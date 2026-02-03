@@ -981,6 +981,9 @@
                         <button class="reset-btn" id="reset-single">
                             <i class="fas fa-redo"></i> <span data-i18n="button.reset">Reset</span>
                         </button>
+                        <button class="reset-btn" id="export-gear-stp">
+                            <i class="fas fa-file-export"></i> <span data-i18n="button.export-stp">Export Gear (.stp)</span>
+                        </button>
                     </div>
                 </div>
                 
@@ -2264,6 +2267,7 @@
                 "button.calculate-shaft": "Calculate Shaft",
                 "button.run-analysis": "Run Complete Analysis",
                 "button.export-data": "Export Data",
+                "button.export-stp": "Export Gear (.stp)",
                 "button.save": "Save",
                 "button.cancel": "Cancel",
                 "button.save-stage": "Save Stage",
@@ -2282,6 +2286,7 @@
                 
                 // Messages
                 "message.calculate-to-see": "Calculate to see details",
+                "message.export-stp-success": "STEP file downloaded with the current gear parameters.",
                 "warning.default": "Warning message will appear here if issues are detected",
                 "success.default": "Shaft design meets all requirements",
                 
@@ -2547,6 +2552,7 @@
                 "button.calculate-shaft": "Welle berechnen",
                 "button.run-analysis": "Komplette Analyse durchführen",
                 "button.export-data": "Daten exportieren",
+                "button.export-stp": "Zahnrad als .stp exportieren",
                 "button.save": "Speichern",
                 "button.cancel": "Abbrechen",
                 "button.save-stage": "Stufe speichern",
@@ -2565,6 +2571,7 @@
                 
                 // Messages
                 "message.calculate-to-see": "Berechnen Sie, um Details zu sehen",
+                "message.export-stp-success": "STEP-Datei mit den aktuellen Zahnradparametern heruntergeladen.",
                 "warning.default": "Warnmeldung erscheint hier, wenn Probleme erkannt werden",
                 "success.default": "Wellenauslegung erfüllt alle Anforderungen",
                 
@@ -3104,6 +3111,81 @@
             
             // Draw the gear
             drawSingleGearVisualization(pitchDiameter, outerDiameter, teeth);
+        }
+
+        function buildGearStepData() {
+            const module = parseFloat(document.getElementById('module').value);
+            const teeth = parseInt(document.getElementById('teeth').value);
+            const pressureAngle = parseFloat(document.getElementById('pressure-angle').value);
+            const faceWidth = parseFloat(document.getElementById('face-width').value);
+            const gearTypeKey = `gear-type.${document.getElementById('gear-type').value}`;
+            const gearType = translations[currentLanguage][gearTypeKey] || document.getElementById('gear-type').value;
+
+            const pitchDiameter = module * teeth;
+            const addendum = module;
+            const dedendum = module * 1.25;
+            const outerDiameter = pitchDiameter + 2 * addendum;
+            const rootDiameter = pitchDiameter - 2 * dedendum;
+            const boreDiameter = outerDiameter * 0.4;
+            const circularPitch = Math.PI * module;
+            const now = new Date();
+            const timestamp = now.toISOString();
+
+            const fileName = `gear-${teeth}t-m${module.toFixed(2)}.stp`;
+            const parameterText = [
+                `Gear Type=${gearType}`,
+                `Module=${module.toFixed(3)} mm`,
+                `Teeth=${teeth}`,
+                `Pressure Angle=${pressureAngle.toFixed(1)} deg`,
+                `Face Width=${faceWidth.toFixed(2)} mm`,
+                `Pitch Diameter=${pitchDiameter.toFixed(2)} mm`,
+                `Outer Diameter=${outerDiameter.toFixed(2)} mm`,
+                `Root Diameter=${rootDiameter.toFixed(2)} mm`,
+                `Bore Diameter=${boreDiameter.toFixed(2)} mm`,
+                `Circular Pitch=${circularPitch.toFixed(2)} mm`
+            ].join('; ');
+
+            const content = `ISO-10303-21;
+HEADER;
+FILE_DESCRIPTION(('Gear STEP export from Gearbox Design System'),'2;1');
+FILE_NAME('${fileName}','${timestamp}',('Gearbox Design System'),(''),'', '', '');
+FILE_SCHEMA(('AUTOMOTIVE_DESIGN_CC2'));
+ENDSEC;
+DATA;
+#100 = APPLICATION_CONTEXT('mechanical design');
+#110 = PRODUCT_CONTEXT('',#100,'mechanical');
+#120 = PRODUCT('Gear','Gear','',(#110));
+#130 = PRODUCT_DEFINITION_FORMATION_WITH_SPECIFIED_SOURCE('','',#120,.NOT_KNOWN.);
+#140 = PRODUCT_DEFINITION('design','',#130,#150);
+#150 = PRODUCT_DEFINITION_CONTEXT('part definition',#100,'design');
+#160 = PRODUCT_DEFINITION_SHAPE('','',#140);
+#170 = SHAPE_DEFINITION_REPRESENTATION(#160,#180);
+#180 = SHAPE_REPRESENTATION('Gear parameters',(#190),#200);
+#190 = DESCRIPTIVE_REPRESENTATION_ITEM('Gear parameters','${parameterText}');
+#200 = REPRESENTATION_CONTEXT('','');
+ENDSEC;
+END-ISO-10303-21;
+`;
+
+            return { fileName, content };
+        }
+
+        function downloadStepFile() {
+            const { fileName, content } = buildGearStepData();
+            const blob = new Blob([content], { type: 'application/step' });
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = fileName;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+        }
+
+        function exportGearToStp() {
+            downloadStepFile();
+            alert(translations[currentLanguage]["message.export-stp-success"]);
         }
         
         // Draw single gear visualization
@@ -3873,6 +3955,7 @@
         
         // Event listeners for calculate buttons
         document.getElementById('calculate-single').addEventListener('click', calculateSingleGear);
+        document.getElementById('export-gear-stp').addEventListener('click', exportGearToStp);
         document.getElementById('reset-single').addEventListener('click', function() {
             document.getElementById('module').value = 3;
             document.getElementById('teeth').value = 24;
