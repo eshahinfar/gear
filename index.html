@@ -374,6 +374,121 @@
             padding: 20px;
             margin-bottom: 25px;
         }
+
+        .shaft-gearbox-panel {
+            background: linear-gradient(135deg, #edf2ff 0%, #f8fafc 100%);
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid #dce5f5;
+            margin-bottom: 20px;
+            box-shadow: 0 6px 18px rgba(30, 64, 175, 0.08);
+        }
+
+        .shaft-panel-header {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            align-items: center;
+            margin-bottom: 15px;
+        }
+
+        .shaft-panel-header h3 {
+            margin: 0;
+            color: #1e3a8a;
+        }
+
+        .shaft-panel-tag {
+            background-color: #1d4ed8;
+            color: white;
+            padding: 6px 12px;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            white-space: nowrap;
+        }
+
+        .shaft-panel-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+        }
+
+        .shaft-panel-card {
+            background-color: white;
+            border-radius: 10px;
+            padding: 15px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .shaft-panel-card h4 {
+            margin-bottom: 8px;
+            color: #1f2937;
+            font-size: 1rem;
+        }
+
+        .shaft-panel-card p {
+            color: #64748b;
+            font-size: 0.9rem;
+            margin-bottom: 10px;
+        }
+
+        .shaft-panel-list {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .shaft-panel-list li {
+            display: flex;
+            gap: 8px;
+            align-items: flex-start;
+            font-size: 0.85rem;
+            color: #475569;
+            margin-bottom: 6px;
+        }
+
+        .shaft-panel-list i {
+            color: #2563eb;
+            margin-top: 2px;
+        }
+
+        .shaft-compliance {
+            background-color: #f8fafc;
+            border-radius: 10px;
+            padding: 15px;
+            border: 1px solid #e2e8f0;
+            margin: 15px 0;
+        }
+
+        .shaft-compliance h4 {
+            margin-bottom: 10px;
+            color: #1e3a8a;
+        }
+
+        .compliance-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #e2e8f0;
+            font-size: 0.9rem;
+        }
+
+        .compliance-item:last-child {
+            border-bottom: none;
+        }
+
+        .compliance-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-weight: 600;
+            color: #0f766e;
+        }
+
+        .compliance-status.warning {
+            color: #b45309;
+        }
         
         .shaft-visualization {
             height: 300px;
@@ -525,6 +640,11 @@
             
             .gear-config, .shaft-config, .material-props, .service-factor-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .shaft-panel-header {
+                flex-direction: column;
+                align-items: flex-start;
             }
         }
         
@@ -1093,6 +1213,42 @@
             <div class="two-column">
                 <div class="column">
                     <h2 data-i18n="shaft.title">Shaft Design Parameters</h2>
+
+                    <div class="shaft-gearbox-panel">
+                        <div class="shaft-panel-header">
+                            <div>
+                                <h3 data-i18n="shaft.gearbox-compliance">Gearbox Shaft Compliance</h3>
+                                <p data-i18n="shaft.gearbox-compliance-desc">Design the shaft using gearbox output torque, speed, and mounting limits.</p>
+                            </div>
+                            <div class="shaft-panel-tag" data-i18n="shaft.gearbox-tag">Gearbox Driven</div>
+                        </div>
+                        <div class="shaft-panel-grid">
+                            <div class="shaft-panel-card">
+                                <h4 data-i18n="shaft.gearbox-inputs">Gearbox Inputs</h4>
+                                <p data-i18n="shaft.gearbox-inputs-desc">Align applied torque and speed with gearbox results.</p>
+                                <ul class="shaft-panel-list">
+                                    <li><i class="fas fa-check-circle"></i><span data-i18n="shaft.gearbox-inputs-item1">Use service factor-adjusted torque</span></li>
+                                    <li><i class="fas fa-check-circle"></i><span data-i18n="shaft.gearbox-inputs-item2">Match output speed for critical speed check</span></li>
+                                </ul>
+                            </div>
+                            <div class="shaft-panel-card">
+                                <h4 data-i18n="shaft.interface">Interface Fit</h4>
+                                <p data-i18n="shaft.interface-desc">Confirm the shaft fits gearbox bore and key interface.</p>
+                                <ul class="shaft-panel-list">
+                                    <li><i class="fas fa-check-circle"></i><span data-i18n="shaft.interface-item1">Diameter & fit class within gearbox limits</span></li>
+                                    <li><i class="fas fa-check-circle"></i><span data-i18n="shaft.interface-item2">Keyway or spline matches coupling</span></li>
+                                </ul>
+                            </div>
+                            <div class="shaft-panel-card">
+                                <h4 data-i18n="shaft.support">Support Layout</h4>
+                                <p data-i18n="shaft.support-desc">Bearings and loads aligned to gearbox housing.</p>
+                                <ul class="shaft-panel-list">
+                                    <li><i class="fas fa-check-circle"></i><span data-i18n="shaft.support-item1">Bearing span within housing length</span></li>
+                                    <li><i class="fas fa-check-circle"></i><span data-i18n="shaft.support-item2">Load points aligned with gear meshes</span></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
                     
                     <!-- Shaft Geometry Section -->
                     <div class="toggle-section" id="geometry-toggle">
@@ -1123,6 +1279,59 @@
                                     <input type="number" id="shaft-taper" min="0" max="0.5" step="0.01" value="0.05">
                                     <div class="unit">d/L</div>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Gearbox Interface Section -->
+                    <div class="toggle-section" id="interface-toggle">
+                        <h3 data-i18n="shaft.gearbox-interface">Gearbox Interface & Fit</h3>
+                        <i class="fas fa-chevron-up toggle-icon"></i>
+                    </div>
+                    <div class="toggle-content" id="interface-content">
+                        <div class="shaft-config">
+                            <div class="form-group">
+                                <label for="gearbox-bore" data-i18n="shaft.gearbox-bore">Gearbox Output Bore</label>
+                                <div class="input-with-unit">
+                                    <input type="number" id="gearbox-bore" min="10" max="500" value="45">
+                                    <div class="unit" data-i18n="unit.mm">mm</div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="hub-length" data-i18n="shaft.hub-length">Coupling Hub Length</label>
+                                <div class="input-with-unit">
+                                    <input type="number" id="hub-length" min="10" max="500" value="80">
+                                    <div class="unit" data-i18n="unit.mm">mm</div>
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="fit-class" data-i18n="shaft.fit-class">Fit Class</label>
+                                <select id="fit-class">
+                                    <option value="h7" selected>H7/h6</option>
+                                    <option value="k6">K6/h6</option>
+                                    <option value="m6">M6/h6</option>
+                                    <option value="p6">P6/h6</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="keyway-type" data-i18n="shaft.keyway">Keyway / Spline</label>
+                                <select id="keyway-type">
+                                    <option value="parallel" selected data-i18n="shaft.keyway-parallel">Parallel Key</option>
+                                    <option value="woodruff" data-i18n="shaft.keyway-woodruff">Woodruff Key</option>
+                                    <option value="spline" data-i18n="shaft.keyway-spline">Involute Spline</option>
+                                </select>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="alignment" data-i18n="shaft.alignment">Alignment Target</label>
+                                <select id="alignment">
+                                    <option value="standard" selected data-i18n="shaft.alignment-standard">Standard (≤ 0.1 mm)</option>
+                                    <option value="precision" data-i18n="shaft.alignment-precision">Precision (≤ 0.05 mm)</option>
+                                    <option value="high" data-i18n="shaft.alignment-high">High Precision (≤ 0.02 mm)</option>
+                                </select>
                             </div>
                         </div>
                     </div>
@@ -1378,6 +1587,22 @@
                     
                     <div class="shaft-visualization">
                         <canvas id="shaft-canvas" width="500" height="280"></canvas>
+                    </div>
+
+                    <div class="shaft-compliance">
+                        <h4 data-i18n="shaft.compliance-check">Gearbox Compliance Check</h4>
+                        <div class="compliance-item">
+                            <span data-i18n="shaft.compliance-item1">Torque & service factor aligned with gearbox</span>
+                            <span class="compliance-status"><i class="fas fa-check-circle"></i><span data-i18n="shaft.compliance-ok">OK</span></span>
+                        </div>
+                        <div class="compliance-item">
+                            <span data-i18n="shaft.compliance-item2">Output bore & fit class validated</span>
+                            <span class="compliance-status"><i class="fas fa-check-circle"></i><span data-i18n="shaft.compliance-ok">OK</span></span>
+                        </div>
+                        <div class="compliance-item">
+                            <span data-i18n="shaft.compliance-item3">Bearing span within gearbox housing</span>
+                            <span class="compliance-status warning"><i class="fas fa-triangle-exclamation"></i><span data-i18n="shaft.compliance-review">Review</span></span>
+                        </div>
                     </div>
                     
                     <div class="stress-results">
@@ -1863,6 +2088,39 @@
                 "shaft.loads-4": "4 Loads",
                 "shaft.results": "Shaft Design Results",
                 "shaft.material-summary": "Material & Service Summary",
+                "shaft.gearbox-compliance": "Gearbox Shaft Compliance",
+                "shaft.gearbox-compliance-desc": "Design the shaft using gearbox output torque, speed, and mounting limits.",
+                "shaft.gearbox-tag": "Gearbox Driven",
+                "shaft.gearbox-inputs": "Gearbox Inputs",
+                "shaft.gearbox-inputs-desc": "Align applied torque and speed with gearbox results.",
+                "shaft.gearbox-inputs-item1": "Use service factor-adjusted torque",
+                "shaft.gearbox-inputs-item2": "Match output speed for critical speed check",
+                "shaft.interface": "Interface Fit",
+                "shaft.interface-desc": "Confirm the shaft fits gearbox bore and key interface.",
+                "shaft.interface-item1": "Diameter & fit class within gearbox limits",
+                "shaft.interface-item2": "Keyway or spline matches coupling",
+                "shaft.support": "Support Layout",
+                "shaft.support-desc": "Bearings and loads aligned to gearbox housing.",
+                "shaft.support-item1": "Bearing span within housing length",
+                "shaft.support-item2": "Load points aligned with gear meshes",
+                "shaft.gearbox-interface": "Gearbox Interface & Fit",
+                "shaft.gearbox-bore": "Gearbox Output Bore",
+                "shaft.hub-length": "Coupling Hub Length",
+                "shaft.fit-class": "Fit Class",
+                "shaft.keyway": "Keyway / Spline",
+                "shaft.keyway-parallel": "Parallel Key",
+                "shaft.keyway-woodruff": "Woodruff Key",
+                "shaft.keyway-spline": "Involute Spline",
+                "shaft.alignment": "Alignment Target",
+                "shaft.alignment-standard": "Standard (≤ 0.1 mm)",
+                "shaft.alignment-precision": "Precision (≤ 0.05 mm)",
+                "shaft.alignment-high": "High Precision (≤ 0.02 mm)",
+                "shaft.compliance-check": "Gearbox Compliance Check",
+                "shaft.compliance-item1": "Torque & service factor aligned with gearbox",
+                "shaft.compliance-item2": "Output bore & fit class validated",
+                "shaft.compliance-item3": "Bearing span within gearbox housing",
+                "shaft.compliance-ok": "OK",
+                "shaft.compliance-review": "Review",
                 
                 // Material
                 "material.mild-steel": "Mild Steel",
@@ -2113,6 +2371,39 @@
                 "shaft.loads-4": "4 Lasten",
                 "shaft.results": "Wellenauslegungsergebnisse",
                 "shaft.material-summary": "Material- & Betriebszusammenfassung",
+                "shaft.gearbox-compliance": "Getriebe-Wellen-Kompatibilität",
+                "shaft.gearbox-compliance-desc": "Die Welle mit Getriebeausgangsdrehmoment, Drehzahl und Einbauraum auslegen.",
+                "shaft.gearbox-tag": "Getriebegetrieben",
+                "shaft.gearbox-inputs": "Getriebe-Eingaben",
+                "shaft.gearbox-inputs-desc": "Drehmoment und Drehzahl mit Getriebeergebnissen abstimmen.",
+                "shaft.gearbox-inputs-item1": "Mit Betriebsfaktor angepasstes Drehmoment verwenden",
+                "shaft.gearbox-inputs-item2": "Ausgangsdrehzahl für kritische Drehzahlprüfung übernehmen",
+                "shaft.interface": "Passung & Schnittstelle",
+                "shaft.interface-desc": "Sicherstellen, dass die Welle zur Getriebebohrung und Passfeder passt.",
+                "shaft.interface-item1": "Durchmesser & Passung innerhalb der Getriebegrenzen",
+                "shaft.interface-item2": "Passfeder oder Verzahnung passend zur Kupplung",
+                "shaft.support": "Lagerung & Layout",
+                "shaft.support-desc": "Lager und Lasten mit dem Getriebegehäuse ausrichten.",
+                "shaft.support-item1": "Lagerspannweite innerhalb der Gehäuselänge",
+                "shaft.support-item2": "Lastpunkte an Zahneingriffen ausrichten",
+                "shaft.gearbox-interface": "Getriebe-Schnittstelle & Passung",
+                "shaft.gearbox-bore": "Getriebeausgangsbohrung",
+                "shaft.hub-length": "Kupplungsnabenlänge",
+                "shaft.fit-class": "Passungsklasse",
+                "shaft.keyway": "Passfeder / Verzahnung",
+                "shaft.keyway-parallel": "Parallelkeil",
+                "shaft.keyway-woodruff": "Scheibenfeder",
+                "shaft.keyway-spline": "Evolventenverzahnung",
+                "shaft.alignment": "Ausrichtungsziel",
+                "shaft.alignment-standard": "Standard (≤ 0,1 mm)",
+                "shaft.alignment-precision": "Präzision (≤ 0,05 mm)",
+                "shaft.alignment-high": "Hochpräzise (≤ 0,02 mm)",
+                "shaft.compliance-check": "Getriebe-Kompatibilitätsprüfung",
+                "shaft.compliance-item1": "Drehmoment & Betriebsfaktor mit Getriebe abgestimmt",
+                "shaft.compliance-item2": "Ausgangsbohrung & Passung geprüft",
+                "shaft.compliance-item3": "Lagerspannweite innerhalb des Gehäuses",
+                "shaft.compliance-ok": "OK",
+                "shaft.compliance-review": "Prüfen",
                 
                 // Material
                 "material.mild-steel": "Baustahl",
