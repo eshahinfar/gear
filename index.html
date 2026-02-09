@@ -179,6 +179,20 @@
             display: flex;
             align-items: center;
         }
+
+        .module-input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .module-custom-input {
+            display: none;
+        }
+
+        .module-custom-input.is-visible {
+            display: flex;
+        }
         
         .input-with-unit input {
             flex: 1;
@@ -927,10 +941,32 @@
                     </div>
                     
                     <div class="form-group">
-                        <label for="module" data-i18n="single-gear.module">Module (m)</label>
-                        <div class="input-with-unit">
-                            <input type="number" id="module" min="0.5" max="20" step="0.5" value="3">
-                            <div class="unit" data-i18n="unit.mm">mm</div>
+                        <label for="module-select" data-i18n="single-gear.module">Module (m)</label>
+                        <div class="module-input-group">
+                            <select id="module-select">
+                                <option value="0.5">0.5</option>
+                                <option value="0.6">0.6</option>
+                                <option value="0.8">0.8</option>
+                                <option value="1">1</option>
+                                <option value="1.25">1.25</option>
+                                <option value="1.5">1.5</option>
+                                <option value="2">2</option>
+                                <option value="2.5">2.5</option>
+                                <option value="3" selected>3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="8">8</option>
+                                <option value="10">10</option>
+                                <option value="12">12</option>
+                                <option value="16">16</option>
+                                <option value="20">20</option>
+                                <option value="custom" data-i18n="module.custom">Custom…</option>
+                            </select>
+                            <div class="input-with-unit module-custom-input" id="module-custom-wrapper">
+                                <input type="number" id="module-custom" min="0.5" max="20" step="0.1" value="3">
+                                <div class="unit" data-i18n="unit.mm">mm</div>
+                            </div>
                         </div>
                     </div>
                     
@@ -1128,10 +1164,32 @@
                     </div>
                     
                     <div class="form-group">
-                        <label for="module-gearbox" data-i18n="gearbox.module">Module (Common)</label>
-                        <div class="input-with-unit">
-                            <input type="number" id="module-gearbox" min="0.5" max="20" step="0.5" value="2.5">
-                            <div class="unit" data-i18n="unit.mm">mm</div>
+                        <label for="module-gearbox-select" data-i18n="gearbox.module">Module (Common)</label>
+                        <div class="module-input-group">
+                            <select id="module-gearbox-select">
+                                <option value="0.5">0.5</option>
+                                <option value="0.6">0.6</option>
+                                <option value="0.8">0.8</option>
+                                <option value="1">1</option>
+                                <option value="1.25">1.25</option>
+                                <option value="1.5">1.5</option>
+                                <option value="2">2</option>
+                                <option value="2.5" selected>2.5</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="8">8</option>
+                                <option value="10">10</option>
+                                <option value="12">12</option>
+                                <option value="16">16</option>
+                                <option value="20">20</option>
+                                <option value="custom" data-i18n="module.custom">Custom…</option>
+                            </select>
+                            <div class="input-with-unit module-custom-input" id="module-gearbox-custom-wrapper">
+                                <input type="number" id="module-gearbox-custom" min="0.5" max="20" step="0.1" value="2.5">
+                                <div class="unit" data-i18n="unit.mm">mm</div>
+                            </div>
                         </div>
                     </div>
                     
@@ -1826,10 +1884,32 @@
                     </div>
                     
                     <div class="form-group">
-                        <label for="stage-module" data-i18n="modal.stage-module">Module</label>
-                        <div class="input-with-unit">
-                            <input type="number" id="stage-module" min="0.5" max="20" step="0.5" value="2.5">
-                            <div class="unit" data-i18n="unit.mm">mm</div>
+                        <label for="stage-module-select" data-i18n="modal.stage-module">Module</label>
+                        <div class="module-input-group">
+                            <select id="stage-module-select">
+                                <option value="0.5">0.5</option>
+                                <option value="0.6">0.6</option>
+                                <option value="0.8">0.8</option>
+                                <option value="1">1</option>
+                                <option value="1.25">1.25</option>
+                                <option value="1.5">1.5</option>
+                                <option value="2">2</option>
+                                <option value="2.5" selected>2.5</option>
+                                <option value="3">3</option>
+                                <option value="4">4</option>
+                                <option value="5">5</option>
+                                <option value="6">6</option>
+                                <option value="8">8</option>
+                                <option value="10">10</option>
+                                <option value="12">12</option>
+                                <option value="16">16</option>
+                                <option value="20">20</option>
+                                <option value="custom" data-i18n="module.custom">Custom…</option>
+                            </select>
+                            <div class="input-with-unit module-custom-input" id="stage-module-custom-wrapper">
+                                <input type="number" id="stage-module-custom" min="0.5" max="20" step="0.1" value="2.5">
+                                <div class="unit" data-i18n="unit.mm">mm</div>
+                            </div>
                         </div>
                     </div>
                     
@@ -2023,6 +2103,7 @@
                 "single-gear.title": "Gear Parameters",
                 "single-gear.gear-type": "Gear Type",
                 "single-gear.module": "Module (m)",
+                "module.custom": "Custom…",
                 "single-gear.teeth": "Number of Teeth (z)",
                 "single-gear.pressure-angle": "Pressure Angle (α)",
                 "single-gear.face-width": "Face Width (b)",
@@ -2308,6 +2389,7 @@
                 "single-gear.title": "Zahnradparameter",
                 "single-gear.gear-type": "Zahnradtyp",
                 "single-gear.module": "Modul (m)",
+                "module.custom": "Benutzerdefiniert…",
                 "single-gear.teeth": "Zähnezahl (z)",
                 "single-gear.pressure-angle": "Eingriffswinkel (α)",
                 "single-gear.face-width": "Zahnbreite (b)",
@@ -2579,6 +2661,78 @@
                 "footer.note": "Hinweis: Dieses Tool bietet technische Schätzungen. Für kritische Anwendungen überprüfen Sie mit professioneller Analysesoftware und physikalischen Tests."
             }
         };
+
+        const moduleSelectors = [
+            {
+                selectId: 'module-select',
+                customInputId: 'module-custom',
+                wrapperId: 'module-custom-wrapper'
+            },
+            {
+                selectId: 'module-gearbox-select',
+                customInputId: 'module-gearbox-custom',
+                wrapperId: 'module-gearbox-custom-wrapper'
+            },
+            {
+                selectId: 'stage-module-select',
+                customInputId: 'stage-module-custom',
+                wrapperId: 'stage-module-custom-wrapper'
+            }
+        ];
+
+        function toggleModuleCustomInput(selectId, customInputId, wrapperId) {
+            const select = document.getElementById(selectId);
+            const wrapper = document.getElementById(wrapperId);
+            const customInput = document.getElementById(customInputId);
+
+            if (!select || !wrapper) {
+                return;
+            }
+
+            if (select.value === 'custom') {
+                wrapper.classList.add('is-visible');
+            } else {
+                wrapper.classList.remove('is-visible');
+                if (customInput) {
+                    customInput.value = select.value;
+                }
+            }
+        }
+
+        function setModuleSelection(selectId, customInputId, wrapperId, value) {
+            const select = document.getElementById(selectId);
+            if (!select) {
+                return;
+            }
+
+            const valueString = value !== undefined ? value.toString() : '';
+            const hasOption = Array.from(select.options).some(option => option.value === valueString);
+
+            if (hasOption) {
+                select.value = valueString;
+                toggleModuleCustomInput(selectId, customInputId, wrapperId);
+                return;
+            }
+
+            select.value = 'custom';
+            toggleModuleCustomInput(selectId, customInputId, wrapperId);
+            const customInput = document.getElementById(customInputId);
+            if (customInput && value !== undefined) {
+                customInput.value = value;
+            }
+        }
+
+        function getModuleValue(selectId, customInputId) {
+            const select = document.getElementById(selectId);
+            if (!select) {
+                return 0;
+            }
+            if (select.value === 'custom') {
+                const customInput = document.getElementById(customInputId);
+                return parseFloat(customInput?.value || '0');
+            }
+            return parseFloat(select.value);
+        }
         
         // Language switching
         function switchLanguage(lang) {
@@ -2818,7 +2972,7 @@
                 document.getElementById('stage-ratio').value = stage.ratio;
                 document.getElementById('gear1-teeth').value = stage.gear1Teeth;
                 document.getElementById('gear2-teeth').value = stage.gear2Teeth;
-                document.getElementById('stage-module').value = stage.module;
+                setModuleSelection('stage-module-select', 'stage-module-custom', 'stage-module-custom-wrapper', stage.module);
                 document.getElementById('stage-width').value = stage.width;
                 document.getElementById('stage-type').value = stage.type;
                 document.getElementById('stage-efficiency').value = stage.efficiency;
@@ -2828,7 +2982,12 @@
                 document.getElementById('stage-ratio').value = 3.5;
                 document.getElementById('gear1-teeth').value = 20;
                 document.getElementById('gear2-teeth').value = 70;
-                document.getElementById('stage-module').value = document.getElementById('module-gearbox').value;
+                setModuleSelection(
+                    'stage-module-select',
+                    'stage-module-custom',
+                    'stage-module-custom-wrapper',
+                    getModuleValue('module-gearbox-select', 'module-gearbox-custom')
+                );
                 document.getElementById('stage-width').value = 30;
                 document.getElementById('stage-type').value = 'spur';
                 document.getElementById('stage-efficiency').value = 97.5;
@@ -2924,7 +3083,7 @@
                 ratio: parseFloat(document.getElementById('stage-ratio').value),
                 gear1Teeth: parseInt(document.getElementById('gear1-teeth').value),
                 gear2Teeth: parseInt(document.getElementById('gear2-teeth').value),
-                module: parseFloat(document.getElementById('stage-module').value),
+                module: getModuleValue('stage-module-select', 'stage-module-custom'),
                 width: parseFloat(document.getElementById('stage-width').value),
                 type: document.getElementById('stage-type').value,
                 efficiency: parseFloat(document.getElementById('stage-efficiency').value)
@@ -3074,7 +3233,7 @@
         
         // Single gear calculations
         function calculateSingleGear() {
-            const module = parseFloat(document.getElementById('module').value);
+            const module = getModuleValue('module-select', 'module-custom');
             const teeth = parseInt(document.getElementById('teeth').value);
             const pressureAngle = parseFloat(document.getElementById('pressure-angle').value);
             const faceWidth = parseFloat(document.getElementById('face-width').value);
@@ -3114,7 +3273,7 @@
         }
 
         function buildGearStepData() {
-            const module = parseFloat(document.getElementById('module').value);
+            const module = getModuleValue('module-select', 'module-custom');
             const teeth = parseInt(document.getElementById('teeth').value);
             const pressureAngle = parseFloat(document.getElementById('pressure-angle').value);
             const faceWidth = parseFloat(document.getElementById('face-width').value);
@@ -3970,7 +4129,7 @@ END-ISO-10303-21;
         document.getElementById('calculate-single').addEventListener('click', calculateSingleGear);
         document.getElementById('export-gear-stp').addEventListener('click', exportGearToStp);
         document.getElementById('reset-single').addEventListener('click', function() {
-            document.getElementById('module').value = 3;
+            setModuleSelection('module-select', 'module-custom', 'module-custom-wrapper', 3);
             document.getElementById('teeth').value = 24;
             document.getElementById('pressure-angle').value = 20;
             document.getElementById('face-width').value = 25;
@@ -3985,7 +4144,7 @@ END-ISO-10303-21;
             document.getElementById('input-rpm').value = 1500;
             document.getElementById('input-power').value = 10;
             document.getElementById('total-ratio').value = 12.5;
-            document.getElementById('module-gearbox').value = 2.5;
+            setModuleSelection('module-gearbox-select', 'module-gearbox-custom', 'module-gearbox-custom-wrapper', 2.5);
             updateGearStagesList();
             calculateGearbox();
         });
@@ -4043,6 +4202,16 @@ END-ISO-10303-21;
                     }
                 }
             });
+        });
+
+        moduleSelectors.forEach(({ selectId, customInputId, wrapperId }) => {
+            const select = document.getElementById(selectId);
+            if (select) {
+                toggleModuleCustomInput(selectId, customInputId, wrapperId);
+                select.addEventListener('change', function() {
+                    toggleModuleCustomInput(selectId, customInputId, wrapperId);
+                });
+            }
         });
         
         // Initialize the application
