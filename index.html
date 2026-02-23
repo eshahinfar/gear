@@ -1004,8 +1004,8 @@
                                 <option value="custom" data-i18n="module.custom">Custom…</option>
                             </select>
                             <div class="input-with-unit module-custom-input" id="module-custom-wrapper">
-                                <input type="number" id="module-custom" min="0.5" max="20" step="0.1" value="3" data-unit-type="length">
-                                <div class="unit" data-i18n="unit.mm" data-unit-type="length">mm</div>
+                                <input type="number" id="module-custom" min="0.5" max="20" step="0.1" value="3" data-unit-type="module">
+                                <div class="unit" data-i18n="unit.mm" data-unit-type="module">mm</div>
                             </div>
                         </div>
                     </div>
@@ -1227,8 +1227,8 @@
                                 <option value="custom" data-i18n="module.custom">Custom…</option>
                             </select>
                             <div class="input-with-unit module-custom-input" id="module-gearbox-custom-wrapper">
-                                <input type="number" id="module-gearbox-custom" min="0.5" max="20" step="0.1" value="2.5" data-unit-type="length">
-                                <div class="unit" data-i18n="unit.mm" data-unit-type="length">mm</div>
+                                <input type="number" id="module-gearbox-custom" min="0.5" max="20" step="0.1" value="2.5" data-unit-type="module">
+                                <div class="unit" data-i18n="unit.mm" data-unit-type="module">mm</div>
                             </div>
                         </div>
                     </div>
@@ -1947,8 +1947,8 @@
                                 <option value="custom" data-i18n="module.custom">Custom…</option>
                             </select>
                             <div class="input-with-unit module-custom-input" id="stage-module-custom-wrapper">
-                                <input type="number" id="stage-module-custom" min="0.5" max="20" step="0.1" value="2.5" data-unit-type="length">
-                                <div class="unit" data-i18n="unit.mm" data-unit-type="length">mm</div>
+                                <input type="number" id="stage-module-custom" min="0.5" max="20" step="0.1" value="2.5" data-unit-type="module">
+                                <div class="unit" data-i18n="unit.mm" data-unit-type="module">mm</div>
                             </div>
                         </div>
                     </div>
@@ -2782,8 +2782,42 @@
             ratio: {
                 siLabel: { en: ':1', de: ':1' },
                 imperialLabel: { en: ':1', de: ':1' }
+            },
+            module: {
+                siLabel: { en: 'mm', de: 'mm' },
+                imperialLabel: { en: 'DP', de: 'DP' },
+                toImperial: value => value === 0 ? 0 : 25.4 / value,
+                toSI: value => value === 0 ? 0 : 25.4 / value
             }
         };
+
+        function getModuleLabelText() {
+            if (currentUnitSystem === 'imperial') {
+                return currentLanguage === 'de' ? 'Diametral Pitch (P)' : 'Diametral Pitch (P)';
+            }
+            return {
+                single: translations[currentLanguage]["single-gear.module"],
+                gearbox: translations[currentLanguage]["gearbox.module"],
+                stage: translations[currentLanguage]["modal.stage-module"]
+            };
+        }
+
+        function updateModuleTerminology() {
+            const singleLabel = document.querySelector('label[for="module-select"]');
+            const gearboxLabel = document.querySelector('label[for="module-gearbox-select"]');
+            const stageLabel = document.querySelector('label[for="stage-module-select"]');
+
+            if (currentUnitSystem === 'imperial') {
+                if (singleLabel) singleLabel.textContent = 'Diametral Pitch (P)';
+                if (gearboxLabel) gearboxLabel.textContent = currentLanguage === 'de' ? 'Diametral Pitch (Gemeinsam)' : 'Diametral Pitch (Common)';
+                if (stageLabel) stageLabel.textContent = 'Diametral Pitch';
+                return;
+            }
+
+            if (singleLabel) singleLabel.textContent = translations[currentLanguage]["single-gear.module"];
+            if (gearboxLabel) gearboxLabel.textContent = translations[currentLanguage]["gearbox.module"];
+            if (stageLabel) stageLabel.textContent = translations[currentLanguage]["modal.stage-module"];
+        }
 
         function getUnitLabel(unitType) {
             if (!unitType || !unitDefinitions[unitType]) {
@@ -2832,6 +2866,7 @@
         function getUnitDecimals(unitType) {
             switch (unitType) {
                 case 'length':
+                case 'module':
                     return 2;
                 case 'force':
                     return 0;
@@ -2933,7 +2968,7 @@
                     if (Number.isNaN(mmValue)) {
                         return;
                     }
-                    const displayValue = formatValue(mmValue, 'length', 2);
+                    const displayValue = formatValue(mmValue, 'module', 2);
                     option.textContent = displayValue;
                 });
             });
@@ -2967,6 +3002,7 @@
             });
             updateUnitLabels();
             updateModuleOptionLabels();
+            updateModuleTerminology();
             if (customMaterialActive) {
                 updateCustomMaterialProperties();
             } else {
@@ -3013,7 +3049,7 @@
                     const selectValue = parseFloat(select.value);
                     customInput.value = Number.isNaN(selectValue)
                         ? select.value
-                        : formatValue(selectValue, 'length', 2);
+                        : formatValue(selectValue, 'module', 2);
                 }
             }
         }
@@ -3037,7 +3073,7 @@
             toggleModuleCustomInput(selectId, customInputId, wrapperId);
             const customInput = document.getElementById(customInputId);
             if (customInput && value !== undefined) {
-                customInput.value = formatValue(value, 'length', 2);
+                customInput.value = formatValue(value, 'module', 2);
             }
         }
 
@@ -3052,7 +3088,7 @@
                 if (Number.isNaN(customValue)) {
                     return 0;
                 }
-                return convertToSI(customValue, 'length');
+                return convertToSI(customValue, 'module');
             }
             return parseFloat(select.value);
         }
@@ -3106,6 +3142,7 @@
 
             updateUnitLabels();
             updateModuleOptionLabels();
+            updateModuleTerminology();
             
             // Recalculate to update dynamic content
             if (currentTab === 'single-gear') {
@@ -3879,7 +3916,7 @@ END-ISO-10303-21;
                             <div>Ø${formatValue(pitchDiameter2, 'length', 1)}${lengthUnitLabel}</div>
                         </div>
                     </div>
-                    <p><strong>${currentLanguage === 'en' ? 'Type' : 'Typ'}:</strong> ${translations[currentLanguage][`gear-type.${stage.type}`]} | <strong>${currentLanguage === 'en' ? 'Module' : 'Modul'}:</strong> ${formatValue(stage.module, 'length', 2)}${lengthUnitLabel} | <strong>${currentLanguage === 'en' ? 'Width' : 'Breite'}:</strong> ${formatValue(stage.width, 'length', 1)}${lengthUnitLabel} | <strong>${currentLanguage === 'en' ? 'Efficiency' : 'Wirkungsgrad'}:</strong> ${stage.efficiency}%</p>
+                    <p><strong>${currentLanguage === 'en' ? 'Type' : 'Typ'}:</strong> ${translations[currentLanguage][`gear-type.${stage.type}`]} | <strong>${currentUnitSystem === 'imperial' ? 'Diametral Pitch' : (currentLanguage === 'en' ? 'Module' : 'Modul')}:</strong> ${formatValue(stage.module, 'module', 2)} ${getUnitLabel('module')} | <strong>${currentLanguage === 'en' ? 'Width' : 'Breite'}:</strong> ${formatValue(stage.width, 'length', 1)}${lengthUnitLabel} | <strong>${currentLanguage === 'en' ? 'Efficiency' : 'Wirkungsgrad'}:</strong> ${stage.efficiency}%</p>
                 `;
                 
                 stageDetails.appendChild(stageDiv);
@@ -4462,6 +4499,7 @@ END-ISO-10303-21;
             updateMaterialProperties();
             updateUnitLabels();
             updateModuleOptionLabels();
+            updateModuleTerminology();
             calculateServiceFactor();
             calculateGearboxServiceFactor();
             calculateSingleGear();
