@@ -43,6 +43,14 @@
             display: flex;
             gap: 10px;
         }
+
+        .unit-selector {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            display: flex;
+            gap: 10px;
+        }
         
         .lang-btn {
             background: rgba(255, 255, 255, 0.2);
@@ -60,6 +68,26 @@
         }
         
         .lang-btn.active {
+            background: white;
+            color: #2c3e50;
+        }
+
+        .unit-btn {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            padding: 8px 16px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: background-color 0.3s;
+        }
+
+        .unit-btn:hover {
+            background: rgba(255, 255, 255, 0.3);
+        }
+
+        .unit-btn.active {
             background: white;
             color: #2c3e50;
         }
@@ -682,6 +710,14 @@
                 justify-content: center;
                 margin-bottom: 15px;
             }
+
+            .unit-selector {
+                position: relative;
+                top: 0;
+                left: 0;
+                justify-content: center;
+                margin-bottom: 15px;
+            }
         }
         
         .gear-stage {
@@ -904,6 +940,10 @@
 <body>
     <div class="container">
         <header>
+            <div class="unit-selector">
+                <button class="unit-btn active" data-unit="si">SI</button>
+                <button class="unit-btn" data-unit="imperial">Imperial</button>
+            </div>
             <div class="language-selector">
                 <button class="lang-btn active" data-lang="en">
                     <i class="fas fa-globe multilingual-icon"></i>English
@@ -964,8 +1004,8 @@
                                 <option value="custom" data-i18n="module.custom">Custom…</option>
                             </select>
                             <div class="input-with-unit module-custom-input" id="module-custom-wrapper">
-                                <input type="number" id="module-custom" min="0.5" max="20" step="0.1" value="3">
-                                <div class="unit" data-i18n="unit.mm">mm</div>
+                                <input type="number" id="module-custom" min="0.5" max="20" step="0.1" value="3" data-unit-type="length">
+                                <div class="unit" data-i18n="unit.mm" data-unit-type="length">mm</div>
                             </div>
                         </div>
                     </div>
@@ -989,24 +1029,24 @@
                     <div class="form-group">
                         <label for="face-width" data-i18n="single-gear.face-width">Face Width (b)</label>
                         <div class="input-with-unit">
-                            <input type="number" id="face-width" min="5" max="200" value="25">
-                            <div class="unit" data-i18n="unit.mm">mm</div>
+                            <input type="number" id="face-width" min="5" max="200" value="25" data-unit-type="length">
+                            <div class="unit" data-i18n="unit.mm" data-unit-type="length">mm</div>
                         </div>
                     </div>
                     
                     <div class="form-group">
                         <label for="rpm" data-i18n="single-gear.rpm">Input Speed</label>
                         <div class="input-with-unit">
-                            <input type="number" id="rpm" min="10" max="10000" value="1200">
-                            <div class="unit" data-i18n="unit.rpm">RPM</div>
+                            <input type="number" id="rpm" min="10" max="10000" value="1200" data-unit-type="rpm">
+                            <div class="unit" data-i18n="unit.rpm" data-unit-type="rpm">RPM</div>
                         </div>
                     </div>
                     
                     <div class="form-group">
                         <label for="power" data-i18n="single-gear.power">Input Power</label>
                         <div class="input-with-unit">
-                            <input type="number" id="power" min="0.1" max="1000" step="0.1" value="7.5">
-                            <div class="unit" data-i18n="unit.kw">kW</div>
+                            <input type="number" id="power" min="0.1" max="1000" step="0.1" value="7.5" data-unit-type="power">
+                            <div class="unit" data-i18n="unit.kw" data-unit-type="power">kW</div>
                         </div>
                     </div>
                     
@@ -1033,23 +1073,23 @@
                     <div class="results-grid">
                         <div class="result-box">
                             <div class="result-label" data-i18n="result.pitch-diameter">Pitch Diameter</div>
-                            <div class="result-value" id="pitch-diameter">72.00<span class="result-unit" data-i18n="unit.mm">mm</span></div>
+                            <div class="result-value" id="pitch-diameter">72.00<span class="result-unit" data-i18n="unit.mm" data-unit-type="length">mm</span></div>
                         </div>
                         <div class="result-box">
                             <div class="result-label" data-i18n="result.outer-diameter">Outer Diameter</div>
-                            <div class="result-value" id="outer-diameter">78.00<span class="result-unit" data-i18n="unit.mm">mm</span></div>
+                            <div class="result-value" id="outer-diameter">78.00<span class="result-unit" data-i18n="unit.mm" data-unit-type="length">mm</span></div>
                         </div>
                         <div class="result-box">
                             <div class="result-label" data-i18n="result.tangential-force">Tangential Force</div>
-                            <div class="result-value" id="tangential-force">1061.0<span class="result-unit" data-i18n="unit.n">N</span></div>
+                            <div class="result-value" id="tangential-force">1061.0<span class="result-unit" data-i18n="unit.n" data-unit-type="force">N</span></div>
                         </div>
                         <div class="result-box">
                             <div class="result-label" data-i18n="result.torque">Torque</div>
-                            <div class="result-value" id="torque">59.72<span class="result-unit" data-i18n="unit.nm">Nm</span></div>
+                            <div class="result-value" id="torque">59.72<span class="result-unit" data-i18n="unit.nm" data-unit-type="torque">Nm</span></div>
                         </div>
                         <div class="result-box">
                             <div class="result-label" data-i18n="result.circular-pitch">Circular Pitch</div>
-                            <div class="result-value" id="circular-pitch">9.42<span class="result-unit" data-i18n="unit.mm">mm</span></div>
+                            <div class="result-value" id="circular-pitch">9.42<span class="result-unit" data-i18n="unit.mm" data-unit-type="length">mm</span></div>
                         </div>
                         <div class="result-box">
                             <div class="result-label" data-i18n="result.contact-ratio">Contact Ratio</div>
@@ -1057,7 +1097,7 @@
                         </div>
                         <div class="result-box">
                             <div class="result-label" data-i18n="result.bending-stress">Bending Stress</div>
-                            <div class="result-value" id="bending-stress">85.3<span class="result-unit" data-i18n="unit.mpa">MPa</span></div>
+                            <div class="result-value" id="bending-stress">85.3<span class="result-unit" data-i18n="unit.mpa" data-unit-type="stress">MPa</span></div>
                         </div>
                         <div class="result-box">
                             <div class="result-label" data-i18n="result.safety-factor">Safety Factor</div>
@@ -1142,16 +1182,16 @@
                     <div class="form-group">
                         <label for="input-rpm" data-i18n="gearbox.input-rpm">Input Speed</label>
                         <div class="input-with-unit">
-                            <input type="number" id="input-rpm" min="10" max="10000" value="1500">
-                            <div class="unit" data-i18n="unit.rpm">RPM</div>
+                            <input type="number" id="input-rpm" min="10" max="10000" value="1500" data-unit-type="rpm">
+                            <div class="unit" data-i18n="unit.rpm" data-unit-type="rpm">RPM</div>
                         </div>
                     </div>
                     
                     <div class="form-group">
                         <label for="input-power" data-i18n="gearbox.input-power">Input Power</label>
                         <div class="input-with-unit">
-                            <input type="number" id="input-power" min="0.1" max="1000" step="0.1" value="10">
-                            <div class="unit" data-i18n="unit.kw">kW</div>
+                            <input type="number" id="input-power" min="0.1" max="1000" step="0.1" value="10" data-unit-type="power">
+                            <div class="unit" data-i18n="unit.kw" data-unit-type="power">kW</div>
                         </div>
                     </div>
                     
@@ -1159,7 +1199,7 @@
                         <label for="total-ratio" data-i18n="gearbox.total-ratio">Total Gear Ratio</label>
                         <div class="input-with-unit">
                             <input type="number" id="total-ratio" min="1" max="1000" step="0.1" value="12.5">
-                            <div class="unit" data-i18n="unit.ratio">:1</div>
+                            <div class="unit" data-i18n="unit.ratio" data-unit-type="ratio">:1</div>
                         </div>
                     </div>
                     
@@ -1187,8 +1227,8 @@
                                 <option value="custom" data-i18n="module.custom">Custom…</option>
                             </select>
                             <div class="input-with-unit module-custom-input" id="module-gearbox-custom-wrapper">
-                                <input type="number" id="module-gearbox-custom" min="0.5" max="20" step="0.1" value="2.5">
-                                <div class="unit" data-i18n="unit.mm">mm</div>
+                                <input type="number" id="module-gearbox-custom" min="0.5" max="20" step="0.1" value="2.5" data-unit-type="length">
+                                <div class="unit" data-i18n="unit.mm" data-unit-type="length">mm</div>
                             </div>
                         </div>
                     </div>
@@ -1228,35 +1268,35 @@
                     <div class="results-grid">
                         <div class="result-box">
                             <div class="result-label" data-i18n="result.output-rpm">Output Speed</div>
-                            <div class="result-value" id="output-rpm">120.0<span class="result-unit" data-i18n="unit.rpm">RPM</span></div>
+                            <div class="result-value" id="output-rpm">120.0<span class="result-unit" data-i18n="unit.rpm" data-unit-type="rpm">RPM</span></div>
                         </div>
                         <div class="result-box">
                             <div class="result-label" data-i18n="result.output-torque">Output Torque</div>
-                            <div class="result-value" id="output-torque">795.8<span class="result-unit" data-i18n="unit.nm">Nm</span></div>
+                            <div class="result-value" id="output-torque">795.8<span class="result-unit" data-i18n="unit.nm" data-unit-type="torque">Nm</span></div>
                         </div>
                         <div class="result-box">
                             <div class="result-label" data-i18n="result.gearbox-efficiency">Total Efficiency</div>
-                            <div class="result-value" id="gearbox-efficiency">94.5<span class="result-unit" data-i18n="unit.percent">%</span></div>
+                            <div class="result-value" id="gearbox-efficiency">94.5<span class="result-unit" data-i18n="unit.percent" data-unit-type="percent">%</span></div>
                         </div>
                         <div class="result-box">
                             <div class="result-label" data-i18n="result.power-loss">Power Loss</div>
-                            <div class="result-value" id="power-loss">0.55<span class="result-unit" data-i18n="unit.kw">kW</span></div>
+                            <div class="result-value" id="power-loss">0.55<span class="result-unit" data-i18n="unit.kw" data-unit-type="power">kW</span></div>
                         </div>
                         <div class="result-box">
                             <div class="result-label" data-i18n="result.center-distance">Center Distance</div>
-                            <div class="result-value" id="center-distance">112.5<span class="result-unit" data-i18n="unit.mm">mm</span></div>
+                            <div class="result-value" id="center-distance">112.5<span class="result-unit" data-i18n="unit.mm" data-unit-type="length">mm</span></div>
                         </div>
                         <div class="result-box">
                             <div class="result-label" data-i18n="result.overall-size">Overall Size</div>
-                            <div class="result-value" id="overall-size">450×300<span class="result-unit" data-i18n="unit.mm">mm</span></div>
+                            <div class="result-value" id="overall-size">450×300<span class="result-unit" data-i18n="unit.mm" data-unit-type="length">mm</span></div>
                         </div>
                         <div class="result-box">
                             <div class="result-label" data-i18n="result.gearbox-weight">Weight (Approx.)</div>
-                            <div class="result-value" id="gearbox-weight">24.5<span class="result-unit" data-i18n="unit.kg">kg</span></div>
+                            <div class="result-value" id="gearbox-weight">24.5<span class="result-unit" data-i18n="unit.kg" data-unit-type="mass">kg</span></div>
                         </div>
                         <div class="result-box">
                             <div class="result-label" data-i18n="result.heat-generated">Heat Generated</div>
-                            <div class="result-value" id="heat-generated">475<span class="result-unit" data-i18n="unit.w">W</span></div>
+                            <div class="result-value" id="heat-generated">475<span class="result-unit" data-i18n="unit.w" data-unit-type="power-small">W</span></div>
                         </div>
                     </div>
                     
@@ -1321,16 +1361,16 @@
                             <div class="form-group">
                                 <label for="shaft-length" data-i18n="shaft.length">Shaft Length</label>
                                 <div class="input-with-unit">
-                                    <input type="number" id="shaft-length" min="50" max="5000" value="500">
-                                    <div class="unit" data-i18n="unit.mm">mm</div>
+                                    <input type="number" id="shaft-length" min="50" max="5000" value="500" data-unit-type="length">
+                                    <div class="unit" data-i18n="unit.mm" data-unit-type="length">mm</div>
                                 </div>
                             </div>
                             
                             <div class="form-group">
                                 <label for="shaft-diameter" data-i18n="shaft.diameter">Base Diameter</label>
                                 <div class="input-with-unit">
-                                    <input type="number" id="shaft-diameter" min="10" max="500" value="40">
-                                    <div class="unit" data-i18n="unit.mm">mm</div>
+                                    <input type="number" id="shaft-diameter" min="10" max="500" value="40" data-unit-type="length">
+                                    <div class="unit" data-i18n="unit.mm" data-unit-type="length">mm</div>
                                 </div>
                             </div>
                             
@@ -1354,16 +1394,16 @@
                             <div class="form-group">
                                 <label for="gearbox-bore" data-i18n="shaft.gearbox-bore">Gearbox Output Bore</label>
                                 <div class="input-with-unit">
-                                    <input type="number" id="gearbox-bore" min="10" max="500" value="45">
-                                    <div class="unit" data-i18n="unit.mm">mm</div>
+                                    <input type="number" id="gearbox-bore" min="10" max="500" value="45" data-unit-type="length">
+                                    <div class="unit" data-i18n="unit.mm" data-unit-type="length">mm</div>
                                 </div>
                             </div>
 
                             <div class="form-group">
                                 <label for="hub-length" data-i18n="shaft.hub-length">Coupling Hub Length</label>
                                 <div class="input-with-unit">
-                                    <input type="number" id="hub-length" min="10" max="500" value="80">
-                                    <div class="unit" data-i18n="unit.mm">mm</div>
+                                    <input type="number" id="hub-length" min="10" max="500" value="80" data-unit-type="length">
+                                    <div class="unit" data-i18n="unit.mm" data-unit-type="length">mm</div>
                                 </div>
                             </div>
 
@@ -1462,40 +1502,40 @@
                                 <div class="form-group">
                                     <label for="custom-yield" data-i18n="material.yield-strength">Yield Strength</label>
                                     <div class="input-with-unit">
-                                        <input type="number" id="custom-yield" min="50" max="2000" value="250">
-                                        <div class="unit" data-i18n="unit.mpa">MPa</div>
+                                        <input type="number" id="custom-yield" min="50" max="2000" value="250" data-unit-type="stress">
+                                        <div class="unit" data-i18n="unit.mpa" data-unit-type="stress">MPa</div>
                                     </div>
                                 </div>
                                 
                                 <div class="form-group">
                                     <label for="custom-ultimate" data-i18n="material.ultimate-strength">Ultimate Strength</label>
                                     <div class="input-with-unit">
-                                        <input type="number" id="custom-ultimate" min="100" max="3000" value="400">
-                                        <div class="unit" data-i18n="unit.mpa">MPa</div>
+                                        <input type="number" id="custom-ultimate" min="100" max="3000" value="400" data-unit-type="stress">
+                                        <div class="unit" data-i18n="unit.mpa" data-unit-type="stress">MPa</div>
                                     </div>
                                 </div>
                                 
                                 <div class="form-group">
                                     <label for="custom-shear" data-i18n="material.shear-strength">Shear Strength</label>
                                     <div class="input-with-unit">
-                                        <input type="number" id="custom-shear" min="30" max="1500" value="145">
-                                        <div class="unit" data-i18n="unit.mpa">MPa</div>
+                                        <input type="number" id="custom-shear" min="30" max="1500" value="145" data-unit-type="stress">
+                                        <div class="unit" data-i18n="unit.mpa" data-unit-type="stress">MPa</div>
                                     </div>
                                 </div>
                                 
                                 <div class="form-group">
                                     <label for="custom-modulus" data-i18n="material.elastic-modulus">Elastic Modulus</label>
                                     <div class="input-with-unit">
-                                        <input type="number" id="custom-modulus" min="10" max="400" value="210">
-                                        <div class="unit" data-i18n="unit.gpa">GPa</div>
+                                        <input type="number" id="custom-modulus" min="10" max="400" value="210" data-unit-type="modulus">
+                                        <div class="unit" data-i18n="unit.gpa" data-unit-type="modulus">GPa</div>
                                     </div>
                                 </div>
                                 
                                 <div class="form-group">
                                     <label for="custom-density" data-i18n="material.density">Density</label>
                                     <div class="input-with-unit">
-                                        <input type="number" id="custom-density" min="1000" max="20000" value="7850">
-                                        <div class="unit" data-i18n="unit.kg-m3">kg/m³</div>
+                                        <input type="number" id="custom-density" min="1000" max="20000" value="7850" data-unit-type="density">
+                                        <div class="unit" data-i18n="unit.kg-m3" data-unit-type="density">kg/m³</div>
                                     </div>
                                 </div>
                                 
@@ -1596,16 +1636,16 @@
                         <div class="form-group">
                             <label for="shaft-torque" data-i18n="shaft.torque">Applied Torque</label>
                             <div class="input-with-unit">
-                                <input type="number" id="shaft-torque" min="1" max="10000" value="200">
-                                <div class="unit" data-i18n="unit.nm">Nm</div>
+                                <input type="number" id="shaft-torque" min="1" max="10000" value="200" data-unit-type="torque">
+                                <div class="unit" data-i18n="unit.nm" data-unit-type="torque">Nm</div>
                             </div>
                         </div>
                         
                         <div class="form-group">
                             <label for="shaft-speed" data-i18n="shaft.speed">Shaft Speed</label>
                             <div class="input-with-unit">
-                                <input type="number" id="shaft-speed" min="10" max="10000" value="1200">
-                                <div class="unit" data-i18n="unit.rpm">RPM</div>
+                                <input type="number" id="shaft-speed" min="10" max="10000" value="1200" data-unit-type="rpm">
+                                <div class="unit" data-i18n="unit.rpm" data-unit-type="rpm">RPM</div>
                             </div>
                         </div>
                         
@@ -1669,7 +1709,7 @@
                     <div class="stress-results">
                         <div class="stress-item">
                             <div class="stress-label" data-i18n="result.torsional-stress">Torsional Stress</div>
-                            <div class="stress-value" id="torsional-stress">32.5<span class="stress-unit" data-i18n="unit.mpa">MPa</span></div>
+                            <div class="stress-value" id="torsional-stress">32.5<span class="stress-unit" data-i18n="unit.mpa" data-unit-type="stress">MPa</span></div>
                             <div class="stress-bar">
                                 <div class="stress-fill safe" id="torsion-bar" style="width: 25%"></div>
                             </div>
@@ -1678,7 +1718,7 @@
                         
                         <div class="stress-item">
                             <div class="stress-label" data-i18n="result.bending-stress">Bending Stress</div>
-                            <div class="stress-value" id="bending-stress">45.8<span class="stress-unit" data-i18n="unit.mpa">MPa</span></div>
+                            <div class="stress-value" id="bending-stress">45.8<span class="stress-unit" data-i18n="unit.mpa" data-unit-type="stress">MPa</span></div>
                             <div class="stress-bar">
                                 <div class="stress-fill safe" id="bending-bar" style="width: 38%"></div>
                             </div>
@@ -1689,19 +1729,19 @@
                     <div class="results-grid">
                         <div class="result-box">
                             <div class="result-label" data-i18n="result.von-mises-stress">Von Mises Stress</div>
-                            <div class="result-value" id="von-mises-stress">68.3<span class="result-unit" data-i18n="unit.mpa">MPa</span></div>
+                            <div class="result-value" id="von-mises-stress">68.3<span class="result-unit" data-i18n="unit.mpa" data-unit-type="stress">MPa</span></div>
                         </div>
                         <div class="result-box">
                             <div class="result-label" data-i18n="result.max-deflection">Max Deflection</div>
-                            <div class="result-value" id="max-deflection">0.12<span class="result-unit" data-i18n="unit.mm">mm</span></div>
+                            <div class="result-value" id="max-deflection">0.12<span class="result-unit" data-i18n="unit.mm" data-unit-type="length">mm</span></div>
                         </div>
                         <div class="result-box">
                             <div class="result-label" data-i18n="result.critical-speed">Critical Speed</div>
-                            <div class="result-value" id="critical-speed">4250<span class="result-unit" data-i18n="unit.rpm">RPM</span></div>
+                            <div class="result-value" id="critical-speed">4250<span class="result-unit" data-i18n="unit.rpm" data-unit-type="rpm">RPM</span></div>
                         </div>
                         <div class="result-box">
                             <div class="result-label" data-i18n="result.torsional-stiffness">Torsional Stiffness</div>
-                            <div class="result-value" id="torsional-stiffness">18500<span class="result-unit" data-i18n="unit.nm-rad">Nm/rad</span></div>
+                            <div class="result-value" id="torsional-stiffness">18500<span class="result-unit" data-i18n="unit.nm-rad" data-unit-type="stiffness">Nm/rad</span></div>
                         </div>
                         <div class="result-box">
                             <div class="result-label" data-i18n="result.sf-static">Safety Factor (Static)</div>
@@ -1753,23 +1793,23 @@
                     <div class="results-grid">
                         <div class="result-box">
                             <div class="result-label" data-i18n="result.total-efficiency">Total Efficiency</div>
-                            <div class="result-value" id="total-efficiency">91.2<span class="result-unit" data-i18n="unit.percent">%</span></div>
+                            <div class="result-value" id="total-efficiency">91.2<span class="result-unit" data-i18n="unit.percent" data-unit-type="percent">%</span></div>
                         </div>
                         <div class="result-box">
                             <div class="result-label" data-i18n="result.total-power-loss">Power Loss</div>
-                            <div class="result-value" id="total-power-loss">0.88<span class="result-unit" data-i18n="unit.kw">kW</span></div>
+                            <div class="result-value" id="total-power-loss">0.88<span class="result-unit" data-i18n="unit.kw" data-unit-type="power">kW</span></div>
                         </div>
                         <div class="result-box">
                             <div class="result-label" data-i18n="result.total-heat">Heat Generation</div>
-                            <div class="result-value" id="total-heat">880<span class="result-unit" data-i18n="unit.w">W</span></div>
+                            <div class="result-value" id="total-heat">880<span class="result-unit" data-i18n="unit.w" data-unit-type="power-small">W</span></div>
                         </div>
                         <div class="result-box">
                             <div class="result-label" data-i18n="result.system-weight">System Weight</div>
-                            <div class="result-value" id="system-weight">38.5<span class="result-unit" data-i18n="unit.kg">kg</span></div>
+                            <div class="result-value" id="system-weight">38.5<span class="result-unit" data-i18n="unit.kg" data-unit-type="mass">kg</span></div>
                         </div>
                         <div class="result-box">
                             <div class="result-label" data-i18n="result.system-volume">Volume</div>
-                            <div class="result-value" id="system-volume">0.025<span class="result-unit" data-i18n="unit.m3">m³</span></div>
+                            <div class="result-value" id="system-volume">0.025<span class="result-unit" data-i18n="unit.m3" data-unit-type="volume">m³</span></div>
                         </div>
                         <div class="result-box">
                             <div class="result-label" data-i18n="result.cost-estimate">Cost Estimate</div>
@@ -1781,7 +1821,7 @@
                         </div>
                         <div class="result-box">
                             <div class="result-label" data-i18n="result.reliability">Reliability</div>
-                            <div class="result-value" id="reliability">98.5<span class="result-unit" data-i18n="unit.percent">%</span></div>
+                            <div class="result-value" id="reliability">98.5<span class="result-unit" data-i18n="unit.percent" data-unit-type="percent">%</span></div>
                         </div>
                     </div>
                 </div>
@@ -1869,7 +1909,7 @@
                         <label for="stage-ratio" data-i18n="modal.stage-ratio">Stage Ratio</label>
                         <div class="input-with-unit">
                             <input type="number" id="stage-ratio" min="1" max="100" step="0.1" value="3.5">
-                            <div class="unit" data-i18n="unit.ratio">:1</div>
+                            <div class="unit" data-i18n="unit.ratio" data-unit-type="ratio">:1</div>
                         </div>
                     </div>
                     
@@ -1907,8 +1947,8 @@
                                 <option value="custom" data-i18n="module.custom">Custom…</option>
                             </select>
                             <div class="input-with-unit module-custom-input" id="stage-module-custom-wrapper">
-                                <input type="number" id="stage-module-custom" min="0.5" max="20" step="0.1" value="2.5">
-                                <div class="unit" data-i18n="unit.mm">mm</div>
+                                <input type="number" id="stage-module-custom" min="0.5" max="20" step="0.1" value="2.5" data-unit-type="length">
+                                <div class="unit" data-i18n="unit.mm" data-unit-type="length">mm</div>
                             </div>
                         </div>
                     </div>
@@ -1916,8 +1956,8 @@
                     <div class="form-group">
                         <label for="stage-width" data-i18n="modal.stage-width">Face Width</label>
                         <div class="input-with-unit">
-                            <input type="number" id="stage-width" min="5" max="200" value="30">
-                            <div class="unit" data-i18n="unit.mm">mm</div>
+                            <input type="number" id="stage-width" min="5" max="200" value="30" data-unit-type="length">
+                            <div class="unit" data-i18n="unit.mm" data-unit-type="length">mm</div>
                         </div>
                     </div>
                     
@@ -1934,7 +1974,7 @@
                         <label for="stage-efficiency" data-i18n="modal.stage-efficiency">Stage Efficiency</label>
                         <div class="input-with-unit">
                             <input type="number" id="stage-efficiency" min="85" max="99.9" step="0.1" value="97.5">
-                            <div class="unit" data-i18n="unit.percent">%</div>
+                            <div class="unit" data-i18n="unit.percent" data-unit-type="percent">%</div>
                         </div>
                     </div>
                 </div>
@@ -1999,6 +2039,7 @@
         
         // Current language
         let currentLanguage = 'en';
+        let currentUnitSystem = 'si';
         
         // Material properties database
         const materialDB = {
@@ -2085,6 +2126,7 @@
         const customMaterialSection = document.getElementById('custom-material-section');
         const materialOptions = document.querySelectorAll('.material-option');
         const langButtons = document.querySelectorAll('.lang-btn');
+        const unitButtons = document.querySelectorAll('.unit-btn');
         
         // Translation dictionary
         const translations = {
@@ -2662,6 +2704,280 @@
             }
         };
 
+        const unitDefinitions = {
+            length: {
+                siLabel: { en: 'mm', de: 'mm' },
+                imperialLabel: { en: 'in', de: 'in' },
+                toImperial: value => value / 25.4,
+                toSI: value => value * 25.4
+            },
+            force: {
+                siLabel: { en: 'N', de: 'N' },
+                imperialLabel: { en: 'lbf', de: 'lbf' },
+                toImperial: value => value / 4.448221615,
+                toSI: value => value * 4.448221615
+            },
+            torque: {
+                siLabel: { en: 'Nm', de: 'Nm' },
+                imperialLabel: { en: 'lb-ft', de: 'lb-ft' },
+                toImperial: value => value * 0.737562149,
+                toSI: value => value / 0.737562149
+            },
+            power: {
+                siLabel: { en: 'kW', de: 'kW' },
+                imperialLabel: { en: 'hp', de: 'PS' },
+                toImperial: value => value / 0.745699872,
+                toSI: value => value * 0.745699872
+            },
+            'power-small': {
+                siLabel: { en: 'W', de: 'W' },
+                imperialLabel: { en: 'hp', de: 'PS' },
+                toImperial: value => value / 745.699872,
+                toSI: value => value * 745.699872
+            },
+            stress: {
+                siLabel: { en: 'MPa', de: 'MPa' },
+                imperialLabel: { en: 'ksi', de: 'ksi' },
+                toImperial: value => value / 6.89475729,
+                toSI: value => value * 6.89475729
+            },
+            modulus: {
+                siLabel: { en: 'GPa', de: 'GPa' },
+                imperialLabel: { en: 'Mpsi', de: 'Mpsi' },
+                toImperial: value => value * 0.1450377377,
+                toSI: value => value / 0.1450377377
+            },
+            density: {
+                siLabel: { en: 'kg/m³', de: 'kg/m³' },
+                imperialLabel: { en: 'lb/ft³', de: 'lb/ft³' },
+                toImperial: value => value * 0.0624279606,
+                toSI: value => value / 0.0624279606
+            },
+            mass: {
+                siLabel: { en: 'kg', de: 'kg' },
+                imperialLabel: { en: 'lb', de: 'lb' },
+                toImperial: value => value * 2.2046226218,
+                toSI: value => value / 2.2046226218
+            },
+            volume: {
+                siLabel: { en: 'm³', de: 'm³' },
+                imperialLabel: { en: 'ft³', de: 'ft³' },
+                toImperial: value => value * 35.3146667,
+                toSI: value => value / 35.3146667
+            },
+            stiffness: {
+                siLabel: { en: 'Nm/rad', de: 'Nm/rad' },
+                imperialLabel: { en: 'lb-ft/rad', de: 'lb-ft/rad' },
+                toImperial: value => value * 0.737562149,
+                toSI: value => value / 0.737562149
+            },
+            rpm: {
+                siLabel: { en: 'RPM', de: 'U/min' },
+                imperialLabel: { en: 'RPM', de: 'U/min' }
+            },
+            percent: {
+                siLabel: { en: '%', de: '%' },
+                imperialLabel: { en: '%', de: '%' }
+            },
+            ratio: {
+                siLabel: { en: ':1', de: ':1' },
+                imperialLabel: { en: ':1', de: ':1' }
+            }
+        };
+
+        function getUnitLabel(unitType) {
+            if (!unitType || !unitDefinitions[unitType]) {
+                return '';
+            }
+            const labels = currentUnitSystem === 'si'
+                ? unitDefinitions[unitType].siLabel
+                : unitDefinitions[unitType].imperialLabel;
+            return labels[currentLanguage] || labels.en || '';
+        }
+
+        function convertFromSI(value, unitType) {
+            const definition = unitDefinitions[unitType];
+            if (!definition || currentUnitSystem === 'si' || !definition.toImperial) {
+                return value;
+            }
+            return definition.toImperial(value);
+        }
+
+        function convertToSI(value, unitType) {
+            const definition = unitDefinitions[unitType];
+            if (!definition || currentUnitSystem === 'si' || !definition.toSI) {
+                return value;
+            }
+            return definition.toSI(value);
+        }
+
+        function convertBetweenSystems(value, unitType, fromSystem, toSystem) {
+            if (fromSystem === toSystem || !unitDefinitions[unitType]) {
+                return value;
+            }
+            if (fromSystem === 'si' && toSystem === 'imperial') {
+                return unitDefinitions[unitType].toImperial ? unitDefinitions[unitType].toImperial(value) : value;
+            }
+            if (fromSystem === 'imperial' && toSystem === 'si') {
+                return unitDefinitions[unitType].toSI ? unitDefinitions[unitType].toSI(value) : value;
+            }
+            return value;
+        }
+
+        function formatValue(value, unitType, decimals = 2) {
+            const displayValue = convertFromSI(value, unitType);
+            return displayValue.toFixed(decimals);
+        }
+
+        function getUnitDecimals(unitType) {
+            switch (unitType) {
+                case 'length':
+                    return 2;
+                case 'force':
+                    return 0;
+                case 'torque':
+                case 'power':
+                    return 1;
+                case 'power-small':
+                    return 0;
+                case 'stress':
+                    return 1;
+                case 'modulus':
+                    return 2;
+                case 'density':
+                    return 0;
+                case 'mass':
+                    return 1;
+                case 'volume':
+                    return 3;
+                case 'rpm':
+                    return 0;
+                default:
+                    return 2;
+            }
+        }
+
+        function updateUnitLabels() {
+            document.querySelectorAll('[data-unit-type]').forEach(element => {
+                if (element.classList.contains('unit') || element.classList.contains('result-unit') || element.classList.contains('stress-unit')) {
+                    const unitType = element.getAttribute('data-unit-type');
+                    if (unitType) {
+                        element.textContent = getUnitLabel(unitType);
+                    }
+                }
+            });
+        }
+
+        function setResultValue(elementId, value, unitType, decimals = 2, unitClass = 'result-unit') {
+            const element = document.getElementById(elementId);
+            if (!element) {
+                return;
+            }
+            element.dataset.siValue = value;
+            element.dataset.unitType = unitType || '';
+            if (!unitType) {
+                element.textContent = formatValue(value, unitType, decimals);
+                return;
+            }
+            element.innerHTML = `${formatValue(value, unitType, decimals)}<span class="${unitClass}" data-unit-type="${unitType}">${getUnitLabel(unitType)}</span>`;
+        }
+
+        function setResultValueWithUnitless(elementId, value, decimals = 2) {
+            const element = document.getElementById(elementId);
+            if (!element) {
+                return;
+            }
+            element.dataset.siValue = value;
+            element.dataset.unitType = '';
+            element.textContent = value.toFixed(decimals);
+        }
+
+        function setDimensionValue(elementId, widthValue, heightValue, unitType, decimals = 1) {
+            const element = document.getElementById(elementId);
+            if (!element) {
+                return;
+            }
+            const widthDisplay = formatValue(widthValue, unitType, decimals);
+            const heightDisplay = formatValue(heightValue, unitType, decimals);
+            element.dataset.siValue = JSON.stringify({ width: widthValue, height: heightValue });
+            element.dataset.unitType = unitType;
+            element.innerHTML = `${widthDisplay}×${heightDisplay}<span class="result-unit" data-unit-type="${unitType}">${getUnitLabel(unitType)}</span>`;
+        }
+
+        function getInputValue(inputId, unitType) {
+            const input = document.getElementById(inputId);
+            if (!input) {
+                return 0;
+            }
+            const value = parseFloat(input.value);
+            if (Number.isNaN(value)) {
+                return 0;
+            }
+            return convertToSI(value, unitType);
+        }
+
+        function updateModuleOptionLabels() {
+            moduleSelectors.forEach(({ selectId }) => {
+                const select = document.getElementById(selectId);
+                if (!select) {
+                    return;
+                }
+                Array.from(select.options).forEach(option => {
+                    if (option.value === 'custom') {
+                        return;
+                    }
+                    if (!option.dataset.mm) {
+                        option.dataset.mm = option.value;
+                    }
+                    const mmValue = parseFloat(option.dataset.mm);
+                    if (Number.isNaN(mmValue)) {
+                        return;
+                    }
+                    const displayValue = formatValue(mmValue, 'length', 2);
+                    option.textContent = displayValue;
+                });
+            });
+        }
+
+        function updateInputsForUnitSwitch(nextUnitSystem) {
+            const inputs = document.querySelectorAll('input[data-unit-type]');
+            inputs.forEach(input => {
+                const unitType = input.dataset.unitType;
+                if (!unitType) {
+                    return;
+                }
+                const value = parseFloat(input.value);
+                if (Number.isNaN(value)) {
+                    return;
+                }
+                const converted = convertBetweenSystems(value, unitType, currentUnitSystem, nextUnitSystem);
+                const decimals = getUnitDecimals(unitType);
+                input.value = converted.toFixed(decimals);
+            });
+        }
+
+        function switchUnitSystem(nextUnitSystem) {
+            if (nextUnitSystem === currentUnitSystem) {
+                return;
+            }
+            updateInputsForUnitSwitch(nextUnitSystem);
+            currentUnitSystem = nextUnitSystem;
+            unitButtons.forEach(btn => {
+                btn.classList.toggle('active', btn.getAttribute('data-unit') === nextUnitSystem);
+            });
+            updateUnitLabels();
+            updateModuleOptionLabels();
+            if (customMaterialActive) {
+                updateCustomMaterialProperties();
+            } else {
+                updateMaterialProperties();
+            }
+            calculateSingleGear();
+            calculateGearbox();
+            calculateShaft();
+            drawAnalysis();
+        }
+
         const moduleSelectors = [
             {
                 selectId: 'module-select',
@@ -2694,7 +3010,10 @@
             } else {
                 wrapper.classList.remove('is-visible');
                 if (customInput) {
-                    customInput.value = select.value;
+                    const selectValue = parseFloat(select.value);
+                    customInput.value = Number.isNaN(selectValue)
+                        ? select.value
+                        : formatValue(selectValue, 'length', 2);
                 }
             }
         }
@@ -2718,7 +3037,7 @@
             toggleModuleCustomInput(selectId, customInputId, wrapperId);
             const customInput = document.getElementById(customInputId);
             if (customInput && value !== undefined) {
-                customInput.value = value;
+                customInput.value = formatValue(value, 'length', 2);
             }
         }
 
@@ -2729,7 +3048,11 @@
             }
             if (select.value === 'custom') {
                 const customInput = document.getElementById(customInputId);
-                return parseFloat(customInput?.value || '0');
+                const customValue = parseFloat(customInput?.value || '0');
+                if (Number.isNaN(customValue)) {
+                    return 0;
+                }
+                return convertToSI(customValue, 'length');
             }
             return parseFloat(select.value);
         }
@@ -2780,6 +3103,9 @@
             
             // Update material names
             updateMaterialProperties();
+
+            updateUnitLabels();
+            updateModuleOptionLabels();
             
             // Recalculate to update dynamic content
             if (currentTab === 'single-gear') {
@@ -2831,6 +3157,14 @@
                 switchLanguage(lang);
             });
         });
+
+        // Unit selector event listeners
+        unitButtons.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const unitSystem = this.getAttribute('data-unit');
+                switchUnitSystem(unitSystem);
+            });
+        });
         
         // Toggle sections
         document.querySelectorAll('.toggle-section').forEach(toggle => {
@@ -2873,11 +3207,11 @@
             // Get material name in current language
             const materialName = material.name[currentLanguage] || material.name.en;
             
-            document.getElementById('yield-strength').textContent = `${material.yieldStrength} MPa`;
-            document.getElementById('ultimate-strength').textContent = `${material.ultimateStrength} MPa`;
-            document.getElementById('shear-strength').textContent = `${material.shearStrength} MPa`;
-            document.getElementById('elastic-modulus').textContent = `${material.elasticModulus} GPa`;
-            document.getElementById('material-density').textContent = `${material.density} kg/m³`;
+            document.getElementById('yield-strength').textContent = `${formatValue(material.yieldStrength, 'stress', 0)} ${getUnitLabel('stress')}`;
+            document.getElementById('ultimate-strength').textContent = `${formatValue(material.ultimateStrength, 'stress', 0)} ${getUnitLabel('stress')}`;
+            document.getElementById('shear-strength').textContent = `${formatValue(material.shearStrength, 'stress', 0)} ${getUnitLabel('stress')}`;
+            document.getElementById('elastic-modulus').textContent = `${formatValue(material.elasticModulus, 'modulus', 1)} ${getUnitLabel('modulus')}`;
+            document.getElementById('material-density').textContent = `${formatValue(material.density, 'density', 0)} ${getUnitLabel('density')}`;
             document.getElementById('poisson-ratio').textContent = material.poissonRatio;
             
             // Update material option text if needed
@@ -2889,18 +3223,18 @@
         
         // Update custom material properties
         function updateCustomMaterialProperties() {
-            const yieldStrength = parseFloat(document.getElementById('custom-yield').value) || 250;
-            const ultimateStrength = parseFloat(document.getElementById('custom-ultimate').value) || 400;
-            const shearStrength = parseFloat(document.getElementById('custom-shear').value) || 145;
-            const elasticModulus = parseFloat(document.getElementById('custom-modulus').value) || 210;
-            const density = parseFloat(document.getElementById('custom-density').value) || 7850;
+            const yieldStrength = getInputValue('custom-yield', 'stress') || 250;
+            const ultimateStrength = getInputValue('custom-ultimate', 'stress') || 400;
+            const shearStrength = getInputValue('custom-shear', 'stress') || 145;
+            const elasticModulus = getInputValue('custom-modulus', 'modulus') || 210;
+            const density = getInputValue('custom-density', 'density') || 7850;
             const poissonRatio = parseFloat(document.getElementById('custom-poisson').value) || 0.3;
             
-            document.getElementById('yield-strength').textContent = `${yieldStrength} MPa`;
-            document.getElementById('ultimate-strength').textContent = `${ultimateStrength} MPa`;
-            document.getElementById('shear-strength').textContent = `${shearStrength} MPa`;
-            document.getElementById('elastic-modulus').textContent = `${elasticModulus} GPa`;
-            document.getElementById('material-density').textContent = `${density} kg/m³`;
+            document.getElementById('yield-strength').textContent = `${formatValue(yieldStrength, 'stress', 0)} ${getUnitLabel('stress')}`;
+            document.getElementById('ultimate-strength').textContent = `${formatValue(ultimateStrength, 'stress', 0)} ${getUnitLabel('stress')}`;
+            document.getElementById('shear-strength').textContent = `${formatValue(shearStrength, 'stress', 0)} ${getUnitLabel('stress')}`;
+            document.getElementById('elastic-modulus').textContent = `${formatValue(elasticModulus, 'modulus', 1)} ${getUnitLabel('modulus')}`;
+            document.getElementById('material-density').textContent = `${formatValue(density, 'density', 0)} ${getUnitLabel('density')}`;
             document.getElementById('poisson-ratio').textContent = poissonRatio;
         }
         
@@ -2948,13 +3282,13 @@
         function getCurrentMaterialProperties() {
             if (customMaterialActive) {
                 return {
-                    yieldStrength: parseFloat(document.getElementById('custom-yield').value) || 250,
-                    ultimateStrength: parseFloat(document.getElementById('custom-ultimate').value) || 400,
-                    shearStrength: parseFloat(document.getElementById('custom-shear').value) || 145,
-                    elasticModulus: parseFloat(document.getElementById('custom-modulus').value) || 210,
-                    density: parseFloat(document.getElementById('custom-density').value) || 7850,
+                    yieldStrength: getInputValue('custom-yield', 'stress') || 250,
+                    ultimateStrength: getInputValue('custom-ultimate', 'stress') || 400,
+                    shearStrength: getInputValue('custom-shear', 'stress') || 145,
+                    elasticModulus: getInputValue('custom-modulus', 'modulus') || 210,
+                    density: getInputValue('custom-density', 'density') || 7850,
                     poissonRatio: parseFloat(document.getElementById('custom-poisson').value) || 0.3,
-                    fatigueLimit: 0.5 * (parseFloat(document.getElementById('custom-yield').value) || 250), // Estimate
+                    fatigueLimit: 0.5 * (getInputValue('custom-yield', 'stress') || 250), // Estimate
                     name: { en: 'Custom Material', de: 'Benutzerdefiniertes Material' }
                 };
             } else {
@@ -2973,7 +3307,7 @@
                 document.getElementById('gear1-teeth').value = stage.gear1Teeth;
                 document.getElementById('gear2-teeth').value = stage.gear2Teeth;
                 setModuleSelection('stage-module-select', 'stage-module-custom', 'stage-module-custom-wrapper', stage.module);
-                document.getElementById('stage-width').value = stage.width;
+                document.getElementById('stage-width').value = formatValue(stage.width, 'length', 2);
                 document.getElementById('stage-type').value = stage.type;
                 document.getElementById('stage-efficiency').value = stage.efficiency;
             } else {
@@ -2988,7 +3322,7 @@
                     'stage-module-custom-wrapper',
                     getModuleValue('module-gearbox-select', 'module-gearbox-custom')
                 );
-                document.getElementById('stage-width').value = 30;
+                document.getElementById('stage-width').value = formatValue(30, 'length', 2);
                 document.getElementById('stage-type').value = 'spur';
                 document.getElementById('stage-efficiency').value = 97.5;
             }
@@ -3005,30 +3339,33 @@
             for (let i = 1; i <= numLoads; i++) {
                 const loadDiv = document.createElement('div');
                 loadDiv.className = 'shaft-section';
+                const positionValue = formatValue(100 + i * 100, 'length', 2);
+                const radialValue = formatValue(500 + i * 200, 'force', 0);
+                const axialValue = formatValue(100 + i * 50, 'force', 0);
                 loadDiv.innerHTML = `
                     <h4>${translations[currentLanguage]["modal.load-points"]} ${i}</h4>
                     <div class="shaft-config">
                         <div class="form-group">
                             <label for="load-position-${i}" data-i18n="shaft.position">Position from Left</label>
                             <div class="input-with-unit">
-                                <input type="number" id="load-position-${i}" min="0" max="1000" value="${100 + i * 100}">
-                                <div class="unit" data-i18n="unit.mm">mm</div>
+                                <input type="number" id="load-position-${i}" min="0" max="1000" value="${positionValue}" data-unit-type="length">
+                                <div class="unit" data-i18n="unit.mm" data-unit-type="length">mm</div>
                             </div>
                         </div>
                         
                         <div class="form-group">
                             <label for="load-radial-${i}" data-i18n="shaft.radial-load">Radial Load</label>
                             <div class="input-with-unit">
-                                <input type="number" id="load-radial-${i}" min="0" max="100000" value="${500 + i * 200}">
-                                <div class="unit" data-i18n="unit.n">N</div>
+                                <input type="number" id="load-radial-${i}" min="0" max="100000" value="${radialValue}" data-unit-type="force">
+                                <div class="unit" data-i18n="unit.n" data-unit-type="force">N</div>
                             </div>
                         </div>
                         
                         <div class="form-group">
                             <label for="load-axial-${i}" data-i18n="shaft.axial-load">Axial Load</label>
                             <div class="input-with-unit">
-                                <input type="number" id="load-axial-${i}" min="0" max="100000" value="${100 + i * 50}">
-                                <div class="unit" data-i18n="unit.n">N</div>
+                                <input type="number" id="load-axial-${i}" min="0" max="100000" value="${axialValue}" data-unit-type="force">
+                                <div class="unit" data-i18n="unit.n" data-unit-type="force">N</div>
                             </div>
                         </div>
                         
@@ -3084,7 +3421,7 @@
                 gear1Teeth: parseInt(document.getElementById('gear1-teeth').value),
                 gear2Teeth: parseInt(document.getElementById('gear2-teeth').value),
                 module: getModuleValue('stage-module-select', 'stage-module-custom'),
-                width: parseFloat(document.getElementById('stage-width').value),
+                width: getInputValue('stage-width', 'length'),
                 type: document.getElementById('stage-type').value,
                 efficiency: parseFloat(document.getElementById('stage-efficiency').value)
             };
@@ -3114,9 +3451,9 @@
             
             for (let i = 1; i <= numLoads; i++) {
                 shaftLoads.push({
-                    position: parseFloat(document.getElementById(`load-position-${i}`).value),
-                    radialLoad: parseFloat(document.getElementById(`load-radial-${i}`).value),
-                    axialLoad: parseFloat(document.getElementById(`load-axial-${i}`).value),
+                    position: getInputValue(`load-position-${i}`, 'length'),
+                    radialLoad: getInputValue(`load-radial-${i}`, 'force'),
+                    axialLoad: getInputValue(`load-axial-${i}`, 'force'),
                     type: document.getElementById(`load-type-${i}`).value,
                     direction: document.getElementById(`load-direction-${i}`).value
                 });
@@ -3236,9 +3573,9 @@
             const module = getModuleValue('module-select', 'module-custom');
             const teeth = parseInt(document.getElementById('teeth').value);
             const pressureAngle = parseFloat(document.getElementById('pressure-angle').value);
-            const faceWidth = parseFloat(document.getElementById('face-width').value);
-            const rpm = parseFloat(document.getElementById('rpm').value);
-            const power = parseFloat(document.getElementById('power').value);
+            const faceWidth = getInputValue('face-width', 'length');
+            const rpm = getInputValue('rpm', 'rpm');
+            const power = getInputValue('power', 'power');
             
             // Gear calculations
             const pitchDiameter = module * teeth;
@@ -3259,14 +3596,14 @@
             const safetyFactor = 2.0 + Math.random();
             
             // Update UI
-            document.getElementById('pitch-diameter').innerHTML = `${pitchDiameter.toFixed(2)}<span class="result-unit">${translations[currentLanguage]["unit.mm"]}</span>`;
-            document.getElementById('outer-diameter').innerHTML = `${outerDiameter.toFixed(2)}<span class="result-unit">${translations[currentLanguage]["unit.mm"]}</span>`;
-            document.getElementById('tangential-force').innerHTML = `${tangentialForce.toFixed(1)}<span class="result-unit">${translations[currentLanguage]["unit.n"]}</span>`;
-            document.getElementById('torque').innerHTML = `${torque.toFixed(2)}<span class="result-unit">${translations[currentLanguage]["unit.nm"]}</span>`;
-            document.getElementById('circular-pitch').innerHTML = `${circularPitch.toFixed(2)}<span class="result-unit">${translations[currentLanguage]["unit.mm"]}</span>`;
-            document.getElementById('contact-ratio').innerHTML = `${contactRatio.toFixed(2)}<span class="result-unit"></span>`;
-            document.getElementById('bending-stress').innerHTML = `${bendingStress.toFixed(1)}<span class="result-unit">${translations[currentLanguage]["unit.mpa"]}</span>`;
-            document.getElementById('safety-factor').innerHTML = `${safetyFactor.toFixed(1)}<span class="result-unit"></span>`;
+            setResultValue('pitch-diameter', pitchDiameter, 'length', 2);
+            setResultValue('outer-diameter', outerDiameter, 'length', 2);
+            setResultValue('tangential-force', tangentialForce, 'force', 1);
+            setResultValue('torque', torque, 'torque', 2);
+            setResultValue('circular-pitch', circularPitch, 'length', 2);
+            setResultValueWithUnitless('contact-ratio', contactRatio, 2);
+            setResultValue('bending-stress', bendingStress, 'stress', 1);
+            setResultValueWithUnitless('safety-factor', safetyFactor, 1);
             
             // Draw the gear
             drawSingleGearVisualization(pitchDiameter, outerDiameter, teeth);
@@ -3276,7 +3613,7 @@
             const module = getModuleValue('module-select', 'module-custom');
             const teeth = parseInt(document.getElementById('teeth').value);
             const pressureAngle = parseFloat(document.getElementById('pressure-angle').value);
-            const faceWidth = parseFloat(document.getElementById('face-width').value);
+            const faceWidth = getInputValue('face-width', 'length');
             const gearTypeKey = `gear-type.${document.getElementById('gear-type').value}`;
             const gearType = translations[currentLanguage][gearTypeKey] || document.getElementById('gear-type').value;
 
@@ -3438,8 +3775,8 @@ END-ISO-10303-21;
         
         // Gearbox calculations with service factor
         function calculateGearbox() {
-            const inputRPM = parseFloat(document.getElementById('input-rpm').value);
-            const inputPower = parseFloat(document.getElementById('input-power').value);
+            const inputRPM = getInputValue('input-rpm', 'rpm');
+            const inputPower = getInputValue('input-power', 'power');
             const totalRatio = parseFloat(document.getElementById('total-ratio').value);
             
             if (gearStages.length === 0) {
@@ -3484,14 +3821,14 @@ END-ISO-10303-21;
             const heatGenerated = powerLoss * 1000; // Convert kW to W
             
             // Update UI
-            document.getElementById('output-rpm').innerHTML = `${outputRPM.toFixed(1)}<span class="result-unit">${translations[currentLanguage]["unit.rpm"]}</span>`;
-            document.getElementById('output-torque').innerHTML = `${outputTorque.toFixed(1)}<span class="result-unit">${translations[currentLanguage]["unit.nm"]}</span>`;
-            document.getElementById('gearbox-efficiency').innerHTML = `${(totalEfficiency * 100).toFixed(1)}<span class="result-unit">${translations[currentLanguage]["unit.percent"]}</span>`;
-            document.getElementById('power-loss').innerHTML = `${powerLoss.toFixed(2)}<span class="result-unit">${translations[currentLanguage]["unit.kw"]}</span>`;
-            document.getElementById('center-distance').innerHTML = `${totalCenterDistance.toFixed(1)}<span class="result-unit">${translations[currentLanguage]["unit.mm"]}</span>`;
-            document.getElementById('overall-size').innerHTML = `${Math.round(totalCenterDistance * 4)}×${Math.round(totalCenterDistance * 2.5)}<span class="result-unit">${translations[currentLanguage]["unit.mm"]}</span>`;
-            document.getElementById('gearbox-weight').innerHTML = `${(totalCenterDistance * 0.15).toFixed(1)}<span class="result-unit">${translations[currentLanguage]["unit.kg"]}</span>`;
-            document.getElementById('heat-generated').innerHTML = `${heatGenerated.toFixed(0)}<span class="result-unit">${translations[currentLanguage]["unit.w"]}</span>`;
+            setResultValue('output-rpm', outputRPM, 'rpm', 1);
+            setResultValue('output-torque', outputTorque, 'torque', 1);
+            setResultValue('gearbox-efficiency', totalEfficiency * 100, 'percent', 1);
+            setResultValue('power-loss', powerLoss, 'power', 2);
+            setResultValue('center-distance', totalCenterDistance, 'length', 1);
+            setDimensionValue('overall-size', totalCenterDistance * 4, totalCenterDistance * 2.5, 'length', 0);
+            setResultValue('gearbox-weight', totalCenterDistance * 0.15, 'mass', 1);
+            setResultValue('heat-generated', heatGenerated, 'power-small', 0);
             
             // Update stage details
             updateStageDetails();
@@ -3516,6 +3853,7 @@ END-ISO-10303-21;
                 const pitchDiameter1 = stage.module * stage.gear1Teeth;
                 const pitchDiameter2 = stage.module * stage.gear2Teeth;
                 const centerDistance = (pitchDiameter1 + pitchDiameter2) / 2;
+                const lengthUnitLabel = getUnitLabel('length');
                 
                 stageDiv.innerHTML = `
                     <div class="stage-header">
@@ -3527,21 +3865,21 @@ END-ISO-10303-21;
                             <div class="gear-icon"><i class="fas fa-cog"></i></div>
                             <div><strong>${currentLanguage === 'en' ? 'Pinion' : 'Ritzel'}</strong></div>
                             <div>${stage.gear1Teeth} ${currentLanguage === 'en' ? 'teeth' : 'Zähne'}</div>
-                            <div>Ø${pitchDiameter1.toFixed(1)}mm</div>
+                            <div>Ø${formatValue(pitchDiameter1, 'length', 1)}${lengthUnitLabel}</div>
                         </div>
                         <div class="gear-pair-item">
                             <i class="fas fa-arrows-alt-h" style="font-size: 24px; color: #64748b;"></i>
                             <div>${currentLanguage === 'en' ? 'Center distance' : 'Achsmittenabstand'}</div>
-                            <div>${centerDistance.toFixed(1)}mm</div>
+                            <div>${formatValue(centerDistance, 'length', 1)}${lengthUnitLabel}</div>
                         </div>
                         <div class="gear-pair-item">
                             <div class="gear-icon"><i class="fas fa-cog"></i></div>
                             <div><strong>${currentLanguage === 'en' ? 'Gear' : 'Rad'}</strong></div>
                             <div>${stage.gear2Teeth} ${currentLanguage === 'en' ? 'teeth' : 'Zähne'}</div>
-                            <div>Ø${pitchDiameter2.toFixed(1)}mm</div>
+                            <div>Ø${formatValue(pitchDiameter2, 'length', 1)}${lengthUnitLabel}</div>
                         </div>
                     </div>
-                    <p><strong>${currentLanguage === 'en' ? 'Type' : 'Typ'}:</strong> ${translations[currentLanguage][`gear-type.${stage.type}`]} | <strong>${currentLanguage === 'en' ? 'Module' : 'Modul'}:</strong> ${stage.module}mm | <strong>${currentLanguage === 'en' ? 'Width' : 'Breite'}:</strong> ${stage.width}mm | <strong>${currentLanguage === 'en' ? 'Efficiency' : 'Wirkungsgrad'}:</strong> ${stage.efficiency}%</p>
+                    <p><strong>${currentLanguage === 'en' ? 'Type' : 'Typ'}:</strong> ${translations[currentLanguage][`gear-type.${stage.type}`]} | <strong>${currentLanguage === 'en' ? 'Module' : 'Modul'}:</strong> ${formatValue(stage.module, 'length', 2)}${lengthUnitLabel} | <strong>${currentLanguage === 'en' ? 'Width' : 'Breite'}:</strong> ${formatValue(stage.width, 'length', 1)}${lengthUnitLabel} | <strong>${currentLanguage === 'en' ? 'Efficiency' : 'Wirkungsgrad'}:</strong> ${stage.efficiency}%</p>
                 `;
                 
                 stageDetails.appendChild(stageDiv);
@@ -3689,13 +4027,13 @@ END-ISO-10303-21;
         // Shaft design calculations with material and service factors
         function calculateShaft() {
             // Get geometry parameters
-            const shaftLength = parseFloat(document.getElementById('shaft-length').value);
-            const shaftDiameter = parseFloat(document.getElementById('shaft-diameter').value);
+            const shaftLength = getInputValue('shaft-length', 'length');
+            const shaftDiameter = getInputValue('shaft-diameter', 'length');
             const shaftTaper = parseFloat(document.getElementById('shaft-taper').value);
             
             // Get load parameters
-            const shaftTorque = parseFloat(document.getElementById('shaft-torque').value);
-            const shaftSpeed = parseFloat(document.getElementById('shaft-speed').value);
+            const shaftTorque = getInputValue('shaft-torque', 'torque');
+            const shaftSpeed = getInputValue('shaft-speed', 'rpm');
             const desiredSafety = parseFloat(document.getElementById('desired-safety').value);
             
             // Get material properties
@@ -3786,15 +4124,15 @@ END-ISO-10303-21;
             }
             
             // Update UI with results
-            document.getElementById('torsional-stress').innerHTML = `${torsionalStress.toFixed(1)}<span class="stress-unit">${translations[currentLanguage]["unit.mpa"]}</span>`;
-            document.getElementById('bending-stress').innerHTML = `${bendingStress.toFixed(1)}<span class="stress-unit">${translations[currentLanguage]["unit.mpa"]}</span>`;
-            document.getElementById('von-mises-stress').innerHTML = `${vonMisesStress.toFixed(1)}<span class="result-unit">${translations[currentLanguage]["unit.mpa"]}</span>`;
-            document.getElementById('max-deflection').innerHTML = `${maxDeflection.toFixed(3)}<span class="result-unit">${translations[currentLanguage]["unit.mm"]}</span>`;
-            document.getElementById('critical-speed').innerHTML = `${criticalSpeed.toFixed(0)}<span class="result-unit">${translations[currentLanguage]["unit.rpm"]}</span>`;
-            document.getElementById('torsional-stiffness').innerHTML = `${(torsionalStiffness/1000).toFixed(0)}<span class="result-unit">${translations[currentLanguage]["unit.nm-rad"]}</span>`;
-            document.getElementById('sf-static').innerHTML = `${sfStaticVonMises.toFixed(1)}<span class="result-unit"></span>`;
-            document.getElementById('sf-fatigue').innerHTML = `${sfFatigue.toFixed(1)}<span class="result-unit"></span>`;
-            document.getElementById('applied-service-factor').innerHTML = `${serviceFactor.toFixed(2)}<span class="result-unit"></span>`;
+            setResultValue('torsional-stress', torsionalStress, 'stress', 1, 'stress-unit');
+            setResultValue('bending-stress', bendingStress, 'stress', 1, 'stress-unit');
+            setResultValue('von-mises-stress', vonMisesStress, 'stress', 1);
+            setResultValue('max-deflection', maxDeflection, 'length', 3);
+            setResultValue('critical-speed', criticalSpeed, 'rpm', 0);
+            setResultValue('torsional-stiffness', torsionalStiffness / 1000, 'stiffness', 0);
+            setResultValueWithUnitless('sf-static', sfStaticVonMises, 1);
+            setResultValueWithUnitless('sf-fatigue', sfFatigue, 1);
+            setResultValueWithUnitless('applied-service-factor', serviceFactor, 2);
             document.getElementById('overall-rating').innerHTML = `${overallRatingText}<span class="result-unit"></span>`;
             document.getElementById('overall-rating').style.color = ratingColor;
             
@@ -3808,6 +4146,8 @@ END-ISO-10303-21;
             
             // Update status labels
             const safeText = translations[currentLanguage]["status.safe"];
+            const rpmLabel = getUnitLabel('rpm');
+            const lengthLabel = getUnitLabel('length');
             document.getElementById('torsion-status').textContent = torsionUtilization > 100 ? 
                 (currentLanguage === 'en' ? 'Exceeded!' : 'Überschritten!') : 
                 `${safeText} (${torsionUtilization.toFixed(0)}% ${currentLanguage === 'en' ? 'of limit' : 'der Grenze'})`;
@@ -3832,15 +4172,15 @@ END-ISO-10303-21;
             }
             
             if (shaftSpeed > criticalSpeed * 0.7) {
-                warnings.push(`${currentLanguage === 'en' ? 'Operating speed' : 'Betriebsdrehzahl'} (${shaftSpeed} ${translations[currentLanguage]["unit.rpm"]}) ${currentLanguage === 'en' ? 'is close to critical speed' : 'liegt nahe der kritischen Drehzahl'} (${criticalSpeed.toFixed(0)} ${translations[currentLanguage]["unit.rpm"]})`);
+                warnings.push(`${currentLanguage === 'en' ? 'Operating speed' : 'Betriebsdrehzahl'} (${formatValue(shaftSpeed, 'rpm', 0)} ${rpmLabel}) ${currentLanguage === 'en' ? 'is close to critical speed' : 'liegt nahe der kritischen Drehzahl'} (${formatValue(criticalSpeed, 'rpm', 0)} ${rpmLabel})`);
             } else {
-                successes.push(`${currentLanguage === 'en' ? 'Critical speed' : 'Kritische Drehzahl'} (${criticalSpeed.toFixed(0)} ${translations[currentLanguage]["unit.rpm"]}) ${currentLanguage === 'en' ? 'is sufficiently higher than operating speed' : 'ist ausreichend höher als die Betriebsdrehzahl'}`);
+                successes.push(`${currentLanguage === 'en' ? 'Critical speed' : 'Kritische Drehzahl'} (${formatValue(criticalSpeed, 'rpm', 0)} ${rpmLabel}) ${currentLanguage === 'en' ? 'is sufficiently higher than operating speed' : 'ist ausreichend höher als die Betriebsdrehzahl'}`);
             }
             
             if (maxDeflection > shaftLength / 2000) {
-                warnings.push(`${currentLanguage === 'en' ? 'Deflection' : 'Durchbiegung'} (${maxDeflection.toFixed(3)} ${translations[currentLanguage]["unit.mm"]}) ${currentLanguage === 'en' ? 'may affect gear mesh accuracy' : 'kann die Zahneingriffsgenauigkeit beeinträchtigen'}`);
+                warnings.push(`${currentLanguage === 'en' ? 'Deflection' : 'Durchbiegung'} (${formatValue(maxDeflection, 'length', 3)} ${lengthLabel}) ${currentLanguage === 'en' ? 'may affect gear mesh accuracy' : 'kann die Zahneingriffsgenauigkeit beeinträchtigen'}`);
             } else {
-                successes.push(`${currentLanguage === 'en' ? 'Deflection' : 'Durchbiegung'} (${maxDeflection.toFixed(3)} ${translations[currentLanguage]["unit.mm"]}) ${currentLanguage === 'en' ? 'is within acceptable limits' : 'liegt innerhalb akzeptabler Grenzen'}`);
+                successes.push(`${currentLanguage === 'en' ? 'Deflection' : 'Durchbiegung'} (${formatValue(maxDeflection, 'length', 3)} ${lengthLabel}) ${currentLanguage === 'en' ? 'is within acceptable limits' : 'liegt innerhalb akzeptabler Grenzen'}`);
             }
             
             // Display warnings or success
@@ -3864,6 +4204,8 @@ END-ISO-10303-21;
         // Update material summary
         function updateMaterialSummary(material, serviceFactor, designTorque) {
             const materialName = material.name[currentLanguage] || material.name.en;
+            const stressLabel = getUnitLabel('stress');
+            const torqueLabel = getUnitLabel('torque');
             
             materialSummary.innerHTML = `
                 <div class="material-props">
@@ -3873,11 +4215,11 @@ END-ISO-10303-21;
                     </div>
                     <div class="material-prop">
                         <span class="prop-name" data-i18n="material.yield-strength">Yield Strength</span>
-                        <span class="prop-value">${material.yieldStrength} MPa</span>
+                        <span class="prop-value">${formatValue(material.yieldStrength, 'stress', 0)} ${stressLabel}</span>
                     </div>
                     <div class="material-prop">
                         <span class="prop-name" data-i18n="material.shear-strength">Shear Strength</span>
-                        <span class="prop-value">${material.shearStrength} MPa</span>
+                        <span class="prop-value">${formatValue(material.shearStrength, 'stress', 0)} ${stressLabel}</span>
                     </div>
                     <div class="material-prop">
                         <span class="prop-name" data-i18n="service.total-factor">Service Factor Applied</span>
@@ -3885,7 +4227,7 @@ END-ISO-10303-21;
                     </div>
                     <div class="material-prop">
                         <span class="prop-name" data-i18n="shaft.design-torque">Design Torque</span>
-                        <span class="prop-value">${designTorque.toFixed(1)} Nm</span>
+                        <span class="prop-value">${formatValue(designTorque, 'torque', 1)} ${torqueLabel}</span>
                     </div>
                     <div class="material-prop">
                         <span class="prop-name" data-i18n="material.cost-factor">Estimated Cost Factor</span>
@@ -3902,8 +4244,8 @@ END-ISO-10303-21;
         function drawShaft() {
             shaftCtx.clearRect(0, 0, shaftCtx.canvas.width, shaftCtx.canvas.height);
             
-            const shaftLength = parseFloat(document.getElementById('shaft-length').value);
-            const shaftDiameter = parseFloat(document.getElementById('shaft-diameter').value);
+            const shaftLength = getInputValue('shaft-length', 'length');
+            const shaftDiameter = getInputValue('shaft-diameter', 'length');
             const numBearings = parseInt(document.getElementById('num-bearings').value);
             
             // Scale to fit canvas
@@ -3984,7 +4326,7 @@ END-ISO-10303-21;
                 shaftCtx.fillStyle = '#dc2626';
                 shaftCtx.font = 'bold 12px Arial';
                 shaftCtx.textAlign = 'center';
-                shaftCtx.fillText(`${load.radialLoad}N`, loadX, loadY - 10);
+                shaftCtx.fillText(`${formatValue(load.radialLoad, 'force', 0)}${getUnitLabel('force')}`, loadX, loadY - 10);
             });
             
             // Draw torque arrow
@@ -4012,7 +4354,8 @@ END-ISO-10303-21;
             const material = getCurrentMaterialProperties();
             const materialName = material.name[currentLanguage] || material.name.en;
             shaftCtx.font = '14px Arial';
-            shaftCtx.fillText(`${materialName} | Ø${shaftDiameter}mm × ${shaftLength}mm`, centerX, 55);
+            const lengthLabel = getUnitLabel('length');
+            shaftCtx.fillText(`${materialName} | Ø${formatValue(shaftDiameter, 'length', 1)}${lengthLabel} × ${formatValue(shaftLength, 'length', 0)}${lengthLabel}`, centerX, 55);
         }
         
         // Draw analysis visualization
@@ -4117,6 +4460,8 @@ END-ISO-10303-21;
             initializeSampleGearStages();
             initializeSampleLoads();
             updateMaterialProperties();
+            updateUnitLabels();
+            updateModuleOptionLabels();
             calculateServiceFactor();
             calculateGearboxServiceFactor();
             calculateSingleGear();
@@ -4132,9 +4477,9 @@ END-ISO-10303-21;
             setModuleSelection('module-select', 'module-custom', 'module-custom-wrapper', 3);
             document.getElementById('teeth').value = 24;
             document.getElementById('pressure-angle').value = 20;
-            document.getElementById('face-width').value = 25;
+            document.getElementById('face-width').value = formatValue(25, 'length', 2);
             document.getElementById('rpm').value = 1200;
-            document.getElementById('power').value = 7.5;
+            document.getElementById('power').value = formatValue(7.5, 'power', 1);
             calculateSingleGear();
         });
         
@@ -4142,7 +4487,7 @@ END-ISO-10303-21;
         document.getElementById('reset-gearbox').addEventListener('click', function() {
             gearStages = [];
             document.getElementById('input-rpm').value = 1500;
-            document.getElementById('input-power').value = 10;
+            document.getElementById('input-power').value = formatValue(10, 'power', 1);
             document.getElementById('total-ratio').value = 12.5;
             setModuleSelection('module-gearbox-select', 'module-gearbox-custom', 'module-gearbox-custom-wrapper', 2.5);
             updateGearStagesList();
@@ -4151,10 +4496,10 @@ END-ISO-10303-21;
         
         document.getElementById('calculate-shaft').addEventListener('click', calculateShaft);
         document.getElementById('reset-shaft').addEventListener('click', function() {
-            document.getElementById('shaft-length').value = 500;
-            document.getElementById('shaft-diameter').value = 40;
+            document.getElementById('shaft-length').value = formatValue(500, 'length', 2);
+            document.getElementById('shaft-diameter').value = formatValue(40, 'length', 2);
             document.getElementById('shaft-taper').value = 0.05;
-            document.getElementById('shaft-torque').value = 200;
+            document.getElementById('shaft-torque').value = formatValue(200, 'torque', 1);
             document.getElementById('shaft-speed').value = 1200;
             document.getElementById('desired-safety').value = 2.5;
             initializeSampleLoads();
@@ -4172,9 +4517,9 @@ END-ISO-10303-21;
             const efficiency = parseFloat(document.getElementById('gearbox-efficiency').textContent);
             const powerLoss = parseFloat(document.getElementById('power-loss').textContent);
             
-            document.getElementById('total-efficiency').innerHTML = `${efficiency.toFixed(1)}<span class="result-unit">${translations[currentLanguage]["unit.percent"]}</span>`;
-            document.getElementById('total-power-loss').innerHTML = `${powerLoss.toFixed(2)}<span class="result-unit">${translations[currentLanguage]["unit.kw"]}</span>`;
-            document.getElementById('total-heat').innerHTML = `${(powerLoss * 1000).toFixed(0)}<span class="result-unit">${translations[currentLanguage]["unit.w"]}</span>`;
+            setResultValue('total-efficiency', efficiency, 'percent', 1);
+            setResultValue('total-power-loss', powerLoss, 'power', 2);
+            setResultValue('total-heat', powerLoss * 1000, 'power-small', 0);
             
             // Show success message
             alert(currentLanguage === 'en' 
