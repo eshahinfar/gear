@@ -5,207 +5,358 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Multilingual Gearbox & Shaft Design System</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
     <style>
+        :root {
+            /* Palette — drafting-table graphite, steel blue, machine orange */
+            --ink: #1b2430;
+            --ink-soft: #2b3646;
+            --steel: #2e5c8a;
+            --steel-deep: #234a72;
+            --steel-tint: #eaf1f8;
+            --accent: #e8722c;
+            --accent-soft: #fdeee2;
+            --paper: #f2f4f7;
+            --surface: #ffffff;
+            --line: #dde3ea;
+            --line-strong: #c6cfda;
+            --text: #25303d;
+            --text-muted: #5b6b7c;
+            --safe: #1f9d6e;
+            --safe-soft: #e4f6ee;
+            --warn: #d99000;
+            --warn-soft: #fdf4dd;
+            --critical: #cc3d3d;
+            --critical-soft: #fceaea;
+            --radius-sm: 8px;
+            --radius: 12px;
+            --radius-lg: 16px;
+            --shadow-sm: 0 1px 2px rgba(27, 36, 48, 0.06), 0 1px 1px rgba(27, 36, 48, 0.04);
+            --shadow: 0 4px 16px rgba(27, 36, 48, 0.08), 0 1px 3px rgba(27, 36, 48, 0.06);
+            --shadow-lg: 0 16px 40px rgba(27, 36, 48, 0.18);
+            --font-display: 'Space Grotesk', 'Segoe UI', sans-serif;
+            --font-body: 'Inter', 'Segoe UI', system-ui, sans-serif;
+            --font-mono: 'JetBrains Mono', 'Cascadia Code', Consolas, monospace;
+        }
+
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-        }
-        
-        body {
-            background-color: #f5f7fa;
-            color: #333;
-            line-height: 1.6;
-        }
-        
-        .container {
-            max-width: 1600px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        
-        header {
-            text-align: center;
-            padding: 30px 0;
-            background: linear-gradient(135deg, #2c3e50 0%, #4a6491 100%);
-            color: white;
-            border-radius: 10px;
-            margin-bottom: 30px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-            position: relative;
-        }
-        
-        .language-selector {
-            position: absolute;
-            top: 20px;
-            right: 20px;
-            display: flex;
-            gap: 10px;
         }
 
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--paper);
+            background-image:
+                radial-gradient(circle at 1px 1px, rgba(46, 92, 138, 0.05) 1px, transparent 0);
+            background-size: 28px 28px;
+            color: var(--text);
+            line-height: 1.6;
+            font-family: var(--font-body);
+            font-size: 15px;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        ::selection {
+            background: var(--accent);
+            color: #fff;
+        }
+
+        .container {
+            max-width: 1480px;
+            margin: 0 auto;
+            padding: clamp(14px, 2.5vw, 28px);
+        }
+
+        /* ---------- Header: machine control panel ---------- */
+        header {
+            position: relative;
+            text-align: center;
+            padding: clamp(28px, 5vw, 52px) clamp(16px, 4vw, 40px);
+            background-color: var(--ink);
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.045) 1px, transparent 1px),
+                linear-gradient(160deg, #1b2430 0%, #22304a 100%);
+            background-size: 36px 36px, 36px 36px, cover;
+            color: #fff;
+            border-radius: var(--radius-lg);
+            margin-bottom: 24px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        header::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), #f2a36a 55%, transparent);
+        }
+
+        header h1 {
+            font-family: var(--font-display);
+            font-size: clamp(1.5rem, 1rem + 2.4vw, 2.5rem);
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            margin-bottom: 10px;
+            line-height: 1.2;
+        }
+
+        header h1 i {
+            color: var(--accent);
+            margin-right: 6px;
+        }
+
+        header p {
+            font-size: clamp(0.95rem, 0.85rem + 0.4vw, 1.1rem);
+            color: rgba(255, 255, 255, 0.72);
+            max-width: 760px;
+            margin: 0 auto;
+        }
+
+        .language-selector,
         .unit-selector {
             position: absolute;
-            top: 20px;
-            left: 20px;
+            top: 18px;
             display: flex;
-            gap: 10px;
-        }
-        
-        .lang-btn {
-            background: rgba(255, 255, 255, 0.2);
-            border: none;
-            color: white;
-            padding: 8px 16px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: background-color 0.3s;
-        }
-        
-        .lang-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
-        }
-        
-        .lang-btn.active {
-            background: white;
-            color: #2c3e50;
+            gap: 6px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.14);
+            padding: 4px;
+            border-radius: 999px;
+            backdrop-filter: blur(6px);
+            z-index: 2;
         }
 
+        .language-selector { right: 18px; }
+        .unit-selector { left: 18px; }
+
+        .lang-btn,
         .unit-btn {
-            background: rgba(255, 255, 255, 0.2);
+            background: transparent;
             border: none;
-            color: white;
-            padding: 8px 16px;
-            border-radius: 4px;
+            color: rgba(255, 255, 255, 0.78);
+            padding: 7px 15px;
+            border-radius: 999px;
             cursor: pointer;
+            font-family: var(--font-body);
+            font-size: 0.85rem;
             font-weight: 600;
-            transition: background-color 0.3s;
+            transition: background-color 0.2s ease, color 0.2s ease;
+            white-space: nowrap;
         }
 
+        .lang-btn:hover,
         .unit-btn:hover {
-            background: rgba(255, 255, 255, 0.3);
+            background: rgba(255, 255, 255, 0.12);
+            color: #fff;
         }
 
+        .lang-btn.active,
         .unit-btn.active {
-            background: white;
-            color: #2c3e50;
+            background: var(--accent);
+            color: #fff;
+            box-shadow: 0 2px 8px rgba(232, 114, 44, 0.4);
         }
-        
-        header h1 {
-            font-size: 2.8rem;
-            margin-bottom: 10px;
+
+        .multilingual-icon {
+            margin-right: 5px;
         }
-        
-        header p {
-            font-size: 1.2rem;
-            opacity: 0.9;
-            max-width: 800px;
-            margin: 0 auto;
-        }
-        
+
+        /* ---------- Tabs: segmented bar with accent indicator ---------- */
         .tab-container {
             display: flex;
             flex-wrap: wrap;
-            gap: 30px;
-            margin-bottom: 30px;
+            gap: 24px;
+            margin-bottom: 24px;
         }
-        
+
         .tabs {
             display: flex;
-            background-color: white;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            background-color: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            overflow-x: auto;
+            box-shadow: var(--shadow-sm);
             margin-bottom: 20px;
+            padding: 6px;
+            gap: 4px;
+            scrollbar-width: none;
         }
-        
+
+        .tabs::-webkit-scrollbar { display: none; }
+
         .tab {
             flex: 1;
-            padding: 18px 25px;
+            min-width: max-content;
+            padding: 13px 22px;
             text-align: center;
             cursor: pointer;
-            background-color: #f8fafc;
-            border-bottom: 3px solid transparent;
-            transition: all 0.3s;
+            border-radius: var(--radius-sm);
+            border-bottom: none;
+            position: relative;
+            transition: background-color 0.2s ease, color 0.2s ease;
+            font-family: var(--font-display);
             font-weight: 600;
-            color: #64748b;
+            font-size: 0.95rem;
+            color: var(--text-muted);
+            user-select: none;
         }
-        
+
         .tab:hover {
-            background-color: #f1f5f9;
-            color: #4a6491;
+            background-color: var(--steel-tint);
+            color: var(--steel);
         }
-        
+
         .tab.active {
-            background-color: white;
-            color: #4a6491;
-            border-bottom: 3px solid #4a6491;
+            background-color: var(--ink);
+            color: #fff;
         }
-        
+
+        .tab.active::after {
+            content: "";
+            position: absolute;
+            left: 18px;
+            right: 18px;
+            bottom: 6px;
+            height: 3px;
+            border-radius: 2px;
+            background: var(--accent);
+        }
+
         .tab-content {
             display: none;
-            background-color: white;
-            padding: 25px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            background-color: var(--surface);
+            padding: clamp(18px, 3vw, 32px);
+            border: 1px solid var(--line);
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            animation: tab-in 0.25s ease;
         }
-        
+
+        @keyframes tab-in {
+            from { opacity: 0; transform: translateY(6px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         .tab-content.active {
             display: block;
         }
-        
+
+        /* ---------- Layout ---------- */
         .two-column {
-            display: flex;
-            gap: 30px;
-            margin-bottom: 30px;
+            display: grid;
+            grid-template-columns: minmax(320px, 5fr) minmax(0, 7fr);
+            gap: clamp(20px, 3vw, 36px);
+            margin-bottom: 24px;
         }
-        
+
         .column {
-            flex: 1;
+            min-width: 0;
         }
-        
+
         h2 {
-            color: #2c3e50;
+            font-family: var(--font-display);
+            font-size: 1.3rem;
+            font-weight: 700;
+            letter-spacing: -0.01em;
+            color: var(--ink);
             margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #4a6491;
+            padding-bottom: 12px;
+            border-bottom: 1px solid var(--line);
+            position: relative;
         }
-        
+
+        h2::after {
+            content: "";
+            position: absolute;
+            left: 0;
+            bottom: -1px;
+            width: 44px;
+            height: 3px;
+            border-radius: 2px;
+            background: var(--accent);
+        }
+
         h3 {
-            color: #3a506b;
-            margin: 20px 0 15px 0;
+            font-family: var(--font-display);
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: var(--ink-soft);
+            margin: 20px 0 14px 0;
         }
-        
+
+        /* ---------- Forms ---------- */
         .form-group {
-            margin-bottom: 18px;
+            margin-bottom: 16px;
         }
-        
+
         label {
             display: block;
-            margin-bottom: 8px;
+            margin-bottom: 7px;
+            font-size: 0.8rem;
             font-weight: 600;
-            color: #3a506b;
+            letter-spacing: 0.04em;
+            text-transform: uppercase;
+            color: var(--text-muted);
         }
-        
-        select, input {
+
+        select,
+        input {
             width: 100%;
-            padding: 12px;
-            border: 1px solid #d1d9e6;
-            border-radius: 6px;
-            font-size: 16px;
-            transition: border 0.3s;
+            padding: 11px 14px;
+            border: 1px solid var(--line-strong);
+            border-radius: var(--radius-sm);
+            font-family: var(--font-body);
+            font-size: 15px;
+            color: var(--text);
+            background-color: var(--surface);
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+            appearance: none;
         }
-        
-        select:focus, input:focus {
+
+        select {
+            background-image: url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%235b6b7c' stroke-width='2' stroke-linecap='round'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 14px center;
+            padding-right: 38px;
+            cursor: pointer;
+        }
+
+        input[type="number"] {
+            font-family: var(--font-mono);
+            font-size: 14.5px;
+        }
+
+        select:hover,
+        input:hover {
+            border-color: var(--steel);
+        }
+
+        select:focus,
+        input:focus {
             outline: none;
-            border-color: #4a6491;
-            box-shadow: 0 0 0 2px rgba(74, 100, 145, 0.2);
+            border-color: var(--steel);
+            box-shadow: 0 0 0 3px rgba(46, 92, 138, 0.18);
         }
-        
+
+        :is(button, .tab, .material-option, .toggle-section):focus-visible {
+            outline: 2px solid var(--accent);
+            outline-offset: 2px;
+        }
+
         .input-with-unit {
             display: flex;
-            align-items: center;
+            align-items: stretch;
         }
 
         .module-input-group {
@@ -221,209 +372,365 @@
         .module-custom-input.is-visible {
             display: flex;
         }
-        
+
         .input-with-unit input {
             flex: 1;
+            min-width: 0;
             border-top-right-radius: 0;
             border-bottom-right-radius: 0;
         }
-        
+
         .unit {
-            background-color: #f1f5f9;
-            padding: 12px 15px;
-            border: 1px solid #d1d9e6;
+            display: flex;
+            align-items: center;
+            background-color: var(--steel-tint);
+            padding: 0 14px;
+            border: 1px solid var(--line-strong);
             border-left: none;
-            border-top-right-radius: 6px;
-            border-bottom-right-radius: 6px;
-            color: #64748b;
-            font-weight: 500;
+            border-top-right-radius: var(--radius-sm);
+            border-bottom-right-radius: var(--radius-sm);
+            color: var(--steel);
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            font-weight: 600;
+            white-space: nowrap;
         }
-        
+
+        /* ---------- Buttons ---------- */
+        .buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 24px;
+        }
+
+        button {
+            padding: 12px 22px;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-family: var(--font-body);
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+        }
+
+        button:active {
+            transform: translateY(1px);
+        }
+
+        .calculate-btn {
+            background-color: var(--steel);
+            color: #fff;
+            box-shadow: 0 2px 8px rgba(46, 92, 138, 0.3);
+        }
+
+        .calculate-btn:hover {
+            background-color: var(--steel-deep);
+            box-shadow: 0 4px 14px rgba(46, 92, 138, 0.38);
+        }
+
+        .reset-btn {
+            background-color: var(--surface);
+            color: var(--text-muted);
+            border: 1px solid var(--line-strong);
+        }
+
+        .reset-btn:hover {
+            background-color: var(--steel-tint);
+            color: var(--steel);
+            border-color: var(--steel);
+        }
+
+        .add-gear-btn {
+            background-color: var(--steel);
+            color: #fff;
+            padding: 12px 20px;
+            border: none;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            font-weight: 600;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 15px;
+            box-shadow: 0 2px 8px rgba(46, 92, 138, 0.3);
+            transition: background-color 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .add-gear-btn:hover {
+            background-color: var(--steel-deep);
+        }
+
+        .action-btn {
+            padding: 8px 12px;
+            border: none;
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: background-color 0.2s ease, color 0.2s ease;
+            font-size: 0.85rem;
+        }
+
+        .edit-btn {
+            background-color: var(--steel-tint);
+            color: var(--steel);
+        }
+
+        .edit-btn:hover {
+            background-color: var(--steel);
+            color: #fff;
+        }
+
+        .delete-btn {
+            background-color: var(--critical-soft);
+            color: var(--critical);
+        }
+
+        .delete-btn:hover {
+            background-color: var(--critical);
+            color: #fff;
+        }
+
+        /* ---------- Gear list ---------- */
         .gear-list {
-            max-height: 400px;
+            max-height: 420px;
             overflow-y: auto;
-            border: 1px solid #e2e8f0;
-            border-radius: 8px;
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
             padding: 10px;
-            background-color: #f8fafc;
+            background-color: var(--paper);
         }
-        
+
         .gear-item {
-            background-color: white;
-            border: 1px solid #e2e8f0;
-            border-radius: 6px;
-            padding: 15px;
+            background-color: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: var(--radius-sm);
+            padding: 14px 16px;
             margin-bottom: 10px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 12px;
+            box-shadow: var(--shadow-sm);
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
         }
-        
+
+        .gear-item:hover {
+            border-color: var(--steel);
+        }
+
         .gear-item-header {
-            background-color: #4a6491;
-            color: white;
-            font-weight: bold;
+            background-color: var(--ink);
+            border-color: var(--ink);
+            color: #fff;
+            font-weight: 600;
+            font-family: var(--font-display);
         }
-        
+
         .gear-info {
             flex: 1;
+            min-width: 0;
         }
-        
+
         .gear-name {
             font-weight: 600;
-            color: #2c3e50;
-            margin-bottom: 5px;
+            color: var(--ink);
+            margin-bottom: 4px;
         }
-        
+
         .gear-specs {
-            font-size: 0.9rem;
-            color: #64748b;
+            font-size: 0.85rem;
+            font-family: var(--font-mono);
+            color: var(--text-muted);
         }
-        
+
         .gear-actions {
             display: flex;
-            gap: 10px;
-        }
-        
-        .action-btn {
-            padding: 8px 12px;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-size: 0.9rem;
-        }
-        
-        .edit-btn {
-            background-color: #e3f2fd;
-            color: #1976d2;
-        }
-        
-        .delete-btn {
-            background-color: #ffebee;
-            color: #d32f2f;
-        }
-        
-        .add-gear-btn {
-            background-color: #4a6491;
-            color: white;
-            padding: 12px 20px;
-            border: none;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 600;
-            display: flex;
-            align-items: center;
             gap: 8px;
-            margin-top: 15px;
-            transition: background-color 0.3s;
+            flex-shrink: 0;
         }
-        
-        .add-gear-btn:hover {
-            background-color: #3a547a;
-        }
-        
+
+        /* ---------- Visualization panels ---------- */
         .gear-visualization {
             height: 400px;
-            border: 1px solid #e1e5eb;
-            border-radius: 8px;
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
             display: flex;
             justify-content: center;
             align-items: center;
-            background-color: #f9fafc;
+            background-color: #fbfcfe;
+            background-image:
+                linear-gradient(rgba(46, 92, 138, 0.06) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(46, 92, 138, 0.06) 1px, transparent 1px);
+            background-size: 24px 24px;
             overflow: hidden;
             margin-bottom: 20px;
         }
-        
+
+        .gear-visualization canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .shaft-visualization {
+            height: 300px;
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
+            margin-top: 20px;
+            position: relative;
+            background-color: #fbfcfe;
+            background-image:
+                linear-gradient(rgba(46, 92, 138, 0.06) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(46, 92, 138, 0.06) 1px, transparent 1px);
+            background-size: 24px 24px;
+            overflow: hidden;
+        }
+
+        .shaft-visualization canvas {
+            width: 100%;
+            height: 100%;
+            display: block;
+        }
+
+        .shaft-diagram {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* ---------- Results: dimension-callout readouts ---------- */
         .results-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 14px;
             margin-top: 20px;
         }
-        
+
         .result-box {
-            background-color: #f8fafc;
-            border-left: 4px solid #4a6491;
-            padding: 15px;
-            border-radius: 6px;
+            background-color: var(--surface);
+            border: 1px solid var(--line);
+            border-top: 3px solid var(--steel);
+            padding: 14px 16px;
+            border-radius: var(--radius-sm);
+            box-shadow: var(--shadow-sm);
+            position: relative;
+            transition: border-color 0.2s ease, transform 0.2s ease;
         }
-        
+
+        .result-box::before {
+            content: "";
+            position: absolute;
+            top: -3px;
+            left: 14px;
+            width: 18px;
+            height: 3px;
+            background: var(--accent);
+        }
+
+        .result-box:hover {
+            transform: translateY(-2px);
+        }
+
         .result-label {
-            font-size: 0.9rem;
-            color: #64748b;
-            margin-bottom: 5px;
-        }
-        
-        .result-value {
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: #2c3e50;
-        }
-        
-        .result-unit {
-            font-size: 0.9rem;
-            color: #64748b;
-            margin-left: 3px;
-        }
-        
-        .buttons {
-            display: flex;
-            gap: 15px;
-            margin-top: 25px;
-        }
-        
-        button {
-            padding: 15px 25px;
-            border: none;
-            border-radius: 6px;
-            font-size: 16px;
+            font-size: 0.72rem;
             font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 6px;
         }
-        
-        .calculate-btn {
-            background-color: #4a6491;
-            color: white;
+
+        .result-value {
+            font-family: var(--font-mono);
+            font-size: 1.35rem;
+            font-weight: 700;
+            color: var(--ink);
+            letter-spacing: -0.01em;
         }
-        
-        .calculate-btn:hover {
-            background-color: #3a547a;
+
+        .result-unit {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--text-muted);
+            margin-left: 4px;
         }
-        
-        .reset-btn {
-            background-color: #f1f5f9;
-            color: #64748b;
+
+        /* ---------- Stress readouts ---------- */
+        .stress-results {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 14px;
+            margin-top: 20px;
         }
-        
-        .reset-btn:hover {
-            background-color: #e2e8f0;
-        }
-        
-        footer {
+
+        .stress-item {
+            background-color: var(--surface);
+            border: 1px solid var(--line);
+            border-radius: var(--radius-sm);
+            padding: 16px;
             text-align: center;
-            margin-top: 40px;
-            padding: 20px;
-            color: #64748b;
-            font-size: 0.9rem;
-            border-top: 1px solid #e2e8f0;
+            box-shadow: var(--shadow-sm);
         }
-        
+
+        .stress-label {
+            font-size: 0.72rem;
+            font-weight: 600;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            margin-bottom: 8px;
+        }
+
+        .stress-value {
+            font-family: var(--font-mono);
+            font-size: 1.45rem;
+            font-weight: 700;
+            color: var(--ink);
+        }
+
+        .stress-unit {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-left: 4px;
+        }
+
+        .stress-bar {
+            height: 7px;
+            background-color: var(--line);
+            border-radius: 999px;
+            margin-top: 12px;
+            overflow: hidden;
+        }
+
+        .stress-fill {
+            height: 100%;
+            border-radius: 999px;
+            transition: width 0.5s ease;
+        }
+
+        .safe { background-color: var(--safe); }
+        .warning-level { background-color: var(--warn); }
+        .critical { background-color: var(--critical); }
+
+        /* ---------- Section panels ---------- */
         .shaft-section {
-            background-color: #f8fafc;
-            border-radius: 8px;
+            background-color: var(--paper);
+            border: 1px solid var(--line);
+            border-radius: var(--radius);
             padding: 20px;
-            margin-bottom: 25px;
+            margin-bottom: 24px;
         }
 
         .shaft-gearbox-panel {
-            background: linear-gradient(135deg, #edf2ff 0%, #f8fafc 100%);
-            border-radius: 12px;
+            background: linear-gradient(150deg, var(--steel-tint) 0%, #fbfcfe 65%);
+            border-radius: var(--radius);
             padding: 20px;
-            border: 1px solid #dce5f5;
+            border: 1px solid #cfdded;
             margin-bottom: 20px;
-            box-shadow: 0 6px 18px rgba(30, 64, 175, 0.08);
+            box-shadow: var(--shadow-sm);
         }
 
         .shaft-panel-header {
@@ -432,45 +739,49 @@
             gap: 15px;
             align-items: center;
             margin-bottom: 15px;
+            flex-wrap: wrap;
         }
 
         .shaft-panel-header h3 {
             margin: 0;
-            color: #1e3a8a;
+            color: var(--steel-deep);
         }
 
         .shaft-panel-tag {
-            background-color: #1d4ed8;
-            color: white;
-            padding: 6px 12px;
+            background-color: var(--steel);
+            color: #fff;
+            padding: 5px 14px;
             border-radius: 999px;
-            font-size: 0.85rem;
+            font-family: var(--font-mono);
+            font-size: 0.78rem;
             font-weight: 600;
             white-space: nowrap;
         }
 
         .shaft-panel-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+            gap: 14px;
         }
 
         .shaft-panel-card {
-            background-color: white;
-            border-radius: 10px;
-            padding: 15px;
-            border: 1px solid #e2e8f0;
+            background-color: var(--surface);
+            border-radius: var(--radius-sm);
+            padding: 16px;
+            border: 1px solid var(--line);
+            box-shadow: var(--shadow-sm);
         }
 
         .shaft-panel-card h4 {
+            font-family: var(--font-display);
             margin-bottom: 8px;
-            color: #1f2937;
-            font-size: 1rem;
+            color: var(--ink);
+            font-size: 0.98rem;
         }
 
         .shaft-panel-card p {
-            color: #64748b;
-            font-size: 0.9rem;
+            color: var(--text-muted);
+            font-size: 0.88rem;
             margin-bottom: 10px;
         }
 
@@ -484,35 +795,37 @@
             display: flex;
             gap: 8px;
             align-items: flex-start;
-            font-size: 0.85rem;
-            color: #475569;
+            font-size: 0.84rem;
+            color: var(--text-muted);
             margin-bottom: 6px;
         }
 
         .shaft-panel-list i {
-            color: #2563eb;
-            margin-top: 2px;
+            color: var(--steel);
+            margin-top: 3px;
         }
 
         .shaft-compliance {
-            background-color: #f8fafc;
-            border-radius: 10px;
-            padding: 15px;
-            border: 1px solid #e2e8f0;
+            background-color: var(--surface);
+            border-radius: var(--radius-sm);
+            padding: 16px;
+            border: 1px solid var(--line);
             margin: 15px 0;
         }
 
         .shaft-compliance h4 {
+            font-family: var(--font-display);
             margin-bottom: 10px;
-            color: #1e3a8a;
+            color: var(--steel-deep);
         }
 
         .compliance-item {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 10px;
             padding: 10px 0;
-            border-bottom: 1px solid #e2e8f0;
+            border-bottom: 1px dashed var(--line);
             font-size: 0.9rem;
         }
 
@@ -525,163 +838,410 @@
             align-items: center;
             gap: 6px;
             font-weight: 600;
-            color: #0f766e;
+            font-family: var(--font-mono);
+            font-size: 0.82rem;
+            color: var(--safe);
         }
 
         .compliance-status.warning {
-            color: #b45309;
+            color: var(--warn);
         }
-        
-        .shaft-visualization {
-            height: 300px;
-            border: 1px solid #e1e5eb;
-            border-radius: 8px;
+
+        /* ---------- Gear stages ---------- */
+        .gear-stage {
+            background-color: var(--steel-tint);
+            border: 1px solid #cfdded;
+            border-left: 4px solid var(--steel);
+            border-radius: var(--radius-sm);
+            padding: 16px;
+            margin-bottom: 18px;
+        }
+
+        .stage-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 10px;
+            flex-wrap: wrap;
+        }
+
+        .stage-title {
+            font-family: var(--font-display);
+            font-weight: 600;
+            color: var(--ink);
+            font-size: 1.05rem;
+        }
+
+        .stage-ratio {
+            background-color: var(--ink);
+            color: #fff;
+            padding: 4px 12px;
+            border-radius: 999px;
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .gear-pair {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 14px 0;
+            gap: 10px;
+        }
+
+        .gear-pair-item {
+            text-align: center;
+            flex: 1;
+            min-width: 0;
+        }
+
+        .gear-icon {
+            font-size: 36px;
+            color: var(--steel);
+            margin-bottom: 10px;
+        }
+
+        /* ---------- Materials ---------- */
+        .material-selector {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-bottom: 15px;
+        }
+
+        .material-option {
+            flex: 1;
+            min-width: 120px;
+            padding: 12px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border: 1.5px solid var(--line-strong);
+            border-radius: var(--radius-sm);
+            background-color: var(--surface);
+            cursor: pointer;
+            user-select: none;
+            transition: border-color 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+        }
+
+        .material-option:hover {
+            border-color: var(--steel);
+            background-color: var(--steel-tint);
+            color: var(--steel);
+        }
+
+        .material-option.active {
+            border-color: var(--steel);
+            background-color: var(--steel);
+            color: #fff;
+            box-shadow: 0 2px 8px rgba(46, 92, 138, 0.3);
+        }
+
+        .custom-material-btn {
+            background-color: var(--paper);
+            border: 1.5px dashed var(--line-strong);
+            color: var(--text-muted);
+        }
+
+        .custom-material-btn:hover {
+            border-color: var(--steel);
+            background-color: var(--steel-tint);
+        }
+
+        .custom-material-section {
+            background-color: var(--paper);
+            border-radius: var(--radius);
+            padding: 20px;
             margin-top: 20px;
-            position: relative;
-            background-color: #f9fafc;
-            overflow: hidden;
+            border: 1.5px dashed var(--line-strong);
         }
-        
+
+        .material-specs {
+            background-color: var(--surface);
+            border: 1px solid var(--line);
+            border-left: 4px solid var(--accent);
+            border-radius: var(--radius-sm);
+            padding: 16px;
+            margin-top: 15px;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .material-props {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 4px 22px;
+            margin-top: 10px;
+        }
+
+        .material-prop {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            padding: 8px 0;
+            border-bottom: 1px dashed var(--line);
+            font-size: 0.9rem;
+        }
+
+        .prop-name {
+            color: var(--text-muted);
+            font-weight: 500;
+        }
+
+        .prop-value {
+            color: var(--ink);
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-align: right;
+        }
+
+        /* ---------- Service factors ---------- */
+        .service-factors {
+            background-color: var(--safe-soft);
+            border: 1px solid #c4ead8;
+            border-left: 4px solid var(--safe);
+            border-radius: var(--radius-sm);
+            padding: 16px;
+            margin-top: 15px;
+        }
+
+        .gearbox-service-factors {
+            background-color: var(--steel-tint);
+            border: 1px solid #cfdded;
+            border-left: 4px solid var(--steel);
+            border-radius: var(--radius-sm);
+            padding: 16px;
+            margin-top: 15px;
+        }
+
+        .service-factor-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px 22px;
+            margin-top: 10px;
+        }
+
+        .factor-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .factor-name {
+            color: var(--text-muted);
+            font-size: 0.88rem;
+        }
+
+        .factor-value {
+            font-family: var(--font-mono);
+            font-weight: 600;
+            font-size: 0.88rem;
+            color: var(--ink);
+            min-width: 60px;
+            text-align: right;
+        }
+
+        .total-factor {
+            background-color: var(--safe);
+            color: #fff;
+            padding: 9px 12px;
+            border-radius: var(--radius-sm);
+            font-family: var(--font-mono);
+            font-weight: 700;
+            text-align: center;
+            margin-top: 12px;
+        }
+
+        /* ---------- Modals ---------- */
         .modal {
             display: none;
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
+            inset: 0;
+            background-color: rgba(15, 22, 32, 0.55);
+            backdrop-filter: blur(3px);
             z-index: 1000;
             justify-content: center;
             align-items: center;
+            padding: 16px;
         }
-        
+
         .modal-content {
-            background-color: white;
-            padding: 30px;
-            border-radius: 10px;
-            width: 90%;
+            background-color: var(--surface);
+            padding: clamp(20px, 3vw, 32px);
+            border-radius: var(--radius-lg);
+            width: 100%;
             max-width: 700px;
             max-height: 90vh;
             overflow-y: auto;
+            box-shadow: var(--shadow-lg);
+            animation: modal-in 0.22s ease;
         }
-        
+
+        @keyframes modal-in {
+            from { opacity: 0; transform: translateY(14px) scale(0.985); }
+            to { opacity: 1; transform: translateY(0) scale(1); }
+        }
+
         .modal-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            gap: 10px;
             margin-bottom: 20px;
+            padding-bottom: 14px;
+            border-bottom: 1px solid var(--line);
         }
-        
-        .close-modal {
-            background: none;
+
+        .modal-header h2,
+        .modal-header h3 {
+            margin: 0;
+            padding: 0;
             border: none;
-            font-size: 24px;
-            cursor: pointer;
-            color: #64748b;
         }
-        
+
+        .modal-header h2::after {
+            display: none;
+        }
+
+        .close-modal {
+            background: var(--paper);
+            border: 1px solid var(--line);
+            width: 36px;
+            height: 36px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            font-size: 18px;
+            line-height: 1;
+            padding: 0;
+            cursor: pointer;
+            color: var(--text-muted);
+            transition: background-color 0.2s ease, color 0.2s ease;
+        }
+
+        .close-modal:hover {
+            background: var(--critical-soft);
+            color: var(--critical);
+        }
+
         .gear-config {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 20px;
+            gap: 16px 20px;
         }
-        
+
         .shaft-config {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
             gap: 15px;
         }
-        
-        .material-specs {
-            background-color: #fff0f6;
-            border-radius: 8px;
-            padding: 15px;
-            margin-top: 15px;
-            border-left: 4px solid #e64980;
+
+        /* ---------- Alerts ---------- */
+        .warning {
+            background-color: var(--warn-soft);
+            border: 1px solid #f0d9a0;
+            border-left: 4px solid var(--warn);
+            color: #7c5500;
+            padding: 12px 16px;
+            border-radius: var(--radius-sm);
+            margin: 15px 0;
         }
-        
-        .material-props {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-            margin-top: 10px;
+
+        .success {
+            background-color: var(--safe-soft);
+            border: 1px solid #c4ead8;
+            border-left: 4px solid var(--safe);
+            color: #12694a;
+            padding: 12px 16px;
+            border-radius: var(--radius-sm);
+            margin: 15px 0;
         }
-        
-        .material-prop {
-            display: flex;
-            justify-content: space-between;
-            padding: 8px 0;
-            border-bottom: 1px solid #f1f3f5;
+
+        .loading {
+            text-align: center;
+            padding: 20px;
+            color: var(--text-muted);
         }
-        
-        .prop-name {
-            color: #495057;
-            font-weight: 500;
-        }
-        
-        .prop-value {
-            color: #2c3e50;
-            font-weight: 600;
-        }
-        
-        .service-factors {
-            background-color: #e6fcf5;
-            border-radius: 8px;
-            padding: 15px;
-            margin-top: 15px;
-            border-left: 4px solid #20c997;
-        }
-        
-        .service-factor-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 12px;
-            margin-top: 10px;
-        }
-        
-        .factor-item {
+
+        /* ---------- Collapsible sections ---------- */
+        .toggle-section {
             display: flex;
             justify-content: space-between;
             align-items: center;
+            cursor: pointer;
+            padding: 12px 16px;
+            background-color: var(--paper);
+            border: 1px solid var(--line);
+            border-radius: var(--radius-sm);
+            margin-bottom: 10px;
+            user-select: none;
+            transition: background-color 0.2s ease, border-color 0.2s ease;
         }
-        
-        .factor-name {
-            color: #495057;
-            font-size: 0.9rem;
+
+        .toggle-section:hover {
+            background-color: var(--steel-tint);
+            border-color: var(--steel);
         }
-        
-        .factor-value {
-            font-weight: 600;
-            color: #2c3e50;
-            min-width: 60px;
-            text-align: right;
+
+        .toggle-icon {
+            color: var(--steel);
+            transition: transform 0.3s ease;
         }
-        
-        .total-factor {
-            background-color: #20c997;
-            color: white;
-            padding: 8px 12px;
-            border-radius: 4px;
-            font-weight: bold;
+
+        .toggle-section.collapsed .toggle-icon {
+            transform: rotate(180deg);
+        }
+
+        .toggle-content {
+            max-height: 1000px;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .toggle-content.collapsed {
+            max-height: 0;
+        }
+
+        /* ---------- Footer ---------- */
+        footer {
             text-align: center;
-            margin-top: 10px;
+            margin-top: 40px;
+            padding: 24px 16px;
+            color: var(--text-muted);
+            font-size: 0.85rem;
+            border-top: 1px solid var(--line);
         }
-        
-        .gearbox-service-factors {
-            background-color: #e3f2fd;
-            border-radius: 8px;
-            padding: 15px;
-            margin-top: 15px;
-            border-left: 4px solid #1976d2;
+
+        /* ---------- Scrollbars ---------- */
+        .gear-list::-webkit-scrollbar,
+        .modal-content::-webkit-scrollbar {
+            width: 8px;
         }
-        
+
+        .gear-list::-webkit-scrollbar-thumb,
+        .modal-content::-webkit-scrollbar-thumb {
+            background: var(--line-strong);
+            border-radius: 999px;
+        }
+
+        /* ---------- Responsive ---------- */
         @media (max-width: 1200px) {
             .two-column {
-                flex-direction: column;
-            }
-            
-            .gear-config, .shaft-config, .material-props, .service-factor-grid {
                 grid-template-columns: 1fr;
+            }
+
+            .gear-config,
+            .material-props,
+            .service-factor-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .shaft-config {
+                grid-template-columns: repeat(2, 1fr);
             }
 
             .shaft-panel-header {
@@ -689,252 +1249,79 @@
                 align-items: flex-start;
             }
         }
-        
+
         @media (max-width: 768px) {
+            header {
+                padding-top: 84px;
+            }
+
+            .language-selector,
+            .unit-selector {
+                top: 16px;
+            }
+
+            .unit-selector { left: 14px; }
+            .language-selector { right: 14px; }
+
             .tabs {
-                flex-direction: column;
+                justify-content: flex-start;
             }
-            
-            header h1 {
-                font-size: 2.2rem;
+
+            .tab {
+                flex: 0 0 auto;
+                padding: 12px 18px;
             }
-            
+
             .results-grid {
                 grid-template-columns: repeat(2, 1fr);
             }
-            
-            .language-selector {
-                position: relative;
-                top: 0;
-                right: 0;
-                justify-content: center;
-                margin-bottom: 15px;
+
+            .shaft-config {
+                grid-template-columns: 1fr;
             }
 
-            .unit-selector {
-                position: relative;
-                top: 0;
-                left: 0;
-                justify-content: center;
-                margin-bottom: 15px;
+            .gear-visualization {
+                height: 320px;
+            }
+
+            .buttons button {
+                flex: 1 1 100%;
             }
         }
-        
-        .gear-stage {
-            background-color: #f0f7ff;
-            border-radius: 8px;
-            padding: 15px;
-            margin-bottom: 20px;
-            border-left: 4px solid #4a6491;
+
+        @media (max-width: 480px) {
+            .results-grid,
+            .stress-results {
+                grid-template-columns: 1fr;
+            }
+
+            .gear-item {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .gear-actions {
+                justify-content: flex-end;
+            }
+
+            header h1 {
+                font-size: 1.35rem;
+            }
         }
-        
-        .stage-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 10px;
+
+        @media (prefers-reduced-motion: reduce) {
+            *,
+            *::before,
+            *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+
+            html {
+                scroll-behavior: auto;
+            }
         }
-        
-        .stage-title {
-            font-weight: 600;
-            color: #2c3e50;
-            font-size: 1.1rem;
-        }
-        
-        .stage-ratio {
-            background-color: #4a6491;
-            color: white;
-            padding: 4px 10px;
-            border-radius: 4px;
-            font-size: 0.9rem;
-        }
-        
-        .gear-pair {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            padding: 15px 0;
-        }
-        
-        .gear-pair-item {
-            text-align: center;
-            flex: 1;
-        }
-        
-        .gear-icon {
-            font-size: 40px;
-            color: #4a6491;
-            margin-bottom: 10px;
-        }
-        
-        .shaft-diagram {
-            position: relative;
-            width: 100%;
-            height: 100%;
-        }
-        
-        .loading {
-            text-align: center;
-            padding: 20px;
-            color: #64748b;
-        }
-        
-        .warning {
-            background-color: #fff3cd;
-            border: 1px solid #ffc107;
-            color: #856404;
-            padding: 12px;
-            border-radius: 6px;
-            margin: 15px 0;
-        }
-        
-        .success {
-            background-color: #d4edda;
-            border: 1px solid #c3e6cb;
-            color: #155724;
-            padding: 12px;
-            border-radius: 6px;
-            margin: 15px 0;
-        }
-        
-        .material-selector {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin-bottom: 15px;
-        }
-        
-        .material-option {
-            flex: 1;
-            min-width: 120px;
-            padding: 12px;
-            text-align: center;
-            border: 2px solid #e2e8f0;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        
-        .material-option:hover {
-            border-color: #4a6491;
-            background-color: #f8fafc;
-        }
-        
-        .material-option.active {
-            border-color: #4a6491;
-            background-color: #4a6491;
-            color: white;
-        }
-        
-        .custom-material-btn {
-            background-color: #f1f5f9;
-            border: 2px dashed #cbd5e1;
-            color: #64748b;
-        }
-        
-        .custom-material-btn:hover {
-            border-color: #94a3b8;
-            background-color: #e2e8f0;
-        }
-        
-        .custom-material-section {
-            background-color: #f8fafc;
-            border-radius: 8px;
-            padding: 20px;
-            margin-top: 20px;
-            border: 1px dashed #cbd5e1;
-        }
-        
-        .stress-results {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 15px;
-            margin-top: 20px;
-        }
-        
-        .stress-item {
-            background-color: #f8fafc;
-            border-radius: 6px;
-            padding: 15px;
-            text-align: center;
-        }
-        
-        .stress-label {
-            font-size: 0.9rem;
-            color: #64748b;
-            margin-bottom: 8px;
-        }
-        
-        .stress-value {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: #2c3e50;
-        }
-        
-        .stress-unit {
-            font-size: 0.9rem;
-            color: #64748b;
-            margin-left: 3px;
-        }
-        
-        .stress-bar {
-            height: 8px;
-            background-color: #e2e8f0;
-            border-radius: 4px;
-            margin-top: 10px;
-            overflow: hidden;
-        }
-        
-        .stress-fill {
-            height: 100%;
-            border-radius: 4px;
-            transition: width 0.5s ease;
-        }
-        
-        .safe {
-            background-color: #20c997;
-        }
-        
-        .warning-level {
-            background-color: #ffc107;
-        }
-        
-        .critical {
-            background-color: #dc3545;
-        }
-        
-        .toggle-section {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-            padding: 10px;
-            background-color: #f8fafc;
-            border-radius: 6px;
-            margin-bottom: 10px;
-        }
-        
-        .toggle-icon {
-            transition: transform 0.3s;
-        }
-        
-        .toggle-section.collapsed .toggle-icon {
-            transform: rotate(180deg);
-        }
-        
-        .toggle-content {
-            max-height: 1000px;
-            overflow: hidden;
-            transition: max-height 0.3s ease;
-        }
-        
-        .toggle-content.collapsed {
-            max-height: 0;
-        }
-        
-        .multilingual-icon {
-            margin-right: 5px;
-        }
+
     </style>
 </head>
 <body>
@@ -3735,81 +4122,478 @@ END-ISO-10303-21;
         }
         
         // Draw single gear visualization
-        function drawSingleGearVisualization(pitchDiameter, outerDiameter, teeth) {
-            singleGearCtx.clearRect(0, 0, singleGearCtx.canvas.width, singleGearCtx.canvas.height);
-            
-            const centerX = singleGearCtx.canvas.width / 2;
-            const centerY = singleGearCtx.canvas.height / 2;
-            
-            // Scale to fit canvas
-            const scale = Math.min(150 / outerDiameter, 2.0);
-            const pitchRadius = pitchDiameter / 2 * scale;
-            const outerRadius = outerDiameter / 2 * scale;
-            
-            // Draw gear body
-            singleGearCtx.beginPath();
-            singleGearCtx.arc(centerX, centerY, outerRadius, 0, Math.PI * 2);
-            singleGearCtx.fillStyle = '#e6f2ff';
-            singleGearCtx.fill();
-            singleGearCtx.strokeStyle = '#4a6491';
-            singleGearCtx.lineWidth = 2;
-            singleGearCtx.stroke();
-            
-            // Draw pitch circle
-            singleGearCtx.beginPath();
-            singleGearCtx.arc(centerX, centerY, pitchRadius, 0, Math.PI * 2);
-            singleGearCtx.strokeStyle = '#007bff';
-            singleGearCtx.lineWidth = 1.5;
-            singleGearCtx.setLineDash([5, 5]);
-            singleGearCtx.stroke();
-            singleGearCtx.setLineDash([]);
-            
-            // Draw teeth
-            const toothAngle = (2 * Math.PI) / teeth;
-            const toothHeight = (outerRadius - pitchRadius) * 1.2;
-            const toothWidth = (Math.PI * pitchRadius * 2) / teeth * 0.4;
-            
-            for (let i = 0; i < teeth; i++) {
-                const angle = i * toothAngle;
-                const toothX = centerX + pitchRadius * Math.cos(angle);
-                const toothY = centerY + pitchRadius * Math.sin(angle);
-                
-                singleGearCtx.save();
-                singleGearCtx.translate(toothX, toothY);
-                singleGearCtx.rotate(angle);
-                
-                singleGearCtx.beginPath();
-                singleGearCtx.moveTo(-toothWidth/2, 0);
-                singleGearCtx.lineTo(-toothWidth/3, -toothHeight);
-                singleGearCtx.lineTo(toothWidth/3, -toothHeight);
-                singleGearCtx.lineTo(toothWidth/2, 0);
-                singleGearCtx.closePath();
-                
-                singleGearCtx.fillStyle = '#4a6491';
-                singleGearCtx.fill();
-                singleGearCtx.strokeStyle = '#2c3e50';
-                singleGearCtx.lineWidth = 1;
-                singleGearCtx.stroke();
-                
-                singleGearCtx.restore();
-            }
-            
-            // Draw center hole
-            singleGearCtx.beginPath();
-            singleGearCtx.arc(centerX, centerY, outerRadius * 0.2, 0, Math.PI * 2);
-            singleGearCtx.fillStyle = '#f8fafc';
-            singleGearCtx.fill();
-            singleGearCtx.strokeStyle = '#4a6491';
-            singleGearCtx.lineWidth = 2;
-            singleGearCtx.stroke();
-            
-            // Draw gear info
-            singleGearCtx.fillStyle = '#2c3e50';
-            singleGearCtx.font = 'bold 16px Arial';
-            singleGearCtx.textAlign = 'center';
-            singleGearCtx.fillText(`${teeth} ${currentLanguage === 'en' ? 'Tooth Gear' : 'Zahn Zahnrad'}`, centerX, 30);
+        // ======================================================================
+        //  Gear rendering engine — technical-drawing style with smooth animation
+        // ======================================================================
+
+        const GEAR_THEME = {
+            ink: '#1b2430',
+            steel: '#2e5c8a',
+            steelDeep: '#234a72',
+            accent: '#e8722c',
+            muted: '#5b6b7c',
+            line: '#c6cfda',
+            metal: ['#f6f9fc', '#dde6ef', '#b7c6d6', '#94a9bf'],
+            metalDark: ['#e9eff6', '#c9d6e3', '#9fb3c7', '#7e96ad'],
+            fontTitle: '600 14px "Space Grotesk", "Segoe UI", sans-serif',
+            fontLabel: '600 12px "Space Grotesk", "Segoe UI", sans-serif',
+            fontMono: '600 12px "JetBrains Mono", Consolas, monospace',
+            fontMonoSmall: '500 11px "JetBrains Mono", Consolas, monospace'
+        };
+
+        const gearAnim = {
+            angle: 0,
+            last: null,
+            single: null,   // latest single-gear params
+            reduced: window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches
+        };
+
+        if (window.matchMedia) {
+            try {
+                window.matchMedia('(prefers-reduced-motion: reduce)').addEventListener('change', e => {
+                    gearAnim.reduced = e.matches;
+                });
+            } catch (e) { /* older browsers */ }
         }
-        
+
+        // Resize the canvas backing store to its CSS size × devicePixelRatio
+        // so lines stay crisp on HiDPI screens. Returns the CSS-pixel size.
+        function prepCanvas(ctx) {
+            const c = ctx.canvas;
+            const rect = c.getBoundingClientRect();
+            if (rect.width < 2 || rect.height < 2) return null; // hidden tab
+            const dpr = window.devicePixelRatio || 1;
+            const w = Math.round(rect.width);
+            const h = Math.round(rect.height);
+            if (c.width !== Math.round(w * dpr) || c.height !== Math.round(h * dpr)) {
+                c.width = Math.round(w * dpr);
+                c.height = Math.round(h * dpr);
+            }
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+            ctx.clearRect(0, 0, w, h);
+            return { w, h };
+        }
+
+        // Trace a closed gear silhouette with curved (involute-like) flanks.
+        function traceGearOutline(ctx, cx, cy, teeth, tipR, pitchR, rootR, rotation) {
+            const step = (Math.PI * 2) / teeth;
+            const halfTip = step * 0.16;
+            const halfPitch = step * 0.25;
+            const halfRoot = step * 0.34;
+            const pt = (r, a) => [cx + r * Math.cos(a), cy + r * Math.sin(a)];
+
+            ctx.beginPath();
+            const start = pt(rootR, rotation - step + halfRoot);
+            ctx.moveTo(start[0], start[1]);
+
+            for (let i = 0; i < teeth; i++) {
+                const a = rotation + i * step;
+                // Root land between the previous tooth and this one
+                ctx.arc(cx, cy, rootR, a - step + halfRoot, a - halfRoot);
+                // Rising flank (curved through the pitch point)
+                let c1 = pt(pitchR * 0.985, a - halfPitch);
+                let tp = pt(tipR, a - halfTip);
+                ctx.quadraticCurveTo(c1[0], c1[1], tp[0], tp[1]);
+                // Tip land
+                ctx.arc(cx, cy, tipR, a - halfTip, a + halfTip);
+                // Falling flank
+                let c2 = pt(pitchR * 0.985, a + halfPitch);
+                let rt = pt(rootR, a + halfRoot);
+                ctx.quadraticCurveTo(c2[0], c2[1], rt[0], rt[1]);
+            }
+            ctx.closePath();
+        }
+
+        function metalGradient(ctx, cx, cy, r, stops) {
+            const g = ctx.createRadialGradient(cx - r * 0.35, cy - r * 0.4, r * 0.1, cx, cy, r * 1.15);
+            g.addColorStop(0, stops[0]);
+            g.addColorStop(0.45, stops[1]);
+            g.addColorStop(0.8, stops[2]);
+            g.addColorStop(1, stops[3]);
+            return g;
+        }
+
+        // Draw one complete gear: machined body, hub, bore + keyway,
+        // optional lightening holes, and a chain-dashed pitch circle.
+        function drawGear(ctx, cx, cy, opts) {
+            const { teeth, tipR, pitchR, rotation } = opts;
+            const rootR = opts.rootR || Math.max(pitchR - (tipR - pitchR) * 1.25, tipR * 0.6);
+            const palette = opts.dark ? GEAR_THEME.metalDark : GEAR_THEME.metal;
+
+            ctx.save();
+
+            // Soft drop shadow grounds the part on the grid
+            ctx.save();
+            ctx.shadowColor = 'rgba(27, 36, 48, 0.18)';
+            ctx.shadowBlur = tipR * 0.18;
+            ctx.shadowOffsetY = tipR * 0.05;
+            traceGearOutline(ctx, cx, cy, teeth, tipR, pitchR, rootR, rotation);
+            ctx.fillStyle = metalGradient(ctx, cx, cy, tipR, palette);
+            ctx.fill();
+            ctx.restore();
+
+            // Outline
+            traceGearOutline(ctx, cx, cy, teeth, tipR, pitchR, rootR, rotation);
+            ctx.strokeStyle = GEAR_THEME.steelDeep;
+            ctx.lineWidth = 1.5;
+            ctx.lineJoin = 'round';
+            ctx.stroke();
+
+            // Machined rim ring just inside the root circle
+            ctx.beginPath();
+            ctx.arc(cx, cy, rootR * 0.9, 0, Math.PI * 2);
+            ctx.strokeStyle = 'rgba(35, 74, 114, 0.35)';
+            ctx.lineWidth = 1;
+            ctx.stroke();
+
+            // Lightening holes (rotate with the gear — makes motion readable)
+            const hubR = Math.max(tipR * 0.3, 10);
+            if (opts.holes !== false && rootR * 0.9 - hubR > tipR * 0.24) {
+                const n = teeth >= 36 ? 6 : 5;
+                const holeOrbit = (rootR * 0.9 + hubR) / 2;
+                const holeR = Math.min((rootR * 0.9 - hubR) * 0.32, tipR * 0.13);
+                for (let i = 0; i < n; i++) {
+                    const a = rotation + (i + 0.5) * (Math.PI * 2 / n);
+                    const hx = cx + holeOrbit * Math.cos(a);
+                    const hy = cy + holeOrbit * Math.sin(a);
+                    ctx.beginPath();
+                    ctx.arc(hx, hy, holeR, 0, Math.PI * 2);
+                    ctx.fillStyle = 'rgba(255, 255, 255, 0.75)';
+                    ctx.fill();
+                    ctx.strokeStyle = 'rgba(35, 74, 114, 0.4)';
+                    ctx.lineWidth = 1;
+                    ctx.stroke();
+                }
+            }
+
+            // Hub
+            ctx.beginPath();
+            ctx.arc(cx, cy, hubR, 0, Math.PI * 2);
+            ctx.fillStyle = metalGradient(ctx, cx, cy, hubR, palette);
+            ctx.fill();
+            ctx.strokeStyle = GEAR_THEME.steelDeep;
+            ctx.lineWidth = 1.25;
+            ctx.stroke();
+
+            // Bore with keyway, rotating with the gear
+            const boreR = hubR * 0.52;
+            const keyW = boreR * 0.5;
+            const keyH = boreR * 0.34;
+            ctx.save();
+            ctx.translate(cx, cy);
+            ctx.rotate(rotation);
+            ctx.beginPath();
+            ctx.arc(0, 0, boreR, 0, Math.PI * 2);
+            ctx.rect(-keyW / 2, -boreR - keyH, keyW, keyH + boreR * 0.15);
+            ctx.fillStyle = '#fbfcfe';
+            ctx.fill('evenodd');
+            ctx.beginPath();
+            ctx.arc(0, 0, boreR, 0, Math.PI * 2);
+            ctx.moveTo(-keyW / 2, -boreR * 0.985);
+            ctx.lineTo(-keyW / 2, -boreR - keyH);
+            ctx.lineTo(keyW / 2, -boreR - keyH);
+            ctx.lineTo(keyW / 2, -boreR * 0.985);
+            ctx.strokeStyle = GEAR_THEME.steelDeep;
+            ctx.lineWidth = 1.25;
+            ctx.stroke();
+            ctx.restore();
+
+            // Pitch circle — chain (centerline) style, as on a drawing
+            if (opts.pitchCircle !== false) {
+                ctx.beginPath();
+                ctx.arc(cx, cy, pitchR, 0, Math.PI * 2);
+                ctx.setLineDash([9, 4, 2, 4]);
+                ctx.strokeStyle = GEAR_THEME.accent;
+                ctx.lineWidth = 1;
+                ctx.globalAlpha = 0.9;
+                ctx.stroke();
+                ctx.setLineDash([]);
+                ctx.globalAlpha = 1;
+            }
+
+            // Center mark (does not rotate — fixed datum)
+            if (opts.centerMark !== false) {
+                const m = Math.min(hubR * 0.4, 9);
+                ctx.beginPath();
+                ctx.moveTo(cx - m, cy);
+                ctx.lineTo(cx + m, cy);
+                ctx.moveTo(cx, cy - m);
+                ctx.lineTo(cx, cy + m);
+                ctx.strokeStyle = GEAR_THEME.ink;
+                ctx.lineWidth = 1;
+                ctx.stroke();
+            }
+
+            ctx.restore();
+        }
+
+        // Rounded-rect label chip (ratio badges, callouts)
+        function drawChip(ctx, x, y, text, fill, color) {
+            ctx.save();
+            ctx.font = GEAR_THEME.fontMonoSmall;
+            const padX = 8, padY = 5;
+            const tw = ctx.measureText(text).width;
+            const w = tw + padX * 2, h = 20;
+            const rx = x - w / 2, ry = y - h / 2, r = h / 2;
+            ctx.beginPath();
+            ctx.moveTo(rx + r, ry);
+            ctx.arcTo(rx + w, ry, rx + w, ry + h, r);
+            ctx.arcTo(rx + w, ry + h, rx, ry + h, r);
+            ctx.arcTo(rx, ry + h, rx, ry, r);
+            ctx.arcTo(rx, ry, rx + w, ry, r);
+            ctx.closePath();
+            ctx.fillStyle = fill;
+            ctx.fill();
+            ctx.fillStyle = color;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(text, x, y + 0.5);
+            ctx.restore();
+        }
+
+        function drawArrow(ctx, fromX, fromY, toX, toY, color) {
+            const col = color || GEAR_THEME.accent;
+            const headlen = 9;
+            const angle = Math.atan2(toY - fromY, toX - fromX);
+            ctx.save();
+            ctx.beginPath();
+            ctx.moveTo(fromX, fromY);
+            ctx.lineTo(toX - headlen * 0.6 * Math.cos(angle), toY - headlen * 0.6 * Math.sin(angle));
+            ctx.strokeStyle = col;
+            ctx.lineWidth = 2.5;
+            ctx.lineCap = 'round';
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.moveTo(toX, toY);
+            ctx.lineTo(toX - headlen * Math.cos(angle - Math.PI / 6), toY - headlen * Math.sin(angle - Math.PI / 6));
+            ctx.lineTo(toX - headlen * Math.cos(angle + Math.PI / 6), toY - headlen * Math.sin(angle + Math.PI / 6));
+            ctx.closePath();
+            ctx.fillStyle = col;
+            ctx.fill();
+            ctx.restore();
+        }
+
+        // ---------------------------------------------------------------------
+        //  Single gear view
+        // ---------------------------------------------------------------------
+
+        function drawSingleGearVisualization(pitchDiameter, outerDiameter, teeth) {
+            let rpm = 0;
+            const rpmField = document.getElementById('rpm');
+            if (rpmField) rpm = parseFloat(rpmField.value) || 0;
+            gearAnim.single = { pitchDiameter, outerDiameter, teeth, rpm };
+            renderSingleGearFrame();
+        }
+
+        function renderSingleGearFrame() {
+            const p = gearAnim.single;
+            if (!p) return;
+            const size = prepCanvas(singleGearCtx);
+            if (!size) return;
+            const ctx = singleGearCtx;
+            const cx = size.w / 2;
+            const cy = size.h / 2 + 8;
+
+            const maxR = Math.min(size.w, size.h) / 2 - 46;
+            const scale = (maxR * 2) / p.outerDiameter;
+            const tipR = (p.outerDiameter / 2) * scale;
+            const pitchR = (p.pitchDiameter / 2) * scale;
+            const module = (p.outerDiameter - p.pitchDiameter) / 2; // addendum = m
+            const rootR = Math.max((p.pitchDiameter / 2 - 1.25 * module) * scale, tipR * 0.55);
+
+            drawGear(ctx, cx, cy, {
+                teeth: p.teeth,
+                tipR: tipR,
+                pitchR: pitchR,
+                rootR: rootR,
+                rotation: gearAnim.angle
+            });
+
+            // Pitch-diameter dimension callout (leader line to the pitch circle)
+            const aLeader = -Math.PI / 4;
+            const lx1 = cx + pitchR * Math.cos(aLeader);
+            const ly1 = cy + pitchR * Math.sin(aLeader);
+            const lx2 = cx + (tipR + 16) * Math.cos(aLeader);
+            const ly2 = cy + (tipR + 16) * Math.sin(aLeader);
+            ctx.save();
+            ctx.beginPath();
+            ctx.moveTo(lx1, ly1);
+            ctx.lineTo(lx2, ly2);
+            ctx.lineTo(lx2 + 14, ly2);
+            ctx.strokeStyle = GEAR_THEME.muted;
+            ctx.lineWidth = 1;
+            ctx.stroke();
+            ctx.beginPath();
+            ctx.arc(lx1, ly1, 2, 0, Math.PI * 2);
+            ctx.fillStyle = GEAR_THEME.accent;
+            ctx.fill();
+            ctx.font = GEAR_THEME.fontMonoSmall;
+            ctx.fillStyle = GEAR_THEME.ink;
+            ctx.textAlign = 'left';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('Ø ' + formatValue(p.pitchDiameter, 'length', 1) + ' ' + getUnitLabel('length'), lx2 + 18, ly2);
+            ctx.restore();
+
+            // Title and spec line
+            ctx.save();
+            ctx.textAlign = 'center';
+            ctx.font = GEAR_THEME.fontTitle;
+            ctx.fillStyle = GEAR_THEME.ink;
+            ctx.fillText(
+                currentLanguage === 'en' ? 'Gear profile' : 'Zahnradprofil',
+                cx, 22
+            );
+            ctx.font = GEAR_THEME.fontMonoSmall;
+            ctx.fillStyle = GEAR_THEME.muted;
+            ctx.fillText('z = ' + p.teeth + '   ·   ' + (currentLanguage === 'en' ? 'pitch circle' : 'Teilkreis') + ' – · –', cx, 40);
+            ctx.restore();
+        }
+
+        // ---------------------------------------------------------------------
+        //  Gearbox view — meshing gear train, ratio-correct counter-rotation
+        // ---------------------------------------------------------------------
+
+        function drawGearbox() {
+            const size = prepCanvas(gearboxCtx);
+            if (!size) return;
+            if (gearStages.length === 0) return;
+            const ctx = gearboxCtx;
+            const cy = size.h / 2 + 6;
+
+            // Layout the stages across the available width
+            const margin = 86;
+            const n = gearStages.length;
+            const spacing = n > 1
+                ? Math.min(200, Math.max(120, (size.w - margin * 2) / n))
+                : 0;
+            const startX = size.w / 2 - ((n - 1) * spacing) / 2;
+
+            // Angular speed cascades down the train
+            let omega = 1; // visual base speed of the input pinion
+
+            gearStages.forEach((stage, index) => {
+                const stageX = startX + index * spacing - (n > 1 ? 30 : 40);
+
+                const pd1 = stage.module * stage.gear1Teeth;
+                const pd2 = stage.module * stage.gear2Teeth;
+                const scale = Math.min(46 / Math.max(pd1, pd2), 0.85);
+
+                const pr1 = (pd1 / 2) * scale;
+                const pr2 = (pd2 / 2) * scale;
+                const m = (stage.module / 2) * scale * 2; // scaled module
+                const tip1 = pr1 + m, root1 = Math.max(pr1 - 1.25 * m, pr1 * 0.6);
+                const tip2 = pr2 + m, root2 = Math.max(pr2 - 1.25 * m, pr2 * 0.6);
+                const g2x = stageX + pr1 + pr2;
+
+                // Meshing rotation: counter-rotate at the tooth ratio,
+                // with a half-pitch phase shift so teeth interleave.
+                const a1 = gearAnim.angle * omega;
+                const a2 = -a1 * (stage.gear1Teeth / stage.gear2Teeth)
+                    + Math.PI / stage.gear2Teeth
+                    + Math.PI * (1 - stage.gear1Teeth / stage.gear2Teeth);
+
+                // Shaft centerline through both gears
+                ctx.save();
+                ctx.beginPath();
+                ctx.moveTo(stageX - tip1 - 14, cy);
+                ctx.lineTo(g2x + tip2 + 14, cy);
+                ctx.setLineDash([9, 4, 2, 4]);
+                ctx.strokeStyle = 'rgba(91, 107, 124, 0.55)';
+                ctx.lineWidth = 1;
+                ctx.stroke();
+                ctx.restore();
+
+                drawGear(ctx, stageX, cy, {
+                    teeth: stage.gear1Teeth, tipR: tip1, pitchR: pr1, rootR: root1,
+                    rotation: a1, holes: false, centerMark: false
+                });
+                drawGear(ctx, g2x, cy, {
+                    teeth: stage.gear2Teeth, tipR: tip2, pitchR: pr2, rootR: root2,
+                    rotation: a2, dark: true, centerMark: false
+                });
+
+                // Stage label and ratio chip
+                const midX = stageX + (pr1 + pr2) / 2;
+                const topY = cy - Math.max(tip1, tip2);
+                ctx.save();
+                ctx.font = GEAR_THEME.fontLabel;
+                ctx.fillStyle = GEAR_THEME.ink;
+                ctx.textAlign = 'center';
+                ctx.fillText(translations[currentLanguage]["gearbox.stage"] + ' ' + stage.number, midX, topY - 26);
+                ctx.restore();
+                drawChip(ctx, midX, cy + Math.max(tip1, tip2) + 20, stage.actualRatio.toFixed(2) + ':1', GEAR_THEME.ink, '#ffffff');
+
+                omega = omega / stage.actualRatio;
+            });
+
+            // Input / output flow
+            const firstX = startX - (n > 1 ? 30 : 40);
+            const lastStage = gearStages[n - 1];
+            const lastScale = Math.min(46 / Math.max(lastStage.module * lastStage.gear1Teeth, lastStage.module * lastStage.gear2Teeth), 0.85);
+            const lastPr1 = (lastStage.module * lastStage.gear1Teeth / 2) * lastScale;
+            const lastPr2 = (lastStage.module * lastStage.gear2Teeth / 2) * lastScale;
+            const lastX = startX + (n - 1) * spacing - (n > 1 ? 30 : 40) + lastPr1 + lastPr2;
+
+            ctx.save();
+            ctx.font = GEAR_THEME.fontLabel;
+            ctx.textAlign = 'center';
+            ctx.fillStyle = GEAR_THEME.accent;
+            ctx.fillText(currentLanguage === 'en' ? 'Input' : 'Eingang', firstX - 56, cy - 14);
+            drawArrow(ctx, firstX - 80, cy, firstX - 34, cy);
+            ctx.fillStyle = GEAR_THEME.steel;
+            ctx.fillText(currentLanguage === 'en' ? 'Output' : 'Ausgang', lastX + 58, cy - 14);
+            drawArrow(ctx, lastX + 34, cy, lastX + 80, cy, GEAR_THEME.steel);
+            ctx.restore();
+
+            // Service factor footer
+            const gearboxServiceFactor = calculateGearboxServiceFactor();
+            drawChip(
+                ctx, size.w / 2, size.h - 18,
+                (currentLanguage === 'en' ? 'Service factor ' : 'Betriebsfaktor ') + gearboxServiceFactor.toFixed(2),
+                'rgba(46, 92, 138, 0.1)', GEAR_THEME.steelDeep
+            );
+        }
+
+        // ---------------------------------------------------------------------
+        //  Animation loop — runs only for the visible tab, pauses when the
+        //  page is hidden, and respects prefers-reduced-motion.
+        // ---------------------------------------------------------------------
+
+        function gearAnimLoop(ts) {
+            requestAnimationFrame(gearAnimLoop);
+            if (document.hidden) { gearAnim.last = ts; return; }
+
+            const dt = gearAnim.last == null ? 0 : Math.min((ts - gearAnim.last) / 1000, 0.05);
+            gearAnim.last = ts;
+
+            if (!gearAnim.reduced) {
+                // Gentle visual speed, loosely tied to the entered input speed
+                const rpm = gearAnim.single ? gearAnim.single.rpm : 1200;
+                const speed = 0.25 + Math.min(Math.abs(rpm), 3000) / 3000 * 0.75; // rad/s
+                gearAnim.angle += dt * speed;
+            }
+
+            const singleTab = document.getElementById('single-gear');
+            const gearboxTab = document.getElementById('gearbox');
+            if (singleTab && singleTab.classList.contains('active') && gearAnim.single) {
+                renderSingleGearFrame();
+            }
+            if (gearboxTab && gearboxTab.classList.contains('active') && gearStages.length > 0) {
+                drawGearbox();
+            }
+            const shaftTab = document.getElementById('shaft');
+            if (shaftTab && shaftTab.classList.contains('active')) {
+                drawShaft();
+            }
+        }
+        requestAnimationFrame(gearAnimLoop);
+        if (document.fonts && document.fonts.ready) {
+            document.fonts.ready.then(() => {
+                renderSingleGearFrame();
+                drawGearbox();
+            });
+        }
+
         // Gearbox calculations with service factor
         function calculateGearbox() {
             const inputRPM = getInputValue('input-rpm', 'rpm');
@@ -3921,144 +4705,6 @@ END-ISO-10303-21;
                 
                 stageDetails.appendChild(stageDiv);
             });
-        }
-        
-        // Draw gearbox visualization
-        function drawGearbox() {
-            gearboxCtx.clearRect(0, 0, gearboxCtx.canvas.width, gearboxCtx.canvas.height);
-            
-            const centerX = gearboxCtx.canvas.width / 2;
-            const centerY = gearboxCtx.canvas.height / 2;
-            
-            if (gearStages.length === 0) return;
-            
-            // Draw multiple stages
-            const stageSpacing = 150;
-            const startX = centerX - ((gearStages.length - 1) * stageSpacing) / 2;
-            
-            gearStages.forEach((stage, index) => {
-                const stageX = startX + index * stageSpacing;
-                
-                const pitchDiameter1 = stage.module * stage.gear1Teeth;
-                const pitchDiameter2 = stage.module * stage.gear2Teeth;
-                const scale = Math.min(40 / Math.max(pitchDiameter1, pitchDiameter2), 0.8);
-                
-                const radius1 = (pitchDiameter1 / 2) * scale;
-                const radius2 = (pitchDiameter2 / 2) * scale;
-                
-                // Draw shaft line
-                gearboxCtx.beginPath();
-                gearboxCtx.moveTo(stageX - radius1 - 20, centerY);
-                gearboxCtx.lineTo(stageX + radius2 + 20, centerY);
-                gearboxCtx.strokeStyle = '#94a3b8';
-                gearboxCtx.lineWidth = 3;
-                gearboxCtx.stroke();
-                
-                // Draw gear 1 (pinion)
-                gearboxCtx.beginPath();
-                gearboxCtx.arc(stageX, centerY, radius1, 0, Math.PI * 2);
-                gearboxCtx.fillStyle = '#e6f2ff';
-                gearboxCtx.fill();
-                gearboxCtx.strokeStyle = '#4a6491';
-                gearboxCtx.lineWidth = 2;
-                gearboxCtx.stroke();
-                
-                // Draw gear teeth for gear 1
-                drawGearTeeth(gearboxCtx, stageX, centerY, radius1, stage.gear1Teeth, '#4a6491');
-                
-                // Draw gear 2
-                gearboxCtx.beginPath();
-                gearboxCtx.arc(stageX + radius1 + radius2, centerY, radius2, 0, Math.PI * 2);
-                gearboxCtx.fillStyle = '#f0f7ff';
-                gearboxCtx.fill();
-                gearboxCtx.strokeStyle = '#3a547a';
-                gearboxCtx.lineWidth = 2;
-                gearboxCtx.stroke();
-                
-                // Draw gear teeth for gear 2
-                drawGearTeeth(gearboxCtx, stageX + radius1 + radius2, centerY, radius2, stage.gear2Teeth, '#3a547a');
-                
-                // Draw stage label
-                gearboxCtx.fillStyle = '#2c3e50';
-                gearboxCtx.font = 'bold 14px Arial';
-                gearboxCtx.textAlign = 'center';
-                gearboxCtx.fillText(`${translations[currentLanguage]["gearbox.stage"]} ${stage.number}`, stageX + (radius1 + radius2)/2, centerY - radius2 - 20);
-                
-                // Draw ratio
-                gearboxCtx.font = '12px Arial';
-                gearboxCtx.fillText(`${stage.actualRatio.toFixed(2)}:1`, stageX + (radius1 + radius2)/2, centerY + radius2 + 25);
-            });
-            
-            // Draw input/output arrows
-            gearboxCtx.fillStyle = '#4a6491';
-            gearboxCtx.font = 'bold 16px Arial';
-            gearboxCtx.textAlign = 'center';
-            
-            // Input arrow and label
-            const firstStageX = startX;
-            gearboxCtx.fillText(currentLanguage === 'en' ? 'Input' : 'Eingang', firstStageX - 100, centerY - 40);
-            drawArrow(gearboxCtx, firstStageX - 120, centerY, firstStageX - 70, centerY);
-            
-            // Output arrow and label
-            const lastStageX = startX + (gearStages.length - 1) * stageSpacing;
-            gearboxCtx.fillText(currentLanguage === 'en' ? 'Output' : 'Ausgang', lastStageX + 100, centerY - 40);
-            drawArrow(gearboxCtx, lastStageX + 70, centerY, lastStageX + 120, centerY);
-            
-            // Draw service factor info
-            const gearboxServiceFactor = calculateGearboxServiceFactor();
-            gearboxCtx.fillStyle = '#1976d2';
-            gearboxCtx.font = 'bold 14px Arial';
-            gearboxCtx.fillText(`${currentLanguage === 'en' ? 'Service Factor' : 'Betriebsfaktor'}: ${gearboxServiceFactor.toFixed(2)}`, centerX, centerY + 150);
-        }
-        
-        // Draw gear teeth helper function
-        function drawGearTeeth(ctx, x, y, radius, teeth, color) {
-            const toothAngle = (2 * Math.PI) / teeth;
-            const toothHeight = radius * 0.2;
-            
-            for (let i = 0; i < teeth; i++) {
-                const angle = i * toothAngle;
-                const toothX = x + radius * Math.cos(angle);
-                const toothY = y + radius * Math.sin(angle);
-                
-                ctx.save();
-                ctx.translate(toothX, toothY);
-                ctx.rotate(angle);
-                
-                ctx.beginPath();
-                ctx.moveTo(0, 0);
-                ctx.lineTo(-toothHeight/2, -toothHeight);
-                ctx.lineTo(toothHeight/2, -toothHeight);
-                ctx.closePath();
-                
-                ctx.fillStyle = color;
-                ctx.fill();
-                
-                ctx.restore();
-            }
-        }
-        
-        // Draw arrow helper function
-        function drawArrow(ctx, fromX, fromY, toX, toY) {
-            const headlen = 10;
-            const dx = toX - fromX;
-            const dy = toY - fromY;
-            const angle = Math.atan2(dy, dx);
-            
-            ctx.beginPath();
-            ctx.moveTo(fromX, fromY);
-            ctx.lineTo(toX, toY);
-            ctx.strokeStyle = '#4a6491';
-            ctx.lineWidth = 2;
-            ctx.stroke();
-            
-            ctx.beginPath();
-            ctx.moveTo(toX, toY);
-            ctx.lineTo(toX - headlen * Math.cos(angle - Math.PI/6), toY - headlen * Math.sin(angle - Math.PI/6));
-            ctx.lineTo(toX - headlen * Math.cos(angle + Math.PI/6), toY - headlen * Math.sin(angle + Math.PI/6));
-            ctx.closePath();
-            ctx.fillStyle = '#4a6491';
-            ctx.fill();
         }
         
         // Shaft design calculations with material and service factors
@@ -4273,225 +4919,401 @@ END-ISO-10303-21;
                 </div>
             `;
             
-            // Apply translations to the new elements
-            switchLanguage(currentLanguage);
+            // Apply translations to the new elements only (calling the full
+            // switchLanguage here caused infinite recursion on the shaft tab:
+            // switchLanguage -> calculateShaft -> updateMaterialSummary -> switchLanguage)
+            materialSummary.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[currentLanguage] && translations[currentLanguage][key]) {
+                    el.textContent = translations[currentLanguage][key];
+                }
+            });
         }
         
         // Draw shaft visualization
         function drawShaft() {
-            shaftCtx.clearRect(0, 0, shaftCtx.canvas.width, shaftCtx.canvas.height);
-            
+            const size = prepCanvas(shaftCtx);
+            if (!size) return;
+            const ctx = shaftCtx;
+
             const shaftLength = getInputValue('shaft-length', 'length');
             const shaftDiameter = getInputValue('shaft-diameter', 'length');
+            const shaftTorque = getInputValue('shaft-torque', 'torque');
             const numBearings = parseInt(document.getElementById('num-bearings').value);
-            
-            // Scale to fit canvas
-            const scaleX = shaftCtx.canvas.width * 0.9 / shaftLength;
-            const scaleY = shaftCtx.canvas.height * 0.6 / shaftDiameter;
-            const scale = Math.min(scaleX, scaleY);
-            
-            const centerX = shaftCtx.canvas.width / 2;
-            const centerY = shaftCtx.canvas.height / 2;
-            
-            const displayLength = shaftLength * scale;
-            const displayDiameter = shaftDiameter * scale;
-            
-            // Draw shaft with taper
             const taper = parseFloat(document.getElementById('shaft-taper').value);
-            const taperOffset = displayLength * taper;
-            
-            shaftCtx.beginPath();
-            shaftCtx.moveTo(centerX - displayLength/2, centerY - displayDiameter/2);
-            shaftCtx.lineTo(centerX + displayLength/2, centerY - displayDiameter/2 + taperOffset);
-            shaftCtx.lineTo(centerX + displayLength/2, centerY + displayDiameter/2 - taperOffset);
-            shaftCtx.lineTo(centerX - displayLength/2, centerY + displayDiameter/2);
-            shaftCtx.closePath();
-            
-            shaftCtx.fillStyle = '#cbd5e1';
-            shaftCtx.fill();
-            shaftCtx.strokeStyle = '#475569';
-            shaftCtx.lineWidth = 2;
-            shaftCtx.stroke();
-            
-            // Draw bearings
-            for (let i = 0; i < numBearings; i++) {
-                const bearingX = centerX - displayLength/2 + (i + 1) * displayLength / (numBearings + 1);
-                
-                // Draw bearing
-                shaftCtx.beginPath();
-                shaftCtx.arc(bearingX, centerY, displayDiameter * 0.8, 0, Math.PI * 2);
-                shaftCtx.fillStyle = '#f8fafc';
-                shaftCtx.fill();
-                shaftCtx.strokeStyle = '#4a6491';
-                shaftCtx.lineWidth = 2;
-                shaftCtx.stroke();
-                
-                // Draw bearing label
-                shaftCtx.fillStyle = '#2c3e50';
-                shaftCtx.font = '12px Arial';
-                shaftCtx.textAlign = 'center';
-                shaftCtx.fillText(currentLanguage === 'en' ? 'Bearing' : 'Lager', bearingX, centerY - displayDiameter);
-            }
-            
-            // Draw load points
+
             if (shaftLoads.length === 0) {
                 initializeSampleLoads();
             }
-            
-            shaftLoads.forEach((load, index) => {
-                const loadX = centerX - displayLength/2 + load.position * scale;
-                const loadY = centerY - displayDiameter * 1.5;
-                
-                // Draw load arrow
-                shaftCtx.beginPath();
-                shaftCtx.moveTo(loadX, loadY);
-                shaftCtx.lineTo(loadX, centerY - displayDiameter/2);
-                shaftCtx.strokeStyle = '#dc2626';
-                shaftCtx.lineWidth = 2;
-                shaftCtx.stroke();
-                
-                // Draw arrow head
-                shaftCtx.beginPath();
-                shaftCtx.moveTo(loadX, centerY - displayDiameter/2);
-                shaftCtx.lineTo(loadX - 5, centerY - displayDiameter/2 + 10);
-                shaftCtx.lineTo(loadX + 5, centerY - displayDiameter/2 + 10);
-                shaftCtx.closePath();
-                shaftCtx.fillStyle = '#dc2626';
-                shaftCtx.fill();
-                
-                // Draw load label
-                shaftCtx.fillStyle = '#dc2626';
-                shaftCtx.font = 'bold 12px Arial';
-                shaftCtx.textAlign = 'center';
-                shaftCtx.fillText(`${formatValue(load.radialLoad, 'force', 0)}${getUnitLabel('force')}`, loadX, loadY - 10);
+
+            // Layout: title block on top, dimension line at the bottom
+            const padTop = 84;
+            const padBottom = 52;
+            const padSide = 86;
+
+            const availW = size.w - padSide * 2;
+            const availH = size.h - padTop - padBottom;
+            const scale = Math.min(availW / shaftLength, (availH * 0.42) / shaftDiameter);
+
+            const dispL = shaftLength * scale;
+            const dispD = Math.max(shaftDiameter * scale, 14);
+            const cx = size.w / 2;
+            const cy = padTop + availH * 0.42;
+            const x0 = cx - dispL / 2;
+            const x1 = cx + dispL / 2;
+            const taperOffset = dispL * taper;
+
+            // --- Centerline (chain dash, extending past both ends) ---
+            ctx.save();
+            ctx.beginPath();
+            ctx.moveTo(x0 - 26, cy);
+            ctx.lineTo(x1 + 40, cy);
+            ctx.setLineDash([9, 4, 2, 4]);
+            ctx.strokeStyle = 'rgba(91, 107, 124, 0.55)';
+            ctx.lineWidth = 1;
+            ctx.stroke();
+            ctx.restore();
+
+            // --- Shaft body: machined cylinder with taper ---
+            const topL = cy - dispD / 2;
+            const botL = cy + dispD / 2;
+            const topR = cy - dispD / 2 + taperOffset;
+            const botR = cy + dispD / 2 - taperOffset;
+
+            const g = ctx.createLinearGradient(0, topL, 0, botL);
+            g.addColorStop(0, '#9fb3c7');
+            g.addColorStop(0.18, '#e9f0f6');
+            g.addColorStop(0.42, '#f8fbfd');
+            g.addColorStop(0.75, '#c2d0dd');
+            g.addColorStop(1, '#8aa0b6');
+
+            ctx.save();
+            ctx.shadowColor = 'rgba(27, 36, 48, 0.16)';
+            ctx.shadowBlur = 10;
+            ctx.shadowOffsetY = 4;
+            ctx.beginPath();
+            ctx.moveTo(x0, topL);
+            ctx.lineTo(x1, topR);
+            ctx.lineTo(x1, botR);
+            ctx.lineTo(x0, botL);
+            ctx.closePath();
+            ctx.fillStyle = g;
+            ctx.fill();
+            ctx.restore();
+
+            ctx.beginPath();
+            ctx.moveTo(x0, topL);
+            ctx.lineTo(x1, topR);
+            ctx.lineTo(x1, botR);
+            ctx.lineTo(x0, botL);
+            ctx.closePath();
+            ctx.strokeStyle = GEAR_THEME.steelDeep;
+            ctx.lineWidth = 1.5;
+            ctx.stroke();
+
+            // End faces
+            ctx.beginPath();
+            ctx.moveTo(x0, topL);
+            ctx.lineTo(x0, botL);
+            ctx.moveTo(x1, topR);
+            ctx.lineTo(x1, botR);
+            ctx.strokeStyle = 'rgba(35, 74, 114, 0.5)';
+            ctx.lineWidth = 1;
+            ctx.stroke();
+
+            // Interpolated surface y at a given x (accounts for taper)
+            const surfTop = x => topL + (topR - topL) * ((x - x0) / dispL);
+            const surfBot = x => botL + (botR - botL) * ((x - x0) / dispL);
+
+            // --- Bearings: rolling-bearing symbol (square with X) + ground hatch ---
+            const bSize = Math.max(dispD * 0.55, 13);
+            for (let i = 0; i < numBearings; i++) {
+                const bx = x0 + (i + 1) * dispL / (numBearings + 1);
+
+                [ surfTop(bx) - bSize, surfBot(bx) ].forEach((by, k) => {
+                    ctx.beginPath();
+                    ctx.rect(bx - bSize / 2, by, bSize, bSize);
+                    ctx.fillStyle = '#ffffff';
+                    ctx.fill();
+                    ctx.strokeStyle = GEAR_THEME.steel;
+                    ctx.lineWidth = 1.25;
+                    ctx.stroke();
+                    // X cross
+                    ctx.beginPath();
+                    ctx.moveTo(bx - bSize / 2, by);
+                    ctx.lineTo(bx + bSize / 2, by + bSize);
+                    ctx.moveTo(bx + bSize / 2, by);
+                    ctx.lineTo(bx - bSize / 2, by + bSize);
+                    ctx.stroke();
+
+                    // Ground hatching beneath the lower bearing
+                    if (k === 1) {
+                        const gy = by + bSize;
+                        ctx.beginPath();
+                        ctx.moveTo(bx - bSize * 0.8, gy);
+                        ctx.lineTo(bx + bSize * 0.8, gy);
+                        ctx.strokeStyle = GEAR_THEME.ink;
+                        ctx.lineWidth = 1.5;
+                        ctx.stroke();
+                        ctx.beginPath();
+                        for (let hxi = -3; hxi <= 3; hxi++) {
+                            const hx = bx + hxi * bSize * 0.22;
+                            ctx.moveTo(hx, gy);
+                            ctx.lineTo(hx - 5, gy + 6);
+                        }
+                        ctx.strokeStyle = GEAR_THEME.muted;
+                        ctx.lineWidth = 1;
+                        ctx.stroke();
+
+                        ctx.font = GEAR_THEME.fontMonoSmall;
+                        ctx.fillStyle = GEAR_THEME.muted;
+                        ctx.textAlign = 'center';
+                        ctx.textBaseline = 'alphabetic';
+                        ctx.fillText((currentLanguage === 'en' ? 'Bearing ' : 'Lager ') + String.fromCharCode(65 + i), bx, gy + 22);
+                    }
+                });
+            }
+
+            // --- Radial loads: arrows from above with force @ position chips ---
+            shaftLoads.forEach((load) => {
+                const lx = x0 + Math.min(Math.max(load.position * scale, 0), dispL);
+                const tipY = surfTop(lx);
+                const tailY = tipY - Math.max(dispD * 1.15, 34);
+
+                drawArrow(ctx, lx, tailY, lx, tipY - 1, '#cc3d3d');
+
+                // Application point
+                ctx.beginPath();
+                ctx.arc(lx, tipY, 2.5, 0, Math.PI * 2);
+                ctx.fillStyle = '#cc3d3d';
+                ctx.fill();
+
+                drawChip(
+                    ctx, lx, tailY - 12,
+                    formatValue(load.radialLoad, 'force', 0) + ' ' + getUnitLabel('force') +
+                    ' @ ' + formatValue(load.position, 'length', 0) + ' ' + getUnitLabel('length'),
+                    'rgba(204, 61, 61, 0.1)', '#a82f2f'
+                );
             });
-            
-            // Draw torque arrow
-            shaftCtx.beginPath();
-            shaftCtx.arc(centerX + displayLength/2 + 30, centerY, 15, 0, Math.PI * 2);
-            shaftCtx.strokeStyle = '#4a6491';
-            shaftCtx.lineWidth = 3;
-            shaftCtx.stroke();
-            
-            // Draw torque direction arrow
-            shaftCtx.beginPath();
-            shaftCtx.moveTo(centerX + displayLength/2 + 45, centerY);
-            shaftCtx.lineTo(centerX + displayLength/2 + 30, centerY - 10);
-            shaftCtx.lineTo(centerX + displayLength/2 + 30, centerY + 10);
-            shaftCtx.closePath();
-            shaftCtx.fillStyle = '#4a6491';
-            shaftCtx.fill();
-            
-            // Draw shaft info
-            shaftCtx.fillStyle = '#2c3e50';
-            shaftCtx.font = 'bold 16px Arial';
-            shaftCtx.textAlign = 'center';
-            shaftCtx.fillText(currentLanguage === 'en' ? 'Shaft Design' : 'Wellenauslegung', centerX, 30);
-            
+
+            // --- Torque: circular arrow at the input end, dash marches with rpm ---
+            const tR = Math.max(dispD * 0.85, 18);
+            const tX = x0 - 34;
+            ctx.save();
+            ctx.beginPath();
+            ctx.arc(tX, cy, tR, -Math.PI * 0.25, Math.PI * 1.05);
+            ctx.setLineDash([7, 5]);
+            ctx.lineDashOffset = -gearAnim.angle * 22;
+            ctx.strokeStyle = GEAR_THEME.accent;
+            ctx.lineWidth = 2.5;
+            ctx.lineCap = 'round';
+            ctx.stroke();
+            ctx.restore();
+            // Arrow head at the arc end
+            const ha = Math.PI * 1.05;
+            const hx = tX + tR * Math.cos(ha);
+            const hy = cy + tR * Math.sin(ha);
+            const tangent = ha + Math.PI / 2;
+            ctx.beginPath();
+            ctx.moveTo(hx + 7 * Math.cos(tangent), hy + 7 * Math.sin(tangent));
+            ctx.lineTo(hx + 6 * Math.cos(ha), hy + 6 * Math.sin(ha));
+            ctx.lineTo(hx - 6 * Math.cos(ha), hy - 6 * Math.sin(ha));
+            ctx.closePath();
+            ctx.fillStyle = GEAR_THEME.accent;
+            ctx.fill();
+
+            drawChip(
+                ctx, tX, cy + tR + 18,
+                'T = ' + formatValue(shaftTorque, 'torque', 1) + ' ' + getUnitLabel('torque'),
+                'rgba(232, 114, 44, 0.12)', '#b35112'
+            );
+
+            // --- Length dimension line ---
+            const dimY = size.h - 26;
+            ctx.save();
+            ctx.strokeStyle = GEAR_THEME.muted;
+            ctx.lineWidth = 1;
+            // Extension lines
+            ctx.beginPath();
+            ctx.moveTo(x0, botL + 6);
+            ctx.lineTo(x0, dimY + 5);
+            ctx.moveTo(x1, botR + 6);
+            ctx.lineTo(x1, dimY + 5);
+            ctx.stroke();
+            // Dimension line with arrowheads
+            drawArrow(ctx, cx - 36, dimY, x0 + 2, dimY, GEAR_THEME.muted);
+            drawArrow(ctx, cx + 36, dimY, x1 - 2, dimY, GEAR_THEME.muted);
+            ctx.font = GEAR_THEME.fontMonoSmall;
+            ctx.fillStyle = GEAR_THEME.ink;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText(formatValue(shaftLength, 'length', 0) + ' ' + getUnitLabel('length'), cx, dimY);
+            ctx.restore();
+
+            // --- Diameter callout at the right end ---
+            const dx = x1 + 22;
+            ctx.save();
+            ctx.strokeStyle = GEAR_THEME.muted;
+            ctx.lineWidth = 1;
+            ctx.beginPath();
+            ctx.moveTo(x1 + 4, topR);
+            ctx.lineTo(dx + 6, topR);
+            ctx.moveTo(x1 + 4, botR);
+            ctx.lineTo(dx + 6, botR);
+            ctx.stroke();
+            drawArrow(ctx, dx, cy - (cy - topR) - 16, dx, topR - 1, GEAR_THEME.muted);
+            drawArrow(ctx, dx, cy + (botR - cy) + 16, dx, botR + 1, GEAR_THEME.muted);
+            ctx.font = GEAR_THEME.fontMonoSmall;
+            ctx.fillStyle = GEAR_THEME.ink;
+            ctx.textAlign = 'left';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('\u00d8 ' + formatValue(shaftDiameter, 'length', 1) + ' ' + getUnitLabel('length'), dx + 10, cy);
+            ctx.restore();
+
+            // --- Title block ---
             const material = getCurrentMaterialProperties();
             const materialName = material.name[currentLanguage] || material.name.en;
-            shaftCtx.font = '14px Arial';
+            ctx.save();
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'alphabetic';
+            ctx.font = GEAR_THEME.fontTitle;
+            ctx.fillStyle = GEAR_THEME.ink;
+            ctx.fillText(currentLanguage === 'en' ? 'Shaft loading diagram' : 'Wellenbelastungsschema', size.w / 2, 24);
+            ctx.font = GEAR_THEME.fontMonoSmall;
+            ctx.fillStyle = GEAR_THEME.muted;
             const lengthLabel = getUnitLabel('length');
-            shaftCtx.fillText(`${materialName} | Ø${formatValue(shaftDiameter, 'length', 1)}${lengthLabel} × ${formatValue(shaftLength, 'length', 0)}${lengthLabel}`, centerX, 55);
+            ctx.fillText(
+                materialName + '  \u00b7  \u00d8' + formatValue(shaftDiameter, 'length', 1) + lengthLabel +
+                ' \u00d7 ' + formatValue(shaftLength, 'length', 0) + lengthLabel,
+                size.w / 2, 42
+            );
+            ctx.restore();
         }
-        
+
         // Draw analysis visualization
         function drawAnalysis() {
-            analysisCtx.clearRect(0, 0, analysisCtx.canvas.width, analysisCtx.canvas.height);
-            
-            const centerX = analysisCtx.canvas.width / 2;
-            const centerY = analysisCtx.canvas.height / 2;
-            
-            // Draw a simplified system diagram
-            analysisCtx.fillStyle = '#2c3e50';
-            analysisCtx.font = 'bold 18px Arial';
-            analysisCtx.textAlign = 'center';
-            analysisCtx.fillText(currentLanguage === 'en' ? 'Complete System Analysis' : 'Komplette Systemanalyse', centerX, 40);
-            
-            // Draw system schematic
-            const radius = 100;
-            
-            // Draw input
-            analysisCtx.beginPath();
-            analysisCtx.arc(centerX - 150, centerY, 30, 0, Math.PI * 2);
-            analysisCtx.fillStyle = '#4a6491';
-            analysisCtx.fill();
-            analysisCtx.fillStyle = 'white';
-            analysisCtx.font = 'bold 14px Arial';
-            analysisCtx.fillText(currentLanguage === 'en' ? 'IN' : 'EIN', centerX - 150, centerY + 5);
-            
-            // Draw gearbox
-            analysisCtx.fillStyle = '#e6f2ff';
-            analysisCtx.fillRect(centerX - 100, centerY - 60, 120, 120);
-            analysisCtx.strokeStyle = '#4a6491';
-            analysisCtx.lineWidth = 3;
-            analysisCtx.strokeRect(centerX - 100, centerY - 60, 120, 120);
-            
-            analysisCtx.fillStyle = '#2c3e50';
-            analysisCtx.font = 'bold 14px Arial';
-            analysisCtx.fillText(currentLanguage === 'en' ? 'GEARBOX' : 'GETRIEBE', centerX - 40, centerY);
-            
-            // Draw shafts
-            analysisCtx.beginPath();
-            analysisCtx.moveTo(centerX - 150, centerY);
-            analysisCtx.lineTo(centerX - 100, centerY);
-            analysisCtx.moveTo(centerX + 20, centerY);
-            analysisCtx.lineTo(centerX + 100, centerY);
-            analysisCtx.strokeStyle = '#94a3b8';
-            analysisCtx.lineWidth = 4;
-            analysisCtx.stroke();
-            
-            // Draw output
-            analysisCtx.beginPath();
-            analysisCtx.arc(centerX + 150, centerY, 30, 0, Math.PI * 2);
-            analysisCtx.fillStyle = '#10b981';
-            analysisCtx.fill();
-            analysisCtx.fillStyle = 'white';
-            analysisCtx.font = 'bold 14px Arial';
-            analysisCtx.fillText(currentLanguage === 'en' ? 'OUT' : 'AUS', centerX + 150, centerY + 5);
-            
-            // Draw efficiency bars
+            const size = prepCanvas(analysisCtx);
+            if (!size) return;
+            const ctx = analysisCtx;
+            const cx = size.w / 2;
+            const cy = size.h / 2 - 8;
+
+            // Title
+            ctx.font = GEAR_THEME.fontTitle;
+            ctx.fillStyle = GEAR_THEME.ink;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'alphabetic';
+            ctx.fillText(currentLanguage === 'en' ? 'Complete System Analysis' : 'Komplette Systemanalyse', cx, 30);
+
+            const boxW = 130, boxH = 110;
+
+            // Shafts (chain-dash centerline behind everything)
+            ctx.save();
+            ctx.beginPath();
+            ctx.moveTo(cx - 190, cy);
+            ctx.lineTo(cx + 190, cy);
+            ctx.setLineDash([9, 4, 2, 4]);
+            ctx.strokeStyle = 'rgba(91, 107, 124, 0.55)';
+            ctx.lineWidth = 1;
+            ctx.stroke();
+            ctx.restore();
+
+            // Solid shaft segments
+            ctx.beginPath();
+            ctx.moveTo(cx - 150, cy);
+            ctx.lineTo(cx - boxW / 2, cy);
+            ctx.moveTo(cx + boxW / 2, cy);
+            ctx.lineTo(cx + 150, cy);
+            ctx.strokeStyle = GEAR_THEME.line;
+            ctx.lineWidth = 5;
+            ctx.lineCap = 'round';
+            ctx.stroke();
+
+            // Gearbox block
+            const bx = cx - boxW / 2, by = cy - boxH / 2, br = 12;
+            ctx.beginPath();
+            ctx.moveTo(bx + br, by);
+            ctx.arcTo(bx + boxW, by, bx + boxW, by + boxH, br);
+            ctx.arcTo(bx + boxW, by + boxH, bx, by + boxH, br);
+            ctx.arcTo(bx, by + boxH, bx, by, br);
+            ctx.arcTo(bx, by, bx + boxW, by, br);
+            ctx.closePath();
+            const g = ctx.createLinearGradient(bx, by, bx, by + boxH);
+            g.addColorStop(0, '#f3f7fb');
+            g.addColorStop(1, '#e2eaf3');
+            ctx.fillStyle = g;
+            ctx.fill();
+            ctx.strokeStyle = GEAR_THEME.steel;
+            ctx.lineWidth = 2;
+            ctx.stroke();
+
+            ctx.font = GEAR_THEME.fontLabel;
+            ctx.fillStyle = GEAR_THEME.steelDeep;
+            ctx.textAlign = 'center';
+            ctx.fillText(currentLanguage === 'en' ? 'GEARBOX' : 'GETRIEBE', cx, cy + 4);
+
+            // Input node
+            ctx.beginPath();
+            ctx.arc(cx - 150, cy, 26, 0, Math.PI * 2);
+            ctx.fillStyle = GEAR_THEME.steel;
+            ctx.fill();
+            ctx.fillStyle = '#ffffff';
+            ctx.font = GEAR_THEME.fontMono;
+            ctx.fillText(currentLanguage === 'en' ? 'IN' : 'EIN', cx - 150, cy + 4);
+
+            // Output node
+            ctx.beginPath();
+            ctx.arc(cx + 150, cy, 26, 0, Math.PI * 2);
+            ctx.fillStyle = '#1f9d6e';
+            ctx.fill();
+            ctx.fillStyle = '#ffffff';
+            ctx.fillText(currentLanguage === 'en' ? 'OUT' : 'AUS', cx + 150, cy + 4);
+
+            // Power-flow arrows
+            drawArrow(ctx, cx - 118, cy - 38, cx - boxW / 2 - 8, cy - 38);
+            drawArrow(ctx, cx + boxW / 2 + 8, cy - 38, cx + 118, cy - 38, GEAR_THEME.steel);
+
+            // Efficiency bar
             const efficiency = 91.2; // From calculations
-            
-            analysisCtx.fillStyle = '#e2e8f0';
-            analysisCtx.fillRect(centerX - 50, centerY + 80, 100, 20);
-            
-            analysisCtx.fillStyle = efficiency > 90 ? '#10b981' : (efficiency > 80 ? '#f59e0b' : '#dc2626');
-            analysisCtx.fillRect(centerX - 50, centerY + 80, efficiency, 20);
-            
-            analysisCtx.fillStyle = '#2c3e50';
-            analysisCtx.font = '14px Arial';
-            analysisCtx.fillText(`${currentLanguage === 'en' ? 'Efficiency' : 'Wirkungsgrad'}: ${efficiency}%`, centerX, centerY + 95);
-            
-            // Draw status indicators
-            const statusY = centerY + 130;
-            
-            // Gearbox status
-            analysisCtx.beginPath();
-            analysisCtx.arc(centerX - 60, statusY, 8, 0, Math.PI * 2);
-            analysisCtx.fillStyle = '#10b981';
-            analysisCtx.fill();
-            analysisCtx.fillStyle = '#2c3e50';
-            analysisCtx.font = '12px Arial';
-            analysisCtx.fillText(currentLanguage === 'en' ? 'Gearbox OK' : 'Getriebe OK', centerX - 60, statusY + 20);
-            
-            // Shaft status
-            analysisCtx.beginPath();
-            analysisCtx.arc(centerX, statusY, 8, 0, Math.PI * 2);
-            analysisCtx.fillStyle = '#10b981';
-            analysisCtx.fill();
-            analysisCtx.fillStyle = '#2c3e50';
-            analysisCtx.fillText(currentLanguage === 'en' ? 'Shafts OK' : 'Wellen OK', centerX, statusY + 20);
-            
-            // Bearing status
-            analysisCtx.beginPath();
-            analysisCtx.arc(centerX + 60, statusY, 8, 0, Math.PI * 2);
-            analysisCtx.fillStyle = '#f59e0b';
-            analysisCtx.fill();
-            analysisCtx.fillStyle = '#2c3e50';
-            analysisCtx.fillText(currentLanguage === 'en' ? 'Check Bearings' : 'Lager prüfen', centerX + 60, statusY + 20);
+            const barW = 150, barH = 9;
+            const barX = cx - barW / 2, barY = cy + boxH / 2 + 26;
+            ctx.beginPath();
+            ctx.roundRect ? ctx.roundRect(barX, barY, barW, barH, barH / 2) : ctx.rect(barX, barY, barW, barH);
+            ctx.fillStyle = '#dde3ea';
+            ctx.fill();
+            ctx.beginPath();
+            ctx.roundRect ? ctx.roundRect(barX, barY, barW * efficiency / 100, barH, barH / 2) : ctx.rect(barX, barY, barW * efficiency / 100, barH);
+            ctx.fillStyle = efficiency > 90 ? '#1f9d6e' : (efficiency > 80 ? '#d99000' : '#cc3d3d');
+            ctx.fill();
+            ctx.font = GEAR_THEME.fontMonoSmall;
+            ctx.fillStyle = GEAR_THEME.muted;
+            ctx.fillText((currentLanguage === 'en' ? 'Efficiency' : 'Wirkungsgrad') + ': ' + efficiency + '%', cx, barY + 26);
+
+            // Status indicators
+            const statusY = barY + 52;
+            const statuses = [
+                { x: cx - 110, color: '#1f9d6e', label: currentLanguage === 'en' ? 'Gearbox OK' : 'Getriebe OK' },
+                { x: cx, color: '#1f9d6e', label: currentLanguage === 'en' ? 'Shafts OK' : 'Wellen OK' },
+                { x: cx + 110, color: '#d99000', label: currentLanguage === 'en' ? 'Check Bearings' : 'Lager pr\u00fcfen' }
+            ];
+            statuses.forEach(s => {
+                ctx.beginPath();
+                ctx.arc(s.x, statusY, 6, 0, Math.PI * 2);
+                ctx.fillStyle = s.color;
+                ctx.fill();
+                ctx.beginPath();
+                ctx.arc(s.x, statusY, 10, 0, Math.PI * 2);
+                ctx.strokeStyle = s.color;
+                ctx.globalAlpha = 0.35;
+                ctx.lineWidth = 2;
+                ctx.stroke();
+                ctx.globalAlpha = 1;
+                ctx.font = GEAR_THEME.fontMonoSmall;
+                ctx.fillStyle = GEAR_THEME.ink;
+                ctx.fillText(s.label, s.x, statusY + 26);
+            });
         }
-        
+
         // Initialize sample data
         function initializeSampleData() {
             initializeSampleGearStages();
